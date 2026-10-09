@@ -1,15 +1,15 @@
 # RAID Companion
 
-Private, iPad-friendly RAID: Shadow Legends tracker, with no sign-in screen.
+Full desktop dashboard for RAID: Shadow Legends, with responsive iPad and phone layouts and no sign-in screen.
 
 ## Implemented
-- Responsive static app in `index.html`
+- Full dashboard with the reference banner and sidebar, wider desktop panels, and identical `site/index.html` and root `index.html` pages
 - Cheshire Cat baseline stats and candidate gear comparison
 - Three Minotaur runs
 - Notes stored locally with JSON export
 - Searchable champion roster with add/edit forms for rank, level, ascension, and build notes
 - Champion changes saved on the device immediately and synced to the existing private Supabase session; pending changes survive reloads and retry without creating duplicate champions
-- Roster entries available in the iPad leveling planner, including maximum-rank handling for six-star champions
+- Roster entries available in the leveling planner, including maximum-rank handling for six-star champions
 - CSV import with a review step, separate champion copies, preserved build notes, and optional progress updates; original CSV details and stats are retained in private cloud storage and JSON export
 - Supabase cloud integration in `cloud.js`: automatic anonymous device session, owner-scoped RLS, initial champion/run records, notes sync with local fallback
 
@@ -21,7 +21,7 @@ Private, iPad-friendly RAID: Shadow Legends tracker, with no sign-in screen.
 5. Never expose secret or service-role keys. The frontend uses a **publishable** key only.
 
 ## Important device limitation
-Anonymous sessions have no email/password and no login UI, but **clearing browser data or switching iPads can permanently lose access to the anonymous account's records**. Export JSON backups regularly. A recovery mechanism would require a separate future design.
+Anonymous sessions have no email/password and no login UI, but **clearing browser data or switching browsers or devices can permanently lose access to the anonymous account's records**. Export JSON backups regularly. A recovery mechanism would require a separate future design.
 
 ## Run / deploy
 Cloudflare serves `site/` through `wrangler.jsonc`. The root page and its companion modules are also maintained for the existing alternate static hosting workflow.
