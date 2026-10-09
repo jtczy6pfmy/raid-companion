@@ -26,7 +26,8 @@ jobs:
       - name: Prepare site files only
         run: |
           mkdir -p _site
-          cp index.html cloud.js _site/
+          cp index.html cloud.js roster.js _site/
+          cp -R assets _site/
           touch _site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v5
