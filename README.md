@@ -1,26 +1,26 @@
 # RAID Companion
 
-Private, iPad-friendly RAID: Shadow Legends champion and dungeon tracker.
+Private, iPad-friendly RAID: Shadow Legends tracker, with no sign-in screen.
 
-## Product requirements
-- **No sign-in screen or login prompts.** Open directly to the dashboard.
-- Single-user experience optimized for iPad.
-- No public registration or multi-user account management.
+## Implemented
+- Responsive static app in `index.html`
+- Cheshire Cat baseline stats and candidate gear comparison
+- Three Minotaur runs
+- Notes stored locally with JSON export
+- Supabase cloud integration in `cloud.js`: automatic anonymous device session, owner-scoped RLS, initial champion/run records, notes sync with local fallback
 
-## Phase 1
-- Responsive zero-build web app in `index.html`
-- Cheshire Cat baseline profile and stat dashboard
-- Chestplate and gauntlet candidate comparison
-- Minotaur Stage 12/13 history
-- Local note storage and JSON export
+## Supabase setup required
+1. Open [Supabase Authentication Providers](https://supabase.com/dashboard/project/lavsuaojwyzavwtbgkcs/auth/providers).
+2. **Enable Anonymous Sign-Ins**. This is required before cloud sync can connect.
+3. Consider CAPTCHA / rate limiting to prevent abuse of anonymous account creation.
+4. The migration `raid_companion_anonymous_device_rls` already added owner-scoped RLS policies to all six RAID tables.
+5. Never expose secret or service-role keys. The frontend uses a **publishable** key only.
 
-## Run
-Open `index.html` in a browser or deploy it with a static hosting provider. A GitHub repository does not automatically publish a website.
+## Important device limitation
+Anonymous sessions have no email/password and no login UI, but **clearing browser data or switching iPads can permanently lose access to the anonymous account's records**. Export JSON backups regularly. A recovery mechanism would require a separate future design.
 
-## Planned Supabase backend
-Repurpose the existing Chassis Parts Inventory Supabase project after it becomes active and its schema is inspected.
-
-**Security design:** No login UI does not mean unrestricted database access. Do not expose a Supabase service-role key or secret in browser code, and do not allow anonymous public writes to champion tables. Cloud sync will require a protected server-side gateway or another private-access mechanism. Until that mechanism is implemented, keep edits local on the device. Never commit secrets.
+## Run / deploy
+Serve `index.html` and `cloud.js` from the same static site over HTTPS (e.g. GitHub Pages if repository and plan support it, or a private hosting option). Opening raw source files from GitHub is not running the app. A public static URL does not itself make the app private; owner-scoped RLS protects records from other device sessions.
 
 ## Accuracy
-Champion stats are an older observed baseline, not live game data. Gear recommendations are candidates, not confirmed equipment changes. Unofficial fan tool, not affiliated with Plarium.
+Champion stats are prior screenshot baselines, not live game data. Candidate gear changes are not confirmed equipped. This is an unofficial fan tool and is not affiliated with Plarium.
