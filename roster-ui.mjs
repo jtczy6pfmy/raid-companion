@@ -4,6 +4,7 @@ let roster=[],csv=null,preview=null;
 const $=id=>document.getElementById(id);
 try{const saved=JSON.parse(localStorage.getItem(key)||'[]');if(!Array.isArray(saved)||saved.some(c=>!c||typeof c.name!=='string'))throw Error();roster=saved;}catch{$('importStatus').textContent='Saved roster could not be read. Import a CSV to recover it.';}
 function render(){
+ if($('trackedCount'))$('trackedCount').textContent=roster.length;
  const q=$('rosterSearch').value.trim().toLowerCase();
  const visible=roster.filter(c=>[c.name,c.faction,c.affinity,c.rarity].some(v=>String(v||'').toLowerCase().includes(q)));
  $('rosterCount').textContent=visible.length+' of '+roster.length+' champions';
