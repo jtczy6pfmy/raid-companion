@@ -1,7 +1,32 @@
 <!doctype html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#101827"><title>RAID Companion</title>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#08090B"><title>RAID Companion</title>
 <style>
-:root{font-family:system-ui,-apple-system,sans-serif;color:#edf2fa;background:#0b1020}*{box-sizing:border-box}body{margin:0}header{background:#151e31;padding:20px max(20px,env(safe-area-inset-left));border-bottom:1px solid #34415a}h1{margin:0;font-size:1.5rem;color:#f8c86d}small,.muted{color:#aab6ca}main{max-width:920px;margin:auto;padding:20px}nav{display:flex;gap:8px;overflow:auto;margin-bottom:20px}button{cursor:pointer;background:#263653;color:#f4f6fa;border:1px solid #4b6083;border-radius:10px;padding:12px 16px;font-size:1rem}button.active{background:#9a7134;color:#fff;border-color:#e3b967}.panel{background:#151e31;border:1px solid #34415a;border-radius:16px;padding:20px;margin-bottom:16px}h2{margin-top:0}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}.stat{background:#222f49;border-radius:12px;padding:14px}.stat strong{display:block;font-size:1.5rem;margin-top:6px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}label{display:block;color:#bbc8dd;margin:10px 0 5px}input,textarea{width:100%;background:#0d1628;color:#fff;border:1px solid #556781;border-radius:8px;padding:12px;font-size:1rem}textarea{min-height:90px}table{width:100%;border-collapse:collapse}td,th{text-align:left;border-bottom:1px solid #34415a;padding:10px}section[hidden]{display:none}.notice{color:#f2c879}.save{background:#39664b;border-color:#6ca47b}
+:root{font-family:system-ui,-apple-system,sans-serif;color:#F5F7FA;background:#08090B}*{box-sizing:border-box}body{margin:0}header{background:#14181D;padding:20px max(20px,env(safe-area-inset-left));border-bottom:1px solid #285A63}h1{margin:0;font-size:1.5rem;color:#FFB13B}small,.muted{color:#B4C1CA}main{max-width:920px;margin:auto;padding:20px}nav{display:flex;gap:8px;overflow:auto;margin-bottom:20px}button{cursor:pointer;background:#182127;color:#F5F7FA;border:1px solid #3C626C;border-radius:10px;padding:12px 16px;font-size:1rem}button.active{background:#FF851B;color:#fff;border-color:#FFB13B}.panel{background:#14181D;border:1px solid #285A63;border-radius:16px;padding:20px;margin-bottom:16px}h2{margin-top:0}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}.stat{background:#171C22;border-radius:12px;padding:14px}.stat strong{display:block;font-size:1.5rem;margin-top:6px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}label{display:block;color:#C2CDD5;margin:10px 0 5px}input,textarea{width:100%;background:#080D12;color:#fff;border:1px solid #3C626C;border-radius:8px;padding:12px;font-size:1rem}textarea{min-height:90px}table{width:100%;border-collapse:collapse}td,th{text-align:left;border-bottom:1px solid #285A63;padding:10px}section[hidden]{display:none}.notice{color:#FFB13B}.save{background:#FF851B;border-color:#FFB13B}
+
+/* Approved reference palette: charcoal, orange, gold and cyan. */
+:root{color-scheme:dark;--orange:#FF851B;--gold:#FFB13B;--cyan:#00DFF5}
+body{background:#08090B;line-height:1.5;-webkit-text-size-adjust:100%}
+h1,h2,h3{line-height:1.2;letter-spacing:-.025em}
+button,input,select,textarea{touch-action:manipulation}
+button{min-height:44px;transition:background .15s,box-shadow .15s}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+button:disabled{opacity:.55;cursor:default}
+textarea{resize:vertical;line-height:1.5}
+.panel{box-shadow:inset 0 1px #ffffff08,0 8px 24px #00000025}
+.stat strong{font-variant-numeric:tabular-nums}
+::selection{background:var(--cyan);color:#08090B}
+
+header{background:radial-gradient(ellipse at right,#00DFF518,transparent 60%),#0A0C0F;border-bottom:1px solid var(--orange)}
+header h1{color:var(--gold);font-weight:850}
+nav button.active,.save,#export{background:linear-gradient(110deg,var(--orange),var(--gold));color:#160C03;font-weight:800;border-color:var(--orange)}
+nav button:hover:not(.active){background:#14272C;border-color:var(--cyan)}
+.panel:nth-of-type(even){border-color:#986026}
+th{color:var(--gold);background:#182127}
+main{padding-bottom:max(20px,env(safe-area-inset-bottom))}
+@media(max-width:1024px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}}
+@media(max-width:650px){main{padding:12px}.panel{padding:15px}nav button{flex:1;padding:12px 8px;font-size:14px}.grid{grid-template-columns:1fr}td,th{padding:8px;font-size:12px}}
+@media(prefers-reduced-motion:reduce){button{transition:none}}
+
 </style></head><body>
 <header><h1>⚔ RAID Companion</h1><small>Personal champion optimizer · iPad edition</small></header>
 <main><nav aria-label="Sections"><button class="active" data-tab="champion">Champion</button><button data-tab="gear">Artifacts</button><button data-tab="battles">Minotaur</button><button data-tab="settings">Storage</button></nav>
