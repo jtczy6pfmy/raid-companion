@@ -1,0 +1,17 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {parseCSV,guessMapping,validateRoster} from './roster-import.mjs';
+if(!process.argv[2])throw Error('Provide the path to M@dM@rti@n-champions-2026-10-02.csv');
+const bytes=fs.readFileSync(process.argv[2]);
+const csv=parseCSV(new TextDecoder('utf-8',{fatal:true}).decode(bytes));
+const mapping=guessMapping(csv.headers);
+const roster=validateRoster(csv,mapping);
+assert.equal(csv.headers.length,28);
+assert.equal(roster.length,40);
+assert.equal(new Set(roster.map(c=>c.name)).size,33);
+assert.deepEqual(mapping,{name:0,id:-1,level:2,rank:1,faction:5,affinity:4,rarity:3});
+assert.deepEqual(JSON.parse(JSON.stringify(roster)),roster);
+assert.equal(roster.find(c=>c.name==='Kael').level,60);
+assert.equal(roster.find(c=>c.name==='Cheshire Cat').rank,5);
+assert.equal(roster.filter(c=>c.name==='Incubus').length,7);
+console.log('Actual export passed: 40 champion instances, 33 unique names; duplicate instances retained.');
