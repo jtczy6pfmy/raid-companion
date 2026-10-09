@@ -19,8 +19,10 @@
 ## Verification
 Run: node roster-import.test.mjs
 17 synthetic regression cases pass. roster-ui.mjs passes node syntax checking.
+The actual M@dM@rti@n-champions-2026-10-02.csv was tested on 2026-10-09: 4,816 bytes, valid UTF-8, comma-delimited, 28 headers, 40 champion rows and 33 unique names. Automatic mapping recognises Name, Rank, Level, Rarity, Affinity and Faction. No instance ID is present. All rows validate, duplicate names are retained, and JSON serialization preserves the roster. Kael level 60 and Cheshire Cat rank 5 assertions pass. The private export itself is not committed.
+For this specific export, run: node roster-export.test.mjs <path-to-csv>
 
 ## Limitations
-The requested /mnt/data/M@dM@rti@n-champions-2026-10-02.csv is not available in the Codex Windows workspace or referenced chat attachments. Its actual headers, encoding, row count and compatibility have NOT been verified. Mapping avoids inventing an RSL-Xtender schema, but the real export must still be tested.
+The supplied real export is compatible with the Phase 1 roster fields. Its Type, Ascension, Awakening, Blessing, Tomes, Tomes Needed and base/total combat stats are not imported. This file has no champion instance IDs; repeated names cannot support reliable identity-based merging.
 Roster data is device-local, not synchronized through Supabase. Clearing browser data loses it. Backup JSON is for preservation; a JSON restore workflow is not implemented. Imports replace rather than merge the roster. Optional stats, gear, skills, ascension and other unknown columns are omitted. No champion catalog, ratings, optimization or autoclicker.
 Browser/iPad visual QA and live Supabase regression verification have not been performed. Existing cloud.js is unchanged.
