@@ -36,7 +36,7 @@ Choose **My Champions → Import CSV**, select a file with Name, Rank, and Level
 
 Existing build notes are always preserved. Existing ranks, levels, and ascension are kept unless **Update existing ranks, levels and ascension from this file** is checked. Dorothy and Vallyarn starting entries match Dorothy Gale and Vallaryn the Equalizer. Copies are identified by name and occurrence order because this export has no individual champion ID; review the preview when the ordering or number of copies changes. Repeat imports update matching copies rather than adding duplicates. Champions absent from the file remain in the roster.
 
-The additive database changes are recorded in `schema/champion-import.sql`, which was applied to the hosted project. Owner-scoped access policies remain in place. Run `node --test tests/csv-import.test.mjs` for parser and merge checks.
+The database changes are recorded in `schema/champion-import.sql`, which was applied to the hosted project. Imported copies use unique import keys; manual entries retain unique names within each device session. Owner-scoped access policies remain in place. Run `node --test tests/csv-import.test.mjs` for parser and merge checks.
 
 When cloud saves fail, the app keeps pending changes in device storage. **Retry cloud sync**, reconnecting to the network, or reloading the app retries them. Export includes all champion ranks, levels, ascension counts, and build notes, together with the existing baseline. If device storage is unavailable, export before closing the page. Do not clear browser data while changes are pending.
 
