@@ -27,7 +27,16 @@ main{padding-bottom:max(20px,env(safe-area-inset-bottom))}
 @media(max-width:650px){main{padding:12px}.panel{padding:15px}nav button{flex:1;padding:12px 8px;font-size:14px}.grid{grid-template-columns:1fr}td,th{padding:8px;font-size:12px}}
 @media(prefers-reduced-motion:reduce){button{transition:none}}
 
-</style></head><body>
+
+/* PC reference artwork, clipped in the browser to the header region. */
+.pc-banner{position:relative;display:block;width:100%;aspect-ratio:1448 / 258;overflow:hidden;background:#08090B;border-bottom:1px solid var(--orange);padding:0;isolation:isolate}
+.pc-banner img{display:block;position:absolute;width:100%;height:auto;max-width:none;left:0;top:0;pointer-events:none;user-select:none}
+.pc-banner::before,.pc-banner::after{content:"";position:absolute;top:0;height:10.5%;background:#050608;z-index:1;pointer-events:none}
+.pc-banner::before{left:0;width:12%}.pc-banner::after{right:0;width:11%}
+.pc-banner .banner-description{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+@media(max-width:650px){.pc-banner{aspect-ratio:1448 / 258}}
+
+</style></head><body><div class="pc-banner" role="img" aria-label="MadMartian Studios RAID Companion banner: Plan, Level, Build, Dominate"><img src="./assets/raid-header-reference.jpeg" alt="" width="1448" height="1086" fetchpriority="high"><span class="banner-description">Your Champions. Our Strategy. Bigger Victories.</span></div>
 <header><h1>⚔ RAID Companion</h1><small>Personal champion optimizer · iPad edition</small></header>
 <main><nav aria-label="Sections"><button class="active" data-tab="champion">Champion</button><button data-tab="gear">Artifacts</button><button data-tab="battles">Minotaur</button><button data-tab="settings">Storage</button></nav>
 <section id="champion" class="panel"><h2>Cheshire Cat</h2><p class="muted">Level 50 · 5★ · 1 purple ascension star · starting snapshot</p><div id="stats" class="stats"></div><h3>Champion notes</h3><textarea id="notes" aria-label="Champion notes"></textarea><p><button class="save" id="saveNotes">Save notes</button></p></section>

@@ -61,7 +61,16 @@ small{line-height:1.45}
 }
 @media(prefers-reduced-motion:reduce){button,.progress div{transition:none}}
 
-</style></head><body><div class="app">
+
+/* PC reference artwork, clipped in the browser to the header region. */
+.pc-banner{grid-column:1 / -1;position:relative;display:block;width:100%;aspect-ratio:1448 / 258;overflow:hidden;background:#08090B;border-bottom:1px solid var(--orange);padding:0;isolation:isolate}
+.pc-banner img{display:block;position:absolute;width:100%;height:auto;max-width:none;left:0;top:0;pointer-events:none;user-select:none}
+.pc-banner::before,.pc-banner::after{content:"";position:absolute;top:0;height:10.5%;background:#050608;z-index:1;pointer-events:none}
+.pc-banner::before{left:0;width:12%}.pc-banner::after{right:0;width:11%}
+.pc-banner .banner-description{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+@media(max-width:650px){.pc-banner{aspect-ratio:1448 / 258}}
+
+</style></head><body><div class="pc-banner" role="img" aria-label="MadMartian Studios RAID Companion banner: Plan, Level, Build, Dominate"><img src="./assets/raid-header-reference.jpeg" alt="" width="1448" height="1086" fetchpriority="high"><span class="banner-description">Your Champions. Our Strategy. Bigger Victories.</span></div><div class="app">
 <aside class="sidebar"><div class="brand"><div class="emblem">⚔</div><div><strong>RAID COMPANION</strong><span>CHAMPION COMMAND</span></div></div><nav class="side-nav" aria-label="Sections"><button class="active" data-tab="champion"><span>⌂</span>Dashboard</button><button data-tab="leveling"><span>↗</span>Leveling</button><button data-tab="gear"><span>⚒</span>Build Paths</button><button data-tab="battles"><span>♜</span>My Champions</button><button data-tab="settings"><span>☁</span>Storage</button></nav><div class="sidebar-foot">BUILT FOR iPAD<br>PERSONAL RAID TRACKER</div></aside>
 <div class="content"><header class="hero"><div class="eyebrow">RAID COMPANION · iPAD EDITION</div><h1><b>Champion</b> Command</h1><p>LEVEL · BUILD · PROGRESS</p></header>
 <div class="summary"><div class="summary-card"><div class="icon">♜</div><small>Tracked champions</small><strong>5</strong></div><div class="summary-card"><div class="icon">⚔</div><small>Food planning</small><strong id="foodSummary">0 / 5</strong></div><div class="summary-card"><div class="icon">★</div><small>Next milestone</small><strong>6★</strong></div><div class="summary-card"><div class="icon">☁</div><small>Cloud status</small><strong style="font-size:15px" id="summaryCloud">Connecting…</strong></div></div>
