@@ -5,7 +5,7 @@ const db = createClient(url, publishableKey, { auth: { persistSession: true, aut
 let championId = null;
 let connected = false;
 let ownerId = null;
-const championFields = "id,name,level,rank,ascension,notes";
+const championFields = "id,name,level,rank,ascension,notes,import_key,import_data";
 const startingChampions = [
  {name:'Cheshire Cat',level:50,rank:5,ascension:1,notes:'Initial snapshot; recommended equipment not confirmed'},
  {name:'Dorothy',level:50,rank:5,ascension:0,notes:'Minotaur leader; ascension unverified'},
@@ -67,7 +67,12 @@ export async function saveCloudChampion(champion) {
  const {id,name,level,rank,ascension,notes}=champion;
  if(!name?.trim() || name.length>100 || !Number.isInteger(rank) || rank<1 || rank>6 || !Number.isInteger(level) || level<1 || level>rank*10 || !Number.isInteger(ascension) || ascension<0 || ascension>rank || typeof notes!=='string' || notes.length>10000) return {saved:false,reason:'Check champion details'};
  try {
-  const {data,error}=await db.from('raid_champions').upsert({id,name:name.trim(),level,rank,ascension,notes,owner_id:ownerId,updated_at:new Date().toISOString()},{onConflict:'id'}).select(championFields).single();
+  const payload={id,name:name.trim(),level,rank,ascension,notes,import_key:champion.import_key||null,import_data:champion.import_data||{},owner_id:ownerId,updated_at:new Date().toISOString()};
+  let {data,error}=await db.from('raid_champions').upsert(payload,{onConflict:'id'}).select(championFields).single();
+  if(error?.code==='23505' && payload.import_key){
+   const existing=check(await db.from('raid_champions').select('id').eq('import_key',payload.import_key).single());
+   ({data,error}=await db.from('raid_champions').upsert({...payload,id:existing.id},{onConflict:'id'}).select(championFields).single());
+  }
   if(error) throw error;
   if(data.name==='Cheshire Cat') championId=data.id;
   return {saved:true,champion:data};
