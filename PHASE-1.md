@@ -6,15 +6,15 @@
 - Phase 1 adopts roster browsing and a user-supplied snapshot import. Optimization, ratings, combat simulation and automation require separate future implementations.
 
 ## Implemented
-- Roster tab with case-insensitive search across champion name, faction, affinity and rarity, counts and responsive cards.
+- My Champions screen with case-insensitive search across champion name, faction, affinity and rarity, counts and responsive cards.
 - UTF-8 comma/semicolon CSV parsing, BOM, CRLF, quoted fields, embedded newlines and escaped quotes.
 - Explicit column mapping: name required; instance ID, level, rank, faction, affinity and rarity optional. Unknown fields are not imported.
 - All rows validate before a device write. Reject malformed quotes, duplicate/empty headers, inconsistent widths, duplicate instance IDs, invalid level/rank and oversized input. Duplicate names remain separate champions.
 - Preview first five names and replacement count; mapping/file changes invalidate confirmation.
 - Device roster replacement only after confirmation. Storage failures retain the in-memory roster; no cloud writes occur.
 - Text-only rendering; imported HTML/formulas are inert. JSON backup export.
-- Green/black theme with iPad-sized controls. Existing champion, artifacts, Minotaur and storage screens retained.
-- cloud.js and Supabase schema/auth/notes/snapshots/run workflows unchanged.
+- Existing green/black iPad layout, dashboard, leveling planner, build paths, Minotaur and storage screens retained. Importer integrated into site/ (the Wrangler assets directory); root entry mirrors that layout. Imported champion summary reflects roster count.
+- Both cloud.js copies and Supabase schema/auth/notes/snapshots/run workflows unchanged.
 
 ## Verification
 Run: node roster-import.test.mjs
