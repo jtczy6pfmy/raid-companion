@@ -3,3 +3,5 @@
 !.env.example
 node_modules/
 .DS_Store
+__pycache__/
+raid-probe*.json
