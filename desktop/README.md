@@ -1,6 +1,24 @@
 # Windows game reader: development milestone
 
-This folder contains a read-only connection probe, not an installable companion or a completed champion reader.
+This folder contains an installable **Windows Reader Preview** and a read-only connection probe. It is not a completed champion reader.
+
+## Install the preview
+
+Run `RAID-Companion-Reader-Preview-Setup-0.1.0-x64.exe` on Windows 10/11 x64. It includes Python, creates optional shortcuts, and can be removed through Windows Settings → Apps. No login is added. The installer uses the current Windows account and does not request administrator access.
+
+Open RAID, launch the preview, then select **Check RAID connection**. If Windows denies read access, close the reader and run its shortcut as administrator; Windows asks for approval.
+
+**Inspect memory samples** performs an experimental, bounded read of champion objects on the specifically supported game build. The build fingerprint is checked before using field offsets. It can return up to 24 champion IDs, type IDs, ranks, levels and available default names. The scan never writes game memory and excludes structurally invalid or conflicting samples. It is limited to 2 GiB and 100 seconds per scan pass. It may include stale or non-player objects: active-account roster membership, complete coverage and total stats are **not verified**. These samples are never imported into the web companion.
+
+The preview does not extract gear, sync account records, equip artifacts, sell items, or run battles. Updated game builds need a validated reader update; the installer does not automatically adapt or update.
+
+**Open web companion** opens the existing website in your normal browser, retaining that browser's own saved session. A different laptop/browser still has its own session and does not automatically inherit another device's cloud records. The native reader does not send data to the website or create a separate cloud identity. Diagnostic export is local; after sample inspection it includes the selected champion fields, not a raw memory dump. The preview is unsigned and has no automatic updater.
+
+## Build the installer
+
+Use 64-bit Python 3.14 and Inno Setup 6.7.3 on Windows. In an isolated Python environment, install `requirements-build.txt`. Run the UI status checks with `python test_reader_ui.py`, then run `build_windows.ps1` with `-PythonExe` pointing to that environment's Python and `-InnoCompiler` pointing to `ISCC.exe`. The script builds the app, includes runtime license notices, checks bundled startup, and compiles the installer into `installer-output/`. Generated binaries are excluded from Git.
+
+## Probe directly
 
 Run with 64-bit Python on Windows while RAID is open through Plarium Play:
 
@@ -17,6 +35,9 @@ Windows error 5 means Windows denied the requested process access. An administra
 ## Verified locally on October 10, 2026
 
 - Live RAID and GameAssembly module header reads succeeded after Windows elevation approval.
+- The experimental sample reader returned champion default names, IDs, ranks and levels from live memory. Membership and completeness remain unverified.
+- A separate development test found a 63-entry dictionary on the derived UpdatableHeroData model. This is a candidate roster, not a validated complete account import.
+- The packaged preview passed install, startup and uninstall checks; all six reader status/field validation tests passed.
 - Installed Unity version: 6000.3.18f1; standard IL2CPP metadata version: 39.
 - Official Cpp2IL `2022.1.0-pre-release.21` successfully parsed the installed metadata and located the binary code and metadata registrations. This is an offline analysis result, not a live account read.
 - Generated schema contains `SharedModel.Meta.Heroes.Hero` with per-copy ID, type ID, grade and level fields, and `UserHeroData.HeroById` for the roster dictionary. These definitions alone do not identify the active player's objects in memory.
