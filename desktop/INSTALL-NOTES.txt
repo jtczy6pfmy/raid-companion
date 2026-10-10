@@ -1,4 +1,4 @@
-RAID Companion Reader Preview 0.1.0
+RAID Companion Reader Preview 0.2.0
 
 This is an installable connection-test preview for Windows 10/11 x64.
 Python is included. You do not need to install Python or create a login.
@@ -7,7 +7,11 @@ It detects RAID through Plarium Play and tests read-only memory access.
 Inspect memory samples can read up to 24 experimental champion records
 on the specifically supported game build. These may include stale or
 non-player records. They are not a verified active account roster.
-Names may be unavailable. Total stats and gear are not extracted.
+Read roster candidates reads whole, stable champion dictionaries, including
+storage flags. Names can be unavailable when description caches are empty.
+Read gear candidates reads basic artifact records from stable containers.
+Account identity, final stats, equipped links and bonus stats remain
+unverified. Nothing is imported into the web companion automatically.
 No champion or artifact sync, equipping, selling, or battles are implemented.
 
 Open RAID, then choose Check RAID connection. If Windows denies access,

@@ -29,8 +29,8 @@ class ReaderWindow:
         style.configure('Treeview', background='#15171C', foreground='#F4F4F4', fieldbackground='#15171C', rowheight=28)
         style.configure('Treeview.Heading', background='#24262D', foreground='#FFB13B')
         tk.Label(root, text='RAID COMPANION', bg='#08090B', fg='#FF851B', font=('Segoe UI', 24, 'bold')).pack(anchor='w', padx=28, pady=(24, 2))
-        tk.Label(root, text='Windows Reader Preview · 0.1.0', bg='#08090B', fg='#00DFF5', font=('Segoe UI', 12)).pack(anchor='w', padx=28)
-        tk.Label(root, text='Experimental memory samples only. Verified roster/gear syncing and game automation are not available yet.',
+        tk.Label(root, text='Windows Reader Preview · 0.2.0', bg='#08090B', fg='#00DFF5', font=('Segoe UI', 12)).pack(anchor='w', padx=28)
+        tk.Label(root, text='Read-only roster candidates and experimental gear inspection. Account syncing, final stats and game automation are not available yet.',
                  wraplength=780, justify='left', bg='#08090B', fg='#FFB13B', font=('Segoe UI', 11)).pack(anchor='w', padx=28, pady=18)
         self.status = tk.StringVar(value='Open RAID through Plarium Play, then check the connection.')
         tk.Label(root, textvariable=self.status, wraplength=780, justify='left', bg='#08090B', fg='#F4F4F4', font=('Segoe UI', 12)).pack(anchor='w', padx=28, pady=(0, 14))
@@ -54,17 +54,25 @@ class ReaderWindow:
         self.export_button = tk.Button(buttons, text='Save diagnostic report', command=self.export, state='disabled', bg='#24262D', fg='#F4F4F4', padx=12, pady=9)
         self.export_button.pack(side='left', padx=12)
         tk.Button(buttons, text='Open web companion', command=lambda: webbrowser.open(SITE), bg='#24262D', fg='#00DFF5', padx=12, pady=9).pack(side='right')
+        readers = tk.Frame(root, bg='#08090B')
+        readers.pack(fill='x', padx=28, pady=(0, 12))
+        self.roster_button = tk.Button(readers, text='Read roster candidates', command=lambda: self.check(roster=True), bg='#24262D', fg='#00DFF5', padx=12, pady=9)
+        self.roster_button.pack(side='left')
+        self.gear_button = tk.Button(readers, text='Read gear candidates', command=lambda: self.check(gear=True), bg='#24262D', fg='#FFB13B', padx=12, pady=9)
+        self.gear_button.pack(side='left', padx=10)
         tk.Label(root, text='Read-only inspection. Samples may include old or non-player records; they are not imported into your roster.\nNothing is sent online. The web companion opens separately in your browser with its saved device session.',
                  justify='left', wraplength=780, bg='#08090B', fg='#AEB1BC', font=('Segoe UI', 10)).pack(anchor='w', padx=28, pady=(0, 24))
         root.after(100, self.poll)
 
-    def check(self, samples=False):
+    def check(self, samples=False, roster=False, gear=False):
         self.check_button.configure(state='disabled')
         self.sample_button.configure(state='disabled')
+        self.roster_button.configure(state='disabled')
+        self.gear_button.configure(state='disabled')
         self.status.set('Checking the running RAID process…')
         def work():
             try:
-                result = inspect_champion_samples(progress=lambda text: self.events.put({'progress': text})) if samples else probe()
+                result = inspect_champion_samples(progress=lambda text: self.events.put({'progress': text}), roster=roster, gear=gear) if samples or roster or gear else probe()
             except Exception as error:
                 result = {'status': 'unavailable', 'champion_data_verified': False, 'reason': str(error)}
             self.events.put(result)
@@ -85,10 +93,18 @@ class ReaderWindow:
         self.result = result
         self.check_button.configure(state='normal')
         self.sample_button.configure(state='normal')
+        self.roster_button.configure(state='normal')
+        self.gear_button.configure(state='normal')
         self.export_button.configure(state='normal')
         self.table.delete(*self.table.get_children())
         verified = result.get('status') == 'memory_access_verified'
-        if result.get('status') == 'memory_samples_read':
+        if result.get('status') == 'gear_candidates_read':
+            counts = ', '.join(str(len(items)) for items in result['gear_candidates'])
+            self.status.set(f'Artifact list candidates: {counts} items. Account identity, equipped links and bonus stats remain unverified.')
+        elif result.get('status') == 'roster_candidates_read':
+            counts = ', '.join(str(len(items)) for items in result['roster_candidates'])
+            self.status.set(f'Complete dictionary candidates: {counts} champions. Active account identity and final stats remain unverified.')
+        elif result.get('status') == 'memory_samples_read':
             self.status.set(f"Read {len(result['samples'])} experimental champion samples. Active roster membership and total stats are unverified.")
         elif verified:
             self.status.set('Read-only connection verified. Champion and gear extraction are not implemented yet.')
@@ -106,6 +122,13 @@ class ReaderWindow:
         for sample in result.get('samples', []):
             name = sample.get('name') or f"Champion type {sample['type_id']}"
             self.table.insert('', 'end', values=(f"{name} · copy {sample['id']}", f"Rank {sample['rank']} · Level {sample['level']} · Unverified roster membership"))
+        for number, records in enumerate(result.get('roster_candidates', []), 1):
+            for hero in records:
+                name = hero.get('name') or f"Champion type {hero['type_id']}"
+                self.table.insert('', 'end', values=(f"{name} · copy {hero['id']}", f"Candidate {number} · Rank {hero['rank']} · Level {hero['level']}"))
+        for number, records in enumerate(result.get('gear_candidates', []), 1):
+            for artifact in records:
+                self.table.insert('', 'end', values=(f"Artifact {artifact['id']} · kind {artifact['kind_id']}", f"Candidate {number} · Rank {artifact['rank']} · Level {artifact['level']} · Set {artifact['set_id']}"))
 
     def export(self):
         if not self.result:
@@ -123,15 +146,17 @@ if __name__ == '__main__':
     output = parser.add_mutually_exclusive_group()
     output.add_argument('--probe-output', type=Path)
     output.add_argument('--sample-output', type=Path)
+    output.add_argument('--roster-output', type=Path)
+    output.add_argument('--gear-output', type=Path)
     parser.add_argument('--smoke-test', action='store_true')
     args = parser.parse_args()
-    if args.probe_output or args.sample_output:
+    if args.probe_output or args.sample_output or args.roster_output or args.gear_output:
         try:
-            result = inspect_champion_samples() if args.sample_output else probe()
+            result = inspect_champion_samples(roster=bool(args.roster_output), gear=bool(args.gear_output)) if args.sample_output or args.roster_output or args.gear_output else probe()
         except Exception as error:
             result = {'status': 'unavailable', 'champion_data_verified': False, 'reason': str(error)}
-        (args.probe_output or args.sample_output).write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
-        sys.exit(0 if result['status'] in ('memory_access_verified', 'memory_samples_read') else 1)
+        (args.probe_output or args.sample_output or args.roster_output or args.gear_output).write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
+        sys.exit(0 if result['status'] in ('memory_access_verified', 'memory_samples_read', 'roster_candidates_read', 'gear_candidates_read') else 1)
     else:
         root = tk.Tk()
         window = ReaderWindow(root)

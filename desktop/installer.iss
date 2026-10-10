@@ -1,4 +1,4 @@
-#define AppVersion "0.1.0"
+#define AppVersion "0.2.0"
 [Setup]
 AppId={{6F369205-F341-4AFA-9804-E485690423B2}
 AppName=RAID Companion Reader Preview

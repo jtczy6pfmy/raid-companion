@@ -15,7 +15,7 @@ try {
     if ($smoke.ExitCode -ne 0) { throw 'Bundled app startup check failed.' }
     & $InnoCompiler installer.iss
     if ($LASTEXITCODE -ne 0) { throw 'Installer build failed.' }
-    Get-FileHash -LiteralPath 'installer-output/RAID-Companion-Reader-Preview-Setup-0.1.0-x64.exe' -Algorithm SHA256
+    Get-FileHash -LiteralPath 'installer-output/RAID-Companion-Reader-Preview-Setup-0.2.0-x64.exe' -Algorithm SHA256
 } finally {
     Pop-Location
 }
