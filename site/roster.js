@@ -12,6 +12,8 @@ const starters = [
 
 export function initRoster() {
  const $ = id => document.getElementById(id);
+ const noteDrafts=new Map();
+ const primaryChampion=()=>rows.find(r=>r.starterName==='Cheshire Cat')||rows.find(r=>r.name==='Cheshire Cat');
  let rows, editingId=null, syncing=false, cloudReady=false, storageError=false,cloudSettled=false,imported=null,sourceFile='',previewSnapshot='',fileRead=0;
  try { rows=JSON.parse(localStorage.getItem(storageKey)||'null'); } catch {}
  if(!Array.isArray(rows) || !rows.length || rows.some(r=>!r.id || typeof r.name!=='string' || !Number.isInteger(r.rank) || !Number.isInteger(r.level))) {
@@ -43,6 +45,9 @@ export function initRoster() {
    const notes=document.createElement('p');notes.textContent=row.notes||'No build notes yet.';
    const sync=document.createElement('p');sync.className='sync-label'+(row.pending?' pending':'');sync.textContent=row.pending?'Saved on device · sync pending':row.cloudId?'Cloud saved':'Starting entry';
    const edit=document.createElement('button');edit.type='button';edit.className='roster-secondary';edit.textContent='Edit champion';edit.setAttribute('aria-label','Edit '+label);edit.onclick=()=>openEditor(row);
+   const view=document.createElement('button');view.type='button';view.className='roster-secondary';view.textContent='View dashboard';view.setAttribute('aria-label','View '+label);view.onclick=()=>{
+    document.querySelector('[data-tab="champion"]').click();$('dashboardChampion').value=row.id;renderDashboard();window.scrollTo({top:0,behavior:'auto'});
+   };
    card.append(title,details,notes,sync);
    if(row.import_data?.values){
     const extra=document.createElement('details'),heading=document.createElement('summary'),list=document.createElement('dl');heading.textContent='Imported details & stats';
@@ -50,16 +55,41 @@ export function initRoster() {
     for(const [key,value] of Object.entries(row.import_data.values)){if(value==='')continue;const term=document.createElement('dt'),description=document.createElement('dd');term.textContent=key;description.textContent=value;list.append(term,description);}
     extra.append(heading,source,list);card.append(extra);
    }
-   card.append(edit);container.append(card);
+   const actions=document.createElement('div');actions.className='roster-buttons';actions.append(view,edit);card.append(actions);container.append(card);
   }
   if(!container.childElementCount){const empty=document.createElement('p');empty.textContent='No champions match your search.';container.append(empty);}
   if($('trackedChampions'))$('trackedChampions').textContent=rows.length;
+  if($('dashboardChampion')){
+   const selected=$('dashboardChampion').value||primaryChampion()?.id;
+   $('dashboardChampion').replaceChildren(...rows.map(row=>{
+    const option=document.createElement('option');option.value=row.id;
+    option.textContent=row.name+(counts.get(row.name.toLocaleLowerCase())>1?' (copy '+copyLabels.get(row.id)+')':'');return option;
+   }));
+   if(rows.some(row=>row.id===selected))$('dashboardChampion').value=selected;
+   renderDashboard();
+  }
   if($('levelChampion')){
    const selected=$('levelChampion').value;
    $('levelChampion').replaceChildren(...rows.map(r=>{const option=document.createElement('option');option.value=r.id;option.dataset.name=r.name;option.textContent=`${r.name}${counts.get(r.name.toLocaleLowerCase())>1?' (copy '+copyLabels.get(r.id)+')':''} · ${r.rank}★ · Lv ${r.level}`;return option;}));
    const selectedRow=rows.find(r=>r.id===selected)||rows.find(r=>r.name===selected);
    if(selectedRow)$('levelChampion').value=selectedRow.id;
   }
+ }
+ function renderDashboard(){
+  const row=rows.find(row=>row.id===$('dashboardChampion')?.value);if(!row)return;
+  $('dashboardName').textContent=row.name;
+  $('dashboardProgress').textContent=`${row.rank}★ · Level ${row.level} / ${row.rank*10} · ${row.ascension} ascension stars`;
+  const fields=[['HP','Total HP',19222],['ATK','Total ATK',1971],['DEF','Total DEF',1335],['SPD','Total SPD',167],['C.RATE %','Total C.RATE',71],['C.DMG %','Total C.DMG',103],['RES','Total RES',87],['ACC','Total ACC',125]];
+  const snapshot=row.import_data?.values;
+  const baseline=!snapshot&&row.id===primaryChampion()?.id;
+  $('statsSource').textContent=snapshot?'Imported CSV snapshot · '+(row.import_data.sourceFile||'source file')+' · values may differ from current in-game stats.':baseline?'Previous Cheshire Cat screenshot baseline · values may differ from current in-game stats.':'No stat snapshot saved for this champion. Import a CSV to add stats.';
+  $('stats').replaceChildren(...fields.map(([label,key,value])=>{
+   const card=document.createElement('div');card.className='stat';const title=document.createElement('small');title.textContent=label;
+   const number=document.createElement('strong');number.textContent=snapshot?(snapshot[key]||'—'):baseline?value.toLocaleString():'—';card.append(title,number);return card;
+  }));
+  $('notes').value=noteDrafts.has(row.id)?noteDrafts.get(row.id):row.notes||'';
+  $('notes').setAttribute('aria-label','Build notes for '+row.name);
+  $('dashboardNoteStatus').textContent=noteDrafts.has(row.id)?'Unsaved notes for this champion.':row.pending?'Saved on this device · cloud sync pending.':row.cloudId?'Notes saved in your private cloud session.':'Notes saved on this device.';
  }
  function openEditor(row=null) {
   editingId=row?.id||null;
@@ -71,12 +101,15 @@ export function initRoster() {
  }
  function updateLimits(){const rank=Number($('championRank').value);$('championLevel').max=rank*10;$('championAscension').max=rank;}
  function catNotes(row) {
-  // The dashboard remains a Cheshire Cat snapshot; share its notes with that entry.
-  const primary=rows.find(r=>r.starterName==='Cheshire Cat')||rows.find(r=>r.name==='Cheshire Cat');
+  // Preserve the legacy Cheshire Cat notes key for existing devices and backups.
+  const primary=primaryChampion();
   if(row.id===primary?.id){
    try{localStorage.setItem('raid-notes-v1',row.notes);}catch{}
-   $('notes').value=row.notes;
   }
+ }
+ if($('dashboardChampion')){
+  $('dashboardChampion').addEventListener('change',renderDashboard);
+  $('notes').addEventListener('input',()=>{noteDrafts.set($('dashboardChampion').value,$('notes').value);$('dashboardNoteStatus').textContent='Unsaved notes for this champion.';});
  }
  async function syncPending() {
   if(syncing)return;
@@ -176,11 +209,13 @@ export function initRoster() {
    persist();render();summary();void syncPending();
   },
   exportRoster(){return rows.map(({name,level,rank,ascension,notes,import_key,import_data})=>({name,level,rank,ascension,notes,import_key,import_data}));},
-  async saveDashboardNotes(notes){
-   const row=rows.find(r=>r.starterName==='Cheshire Cat')||rows.find(r=>r.name==='Cheshire Cat');
-   if(!row)return {saved:false,reason:'Cheshire Cat is not in the roster'};
+  async saveDashboardNotes(notes,id=primaryChampion()?.id){
+   const row=rows.find(row=>row.id===id);
+   if(!row)return {saved:false,localSaved:false,reason:'Select a champion in the roster'};
+   if(typeof notes!=='string'||notes.length>10000)return {saved:false,localSaved:false,reason:'Build notes must be at most 10,000 characters.'};
+   noteDrafts.delete(row.id);
    row.notes=notes;saveLocal(row);await syncPending();
-   return {saved:!row.pending,reason:row.pending?'Champion changes are waiting for cloud sync.':''};
+   return {saved:!row.pending&&!storageError,localSaved:!storageError,reason:storageError?'Device storage is unavailable; export your data before closing.':row.pending?'Champion changes are waiting for cloud sync.':''};
   }
  };
 }

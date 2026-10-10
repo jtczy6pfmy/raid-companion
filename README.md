@@ -4,7 +4,8 @@ Full desktop dashboard for RAID: Shadow Legends, with responsive iPad and phone 
 
 ## Implemented
 - Full dashboard with the reference banner and sidebar, wider desktop panels, and identical `site/index.html` and root `index.html` pages
-- Cheshire Cat baseline stats and candidate gear comparison
+- Dashboard champion selector with per-copy build notes, imported total stats, labeled snapshot sources, and Cheshire Cat baseline fallback
+- Candidate gear comparison
 - Three Minotaur runs
 - Notes stored locally with JSON export
 - Searchable champion roster with add/edit forms for rank, level, ascension, and build notes
@@ -29,7 +30,7 @@ Cloudflare serves `site/` through `wrangler.jsonc`. The root page and its compan
 Serve `index.html`, `cloud.js`, `roster.js`, `csv-import.js`, and `assets/` together over HTTPS (e.g. GitHub Pages if repository and plan support it, or a private hosting option). Opening raw source files from GitHub is not running the app. A public static URL does not itself make the app private; owner-scoped RLS protects records from other device sessions.
 
 ## Manage champions
-Open **My Champions** to search, add, or edit entries. Rank sets the level cap (rank × 10) and the maximum ascension count. The existing Cheshire Cat entry keeps its name because it is linked to the dashboard snapshot; its notes are shared with the dashboard's notes field. The other champions can be renamed. Imported copies are kept as separate entries and can be edited independently.
+Open **My Champions** to search, add, or edit entries. Rank sets the level cap (rank × 10) and the maximum ascension count. The existing Cheshire Cat entry keeps its name because it is linked to the dashboard snapshot; its notes remain compatible with the original saved dashboard notes. The dashboard now selects any champion, including individual imported copies, and saves notes to that selected entry. Unsaved note drafts survive selection changes within the open page. Imported stats are labeled snapshots; champions without snapshots show unavailable values rather than another champion's stats. The other champions can be renamed. Imported copies are kept as separate entries and can be edited independently.
 
 ## Import a CSV roster
 Choose **My Champions → Import CSV**, select a file with Name, Rank, and Level columns, then review the preview and confirm. Ascension defaults to zero when absent. All other columns, including rarity, affinity, faction, awakening, blessing, tomes, and base/total stats, are kept as an imported snapshot accessible on each card and in JSON export. CSV files are read in the browser; no user CSV is bundled with the website.
