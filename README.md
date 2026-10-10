@@ -43,3 +43,14 @@ When cloud saves fail, the app keeps pending changes in device storage. **Retry 
 
 ## Accuracy
 Champion stats are prior screenshot baselines, not live game data. Candidate gear changes are not confirmed equipped. This is an unofficial fan tool and is not affiliated with Plarium.
+
+## Companion toolkit
+The champion index filters imported rarity, affinity and faction, plus current rank and leveling status. Sort by level, rank, speed, accuracy, HP or crit damage; unavailable stats sort last.
+
+Build Lab saves named per-copy plans with a role, preferred sets, minimum stat targets, optional candidate total stats and notes. Blank candidate fields use the current snapshot. Comparisons show numeric differences between saved snapshots. There is no artifact extraction, automatic gear selection, in-game equipment change or verified champion-rating database.
+
+Team Planner saves up to six distinct champion copies, with the first slot as leader and unused slots left empty. Snapshot speed order is a planning aid, not a combat or speed-tune simulation. Battle Log records manual results, optional team snapshots, duration, energy and notes; performance summaries use only those logged results. Session estimates multiply the user's run count, energy and duration inputs. The original three Minotaur records remain visible in the roster section, separate from the new manually entered battle log.
+
+Builds, teams and battles persist in `raid-companion-tools-v1` and retry private cloud upserts to `raid_companion_plans`. Cloud records retain deletion tombstones to avoid restoring removed plans; each plan ID has its own pending queue entry. Local pending records are retained during reconnect. The schema in `schema/companion-plans.sql` is additive and restricts SELECT/INSERT/UPDATE to the owning device session. Existing champion, run and inventory tables are not altered. JSON exports include the toolkit records.
+
+The web companion is inspired by the organisation and planning workflows of HellHades and RSL Helper. It has no affiliation with either, no login screen, and no native RAID game connection or auto-battle functionality.

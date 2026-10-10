@@ -78,3 +78,18 @@ export async function saveCloudChampion(champion) {
   return {saved:true,champion:data};
  }catch(error){return {saved:false,reason:error?.message||'Cloud unavailable'};}
 }
+
+export async function loadCloudPlans(){
+ if(!connected||!ownerId)return {loaded:false,reason:'Cloud not connected'};
+ try{return {loaded:true,plans:check(await db.from('raid_companion_plans').select('id,kind,payload,deleted,updated_at').order('updated_at'))};}
+ catch(error){return {loaded:false,reason:error?.message||'Cloud unavailable'};}
+}
+export async function saveCloudPlan(plan){
+ if(!connected||!ownerId)return {saved:false,reason:'Cloud not connected'};
+ if(!['build','team','run'].includes(plan.kind)||!plan.id||typeof plan.payload!=='object'||!plan.payload||Array.isArray(plan.payload)||JSON.stringify(plan.payload).length>25000)return {saved:false,reason:'Invalid plan'};
+ try {
+  const payload={id:plan.id,owner_id:ownerId,kind:plan.kind,payload:plan.payload,deleted:!!plan.deleted,updated_at:plan.updated_at};
+  const saved=check(await db.from('raid_companion_plans').upsert(payload,{onConflict:'id'}).select('id,kind,payload,deleted,updated_at').single());
+  return {saved:true,plan:saved};
+ }catch(error){return {saved:false,reason:error?.message||'Cloud unavailable'};}
+}

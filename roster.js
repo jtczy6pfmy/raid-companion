@@ -1,5 +1,6 @@
 import { saveCloudChampion } from './cloud.js';
 import { parseCSV, planImport, canonicalName } from './csv-import.js';
+import { filterChampions,statsFor } from './companion-model.js';
 
 const storageKey = 'raid-roster-v1';
 const starters = [
@@ -37,7 +38,7 @@ export function initRoster() {
   const query=$('rosterSearch').value.trim().toLocaleLowerCase();
   const counts=new Map();const copyLabels=new Map();
   for(const row of rows){const key=row.name.toLocaleLowerCase();const copy=(counts.get(key)||0)+1;counts.set(key,copy);copyLabels.set(row.id,copy);}
-  for(const row of rows.filter(r=>r.name.toLocaleLowerCase().includes(query)).sort((a,b)=>a.name.localeCompare(b.name))) {
+  for(const row of filterChampions(rows,{search:query,rarity:$('filterRarity')?.value,affinity:$('filterAffinity')?.value,faction:$('filterFaction')?.value,rank:$('filterRank')?.value,leveling:$('filterLeveling')?.checked,sort:$('rosterSort')?.value||'name'})) {
    const card=document.createElement('div');card.className='roster-card';
    const label=row.name+(counts.get(row.name.toLocaleLowerCase())>1?` (copy ${copyLabels.get(row.id)})`:'');
    const title=document.createElement('h3');title.textContent=label;
@@ -49,6 +50,10 @@ export function initRoster() {
     document.querySelector('[data-tab="champion"]').click();$('dashboardChampion').value=row.id;renderDashboard();window.scrollTo({top:0,behavior:'auto'});
    };
    card.append(title,details,notes,sync);
+   const importedValues=row.import_data?.values||{},stats=statsFor(row);
+   const tags=document.createElement('p');tags.className='champion-tags';tags.textContent=[importedValues.Rarity,importedValues.Affinity,importedValues.Faction].filter(Boolean).join(' · ');
+   if(tags.textContent)card.insertBefore(tags,notes);
+   if(stats.spd!==null||stats.acc!==null){const strip=document.createElement('p');strip.className='champion-stats';strip.textContent=`Snapshot SPD ${stats.spd??'—'} · ACC ${stats.acc??'—'}`;card.insertBefore(strip,notes);}
    if(row.import_data?.values){
     const extra=document.createElement('details'),heading=document.createElement('summary'),list=document.createElement('dl');heading.textContent='Imported details & stats';
     const source=document.createElement('p');source.className='muted';source.textContent='CSV snapshot: '+row.import_data.sourceFile;
@@ -59,6 +64,7 @@ export function initRoster() {
   }
   if(!container.childElementCount){const empty=document.createElement('p');empty.textContent='No champions match your search.';container.append(empty);}
   if($('trackedChampions'))$('trackedChampions').textContent=rows.length;
+  if($('rosterCount'))$('rosterCount').textContent=`${container.querySelectorAll('.roster-card').length} shown / ${rows.length} champion copies`;
   if($('dashboardChampion')){
    const selected=$('dashboardChampion').value||primaryChampion()?.id;
    $('dashboardChampion').replaceChildren(...rows.map(row=>{
@@ -74,6 +80,7 @@ export function initRoster() {
    const selectedRow=rows.find(r=>r.id===selected)||rows.find(r=>r.name===selected);
    if(selectedRow)$('levelChampion').value=selectedRow.id;
   }
+  window.dispatchEvent(new CustomEvent('raid-roster-change'));
  }
  function renderDashboard(){
   const row=rows.find(row=>row.id===$('dashboardChampion')?.value);if(!row)return;
@@ -144,6 +151,8 @@ export function initRoster() {
  };
  $('addChampion').onclick=()=>openEditor();$('cancelChampion').onclick=()=>{$('championForm').hidden=true;editingId=null;$('addChampion').focus();};
  $('championRank').onchange=updateLimits;$('rosterSearch').oninput=render;
+ for(const id of ['filterRarity','filterAffinity','filterFaction','filterRank','filterLeveling','rosterSort'])if($(id))$(id).addEventListener('change',render);
+ if($('clearFilters'))$('clearFilters').onclick=()=>{for(const id of ['filterRarity','filterAffinity','filterFaction','filterRank'])$(id).value='';$('filterLeveling').checked=false;$('rosterSearch').value='';$('rosterSort').value='name';render();};
  if($('levelChampion'))$('levelChampion').addEventListener('change',()=>{
   const row=rows.find(r=>r.id===$('levelChampion').value);
   if(row){$('currentRank').value=row.rank;$('currentLevel').value=row.level;$('currentRank').dispatchEvent(new Event('input'));}
@@ -189,6 +198,7 @@ export function initRoster() {
  };
  persist();render();summary();
  return {
+  getChampions(){return structuredClone(rows);},
   setCloudStatus(message){if(message.startsWith('Cloud connected')||message.startsWith('Local-only'))cloudSettled=true;$('applyImport').disabled=!cloudSettled||syncing||!imported;if(message.startsWith('Local-only')){cloudReady=false;status(rows.some(r=>r.pending)?'Changes saved on this device; cloud unavailable. Retry cloud sync when connected.':'Roster saved on this device; cloud unavailable.');}},
   receiveCloud(champions) {
    cloudReady=true;
