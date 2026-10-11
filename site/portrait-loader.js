@@ -7,7 +7,8 @@
  function apply(){
   document.querySelectorAll('#championRoster .roster-card').forEach(card=>{
    const title=card.querySelector('h3')?.textContent||'';
-   const url=urls.get(slug(title));
+   const key=slug(title);
+   const url=key==='antigone-man-slayer'?'./portraits/antigone-man-slayer.webp':urls.get(key);
    const portrait=card.querySelector('.hh-portrait');
    if(!url||!portrait)return;
    let img=portrait.querySelector('img');
