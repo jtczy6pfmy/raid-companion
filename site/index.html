@@ -203,6 +203,16 @@ small{line-height:1.45}
 </div><div class="roster-buttons filter-footer"><label class="import-checkbox"><input id="filterLeveling" type="checkbox"> Still needs leveling</label><button id="clearFilters" class="roster-secondary" type="button">Clear filters</button><span id="rosterCount" class="muted" role="status"></span></div><div class="hh-view-switch" role="group" aria-label="Champion roster view"><button type="button" id="rosterListView" class="roster-secondary" aria-pressed="true">☷ List</button><button type="button" id="rosterGridView" class="roster-secondary" aria-pressed="false">▦ Grid</button></div><div id="championRoster" class="roster"></div><h3>Recent Minotaur runs</h3><table><thead><tr><th>Stage</th><th>Result</th><th>Time</th><th>Cheshire</th></tr></thead><tbody><tr><td>12</td><td>Victory</td><td>2:53</td><td>Survival unverified</td></tr><tr><td>13</td><td>Victory</td><td>2:25</td><td>Died before boss</td></tr><tr><td>13</td><td>Victory</td><td>2:34</td><td>Died in wave 2</td></tr></tbody></table><p class="muted">Team: Dorothy (leader), Kael, Vallyarn, Skathix, Cheshire Cat.</p></section>
 <section id="settings" class="panel" hidden><h2>Sync & storage</h2><p id="cloudStatus" role="status">Connecting…</p><p>A private device session is created automatically. Clearing browser data or changing devices can lose access to cloud records. Export backups regularly.</p><p class="notice">Never enter secret or service-role keys in this app.</p><h3>Companion plans</h3><p id="toolsStatus" class="muted" role="status" aria-live="polite"></p><p><button id="retryTools" class="roster-secondary" type="button">Retry companion sync</button></p><button class="action" id="export">Export my data (JSON)</button></section>
 </main></div></div>
+<script>
+// Navigation must work even when a module or roster initialization fails.
+(function(){
+ const activate=(tab)=>{
+  document.querySelectorAll('.side-nav [data-tab]').forEach(button=>button.classList.toggle('active',button.dataset.tab===tab));
+  document.querySelectorAll('main section[id]').forEach(section=>{section.hidden=section.id!==tab;});
+ };
+ document.querySelectorAll('.side-nav [data-tab]').forEach(button=>button.addEventListener('click',()=>activate(button.dataset.tab)));
+})();
+</script>
 <script type="module">
 import { initCloud } from "./cloud.js";
 import { initRoster } from "./roster.js";
