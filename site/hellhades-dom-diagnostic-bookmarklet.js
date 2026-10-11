@@ -1,13 +1,1 @@
-// Preview-only diagnostic. Does not request a token, contact a server, or upload data.
-javascript:(()=>{
- if(location.hostname!=='raidoptimiser.hellhades.com'||!location.pathname.startsWith('/champions'))return alert('Open HellHades Champions first.');
- const names=['KAEL','SKATHIX','VALLARY','DOROTHY','CHESHIRE'];
- const findings=names.map(name=>{
-  const nodes=[...document.querySelectorAll('body *')].filter(e=>e.children.length===0&&e.textContent?.trim().toUpperCase()===name);
-  const node=nodes[0];if(!node)return name+': not found';
-  const chain=[];let el=node;for(let i=0;el&&i<4;i++,el=el.parentElement)chain.push(el.tagName.toLowerCase()+(el.className&&typeof el.className==='string'?'.'+el.className.trim().split(/\\s+/).slice(0,3).join('.'):'' )+(el.id?'#'+el.id:''));
-  return name+': '+chain.join(' < ');
- });
- const ids=document.querySelectorAll('[data-champion-id],[data-copy-id]').length;
- alert('PREVIEW ONLY — no data uploaded\\nCards with expected IDs: '+ids+'\\n'+findings.join('\\n'));
-})();
+javascript:(function(){try{var names=['KAEL','SKATHIX','VALLARY','DOROTHY','CHESHIRE'];var lines=names.map(function(n){var e=Array.from(document.querySelectorAll('body *')).find(function(x){return x.children.length===0&&x.textContent&&x.textContent.trim().toUpperCase()===n});if(!e)return n+': not found';var a=[];for(var i=0;e&&i<4;i++,e=e.parentElement){a.push(e.tagName.toLowerCase()+(typeof e.className==='string'&&e.className?'.'+e.className.trim().split(/\s+/).slice(0,2).join('.'):'')+(e.id?'#'+e.id:''))}return n+': '+a.join(' < ')});alert('DIAGNOSTIC ONLY - no upload\n'+lines.join('\n'))}catch(e){alert('Diagnostic error: '+e.message)}})();
