@@ -11,8 +11,32 @@ const starters = [
  {name:'Skathix',rank:5,level:50,ascension:0,notes:'Minotaur team; ascension unverified'}
 ];
 
+const portraitUrls=new Map();
+let portraitLoadStarted=false;
+async function loadPortraitArchive(){
+ if(portraitLoadStarted)return;
+ portraitLoadStarted=true;
+ try{
+  const response=await fetch('./portraits/raid_companion_portraits.zip');
+  if(!response.ok)throw Error('Portrait archive unavailable');
+  if(!window.JSZip)throw Error('ZIP reader unavailable');
+  const zip=await window.JSZip.loadAsync(await response.arrayBuffer());
+  const entries=Object.values(zip.files).filter(file=>!file.dir&&file.name.endsWith('.webp'));
+  await Promise.all(entries.map(async file=>{
+   const key=file.name.split('/').pop().replace(/\\.webp$/,'');
+   const blob=await file.async('blob');
+   portraitUrls.set(key,URL.createObjectURL(new Blob([blob],{type:'image/webp'})));
+  }));
+  document.querySelectorAll('img[data-portrait-key]').forEach(img=>{
+   const url=portraitUrls.get(img.dataset.portraitKey);
+   if(url){img.style.display='block';img.src=url;img.closest('.hh-portrait')?.classList.remove('portrait-missing');img.parentElement?.querySelector('.portrait-initials')?.remove();}
+  });
+ }catch(error){console.warn('Champion portraits:',error.message);}
+}
+
 export function initRoster() {
  const $ = id => document.getElementById(id);
+ void loadPortraitArchive();
  const noteDrafts=new Map();
  const primaryChampion=()=>rows.find(r=>r.starterName==='Cheshire Cat')||rows.find(r=>r.name==='Cheshire Cat');
  let rosterView=localStorage.getItem('raid-roster-view')==='grid'?'grid':'list';
@@ -55,7 +79,9 @@ export function initRoster() {
    const portrait=document.createElement('div');portrait.className='hh-portrait';
    const img=document.createElement('img');img.alt='';img.loading='lazy';img.decoding='async';
    const portraitKey=row.name.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-   img.src='./portraits/'+portraitKey+'.webp';img.onerror=()=>{img.remove();portrait.classList.add('portrait-missing');const initials=document.createElement('span');initials.textContent=row.name.slice(0,2).toUpperCase();portrait.prepend(initials);};
+   img.dataset.portraitKey=portraitKey;
+   img.src=portraitUrls.get(portraitKey)||'./portraits/'+portraitKey+'.webp';
+   img.onerror=()=>{if(portraitUrls.has(portraitKey)){img.src=portraitUrls.get(portraitKey);return;}img.style.display='none';portrait.classList.add('portrait-missing');if(!portrait.querySelector('.portrait-initials')){const initials=document.createElement('span');initials.className='portrait-initials';initials.textContent=row.name.slice(0,2).toUpperCase();portrait.prepend(initials);}};
    portrait.append(img);
    const level=document.createElement('span');level.className='hh-portrait-level';level.textContent=row.level;portrait.append(level);
    const openProfile=()=>{document.querySelector('[data-tab="champion"]').click();$('dashboardChampion').value=row.id;renderDashboard();window.scrollTo({top:0,behavior:'auto'});};
