@@ -3,7 +3,7 @@
  'use strict';
  const archive='./portraits/raid_companion_portraits.zip';
  const urls=new Map();
- const slug=name=>name.toLowerCase().normalize('NFKD').replace(/\\s*\\(copy\\s+\\d+\\)\\s*$/i,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+ const slug=name=>name.toLowerCase().normalize('NFKD').replace(/\s*\(copy\s+\d+\)\s*$/i,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
  function apply(){
   document.querySelectorAll('#championRoster .roster-card').forEach(card=>{
    const title=card.querySelector('h3')?.textContent||'';
@@ -27,9 +27,9 @@
    const [JSZip,response]=await Promise.all([loadLibrary(),fetch(archive)]);
    if(!response.ok)throw Error('Portrait archive unavailable');
    const zip=await JSZip.loadAsync(await response.arrayBuffer());
-   const entries=Object.values(zip.files).filter(f=>!f.dir&&/\\.webp$/i.test(f.name));
+   const entries=Object.values(zip.files).filter(f=>!f.dir&&/\.webp$/i.test(f.name));
    await Promise.all(entries.map(async f=>{
-    const key=f.name.split('/').pop().replace(/\\.webp$/i,'');
+    const key=f.name.split('/').pop().replace(/\.webp$/i,'');
     const bytes=await f.async('uint8array');
     urls.set(key,URL.createObjectURL(new Blob([bytes],{type:'image/webp'})));
    }));
