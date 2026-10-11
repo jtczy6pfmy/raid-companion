@@ -66,8 +66,8 @@ export function initRoster() {
    info.append(statsBlock,notes,sync);card.append(portrait,info);
    const importedValues=row.import_data?.values||{},stats=statsFor(row);
    const tags=document.createElement('p');tags.className='champion-tags';tags.textContent=[importedValues.Rarity,importedValues.Affinity,importedValues.Faction].filter(Boolean).join(' · ');
-   if(tags.textContent)card.insertBefore(tags,notes);
-   if(stats.spd!==null||stats.acc!==null){const strip=document.createElement('p');strip.className='champion-stats';strip.textContent=`Snapshot SPD ${stats.spd??'—'} · ACC ${stats.acc??'—'}`;card.insertBefore(strip,notes);}
+   if(tags.textContent)info.insertBefore(tags,notes);
+   if(stats.spd!==null||stats.acc!==null){const strip=document.createElement('p');strip.className='champion-stats';strip.textContent=`Snapshot SPD ${stats.spd??'—'} · ACC ${stats.acc??'—'}`;info.insertBefore(strip,notes);}
    if(row.import_data?.values){
     const extra=document.createElement('details'),heading=document.createElement('summary'),list=document.createElement('dl');heading.textContent='Imported details & stats';
     const source=document.createElement('p');source.className='muted';source.textContent='CSV snapshot: '+row.import_data.sourceFile;
