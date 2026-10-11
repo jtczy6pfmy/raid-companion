@@ -55,7 +55,7 @@ export function initRoster() {
    const portrait=document.createElement('div');portrait.className='hh-portrait';
    const img=document.createElement('img');img.alt='';img.loading='lazy';img.decoding='async';
    const portraitKey=row.name.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-   img.src='./portraits/'+portraitKey+'.webp';img.onerror=()=>{img.remove();portrait.classList.add('portrait-missing');portrait.textContent=row.name.slice(0,2).toUpperCase();};
+   img.src='./portraits/'+portraitKey+'.webp';img.onerror=()=>{img.remove();portrait.classList.add('portrait-missing');const initials=document.createElement('span');initials.textContent=row.name.slice(0,2).toUpperCase();portrait.prepend(initials);};
    portrait.append(img);
    const level=document.createElement('span');level.className='hh-portrait-level';level.textContent=row.level;portrait.append(level);
    const openProfile=()=>{document.querySelector('[data-tab="champion"]').click();$('dashboardChampion').value=row.id;renderDashboard();window.scrollTo({top:0,behavior:'auto'});};
