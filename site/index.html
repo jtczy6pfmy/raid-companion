@@ -151,6 +151,18 @@ small{line-height:1.45}
 .hh-eight-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px 12px;font-size:13px;color:#f0e2c5}
 #championRoster.hh-list-view .roster-buttons{display:flex;flex-direction:column;gap:7px;min-width:115px}
 @media(max-width:1050px){#championRoster.hh-grid-view{grid-template-columns:repeat(7,minmax(0,1fr))}#championRoster.hh-list-view .roster-card{flex-wrap:wrap}#championRoster.hh-list-view .roster-buttons{flex-direction:row;width:100%}}
+/* Compact list cards: portrait and stats side-by-side on iPad, controls under info. */
+#championRoster.hh-list-view .roster-card{min-height:0;display:grid;grid-template-columns:105px minmax(0,1fr);align-items:start;column-gap:12px;row-gap:5px;padding:10px}
+#championRoster.hh-list-view .hh-portrait{grid-column:1;grid-row:1 / span 3}
+#championRoster.hh-list-view .hh-roster-info{grid-column:2;grid-row:1}
+#championRoster.hh-list-view .hh-roster-info h3{margin-bottom:3px;font-size:17px}
+#championRoster.hh-list-view .hh-roster-info>p{margin:3px 0}
+#championRoster.hh-list-view .hh-eight-stats{gap:3px 8px}
+#championRoster.hh-list-view .roster-card>details{grid-column:2;grid-row:2}
+#championRoster.hh-list-view .roster-card>details summary{padding:2px 0;min-height:30px}
+#championRoster.hh-list-view .roster-buttons{grid-column:2;grid-row:3;display:flex;flex-direction:row;flex-wrap:wrap;gap:6px;width:auto;min-width:0}
+#championRoster.hh-list-view .roster-buttons button{min-height:36px;padding:7px 10px}
+@media(max-width:650px){#championRoster.hh-list-view .roster-card{grid-template-columns:82px minmax(0,1fr);column-gap:8px;padding:8px}#championRoster.hh-list-view .hh-eight-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){#championRoster.hh-grid-view{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:4px;row-gap:1px}#championRoster.hh-list-view .hh-portrait{width:82px;min-width:82px}#championRoster.hh-list-view .hh-eight-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style></head><body><div class="pc-banner" role="img" aria-label="MadMartian Studios RAID Companion banner: Plan, Level, Build, Dominate"><img src="./assets/raid-header-reference.jpeg" alt="" width="1448" height="1086" fetchpriority="high"><span class="banner-description">Your Champions. Our Strategy. Bigger Victories.</span></div><div class="app">
 <aside class="sidebar"><div class="brand"><div class="emblem">⚔</div><div><strong>RAID COMPANION</strong><span>CHAMPION COMMAND</span></div></div><nav class="side-nav" aria-label="Sections"><button class="active" data-tab="champion"><span>⌂</span>Dashboard</button><button data-tab="leveling"><span>↗</span>Leveling</button><button data-tab="gear"><span>⚒</span>Build Lab</button><button data-tab="compare"><span>⇄</span>Compare</button><button data-tab="teams"><span>♟</span>Team Planner</button><button data-tab="battles"><span>♜</span>My Champions</button><button data-tab="runs"><span>◷</span>Battle Log</button><button data-tab="settings"><span>☁</span>Storage</button></nav><div class="sidebar-foot">FULL DASHBOARD<br>PERSONAL RAID TRACKER</div></aside>
