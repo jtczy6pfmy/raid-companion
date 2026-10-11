@@ -163,7 +163,7 @@ export function initRoster() {
   Object.assign(row,{name,rank,level,ascension,notes:$('championBuildNotes').value});saveLocal(row);
   $('championForm').hidden=true;editingId=null;void syncPending();
  };
- $('addChampion').onclick=()=>openEditor();$('cancelChampion').onclick=()=>{$('championForm').hidden=true;editingId=null;$('addChampion').focus();};
+ $('addChampion').onclick=()=>{$('rosterSearch').focus();$('rosterSearch').scrollIntoView({block:'center',behavior:'smooth'});};$('cancelChampion').onclick=()=>{$('championForm').hidden=true;editingId=null;$('rosterSearch').focus();};
  $('championRank').onchange=updateLimits;$('rosterSearch').oninput=render;
  for(const [id,view] of [['rosterGridView','grid'],['rosterListView','list']])if($(id))$(id).onclick=()=>{rosterView=view;localStorage.setItem('raid-roster-view',view);render();};
  for(const id of ['filterRarity','filterAffinity','filterFaction','filterRank','filterLeveling','rosterSort'])if($(id))$(id).addEventListener('change',render);
