@@ -196,9 +196,41 @@ export function initRoster() {
   imported=null;$('importPreview').hidden=true;$('importError').textContent='';render();summary();
   if(!changed)status('This file is already imported; no changes were needed.');else void syncPending();
  };
+ // Explicit user-supplied structured snapshot import; never fetch a third-party share URL.
+ function importSnapshot(snapshot) {
+  if(!snapshot || !Array.isArray(snapshot.champions))throw new Error('Invalid champion snapshot.');
+  const backup=JSON.stringify(rows);
+  let added=0,updated=0;
+  try {
+   for(const champion of snapshot.champions) {
+    const key='hh:'+champion.copyId;
+    let row=rows.find(r=>r.import_key===key);
+    // Match a unique existing starter only; never collapse duplicate copies.
+    if(!row && snapshot.champions.filter(c=>c.name.toLowerCase()===champion.name.toLowerCase()).length===1) {
+     row=rows.find(r=>r.starter && !r.import_key && r.name.toLowerCase()===champion.name.toLowerCase());
+    }
+    const isNew=!row;
+    if(!row){row={id:crypto.randomUUID(),cloudId:null,starter:false,revision:0,notes:''};rows.push(row);}
+    const labels={hp:'Total HP',atk:'Total ATK',def:'Total DEF',spd:'Total SPD',critRate:'Total C.RATE',critDamage:'Total C.DMG',res:'Total RES',acc:'Total ACC'};
+    const values={};
+    for(const [key,label] of Object.entries(labels))if(champion.stats[key]!==null)values[label]=String(champion.stats[key]);
+    Object.assign(row,{name:champion.name,rank:Math.max(1,Math.min(6,champion.rank||row.rank||1)),
+      level:Math.max(1,Math.min(60,champion.level||row.level||1)),
+      ascension:Math.max(0,Math.min(6,champion.ascension??row.ascension??0)),
+      import_key:key,import_data:{sourceFile:'HellHades authorized snapshot',values},
+      pending:true,revision:(row.revision||0)+1});
+    row.level=Math.min(row.level,row.rank*10);
+    if(isNew)added++;else updated++;
+   }
+   if(!persist())throw new Error('Could not save the imported roster to this device.');
+  } catch(error){rows=JSON.parse(backup);render();throw error;}
+  render();summary();void syncPending();
+  return {added,updated,total:rows.length};
+ }
  persist();render();summary();
  return {
   getChampions(){return structuredClone(rows);},
+  importSnapshot,
   setCloudStatus(message){if(message.startsWith('Cloud connected')||message.startsWith('Local-only'))cloudSettled=true;$('applyImport').disabled=!cloudSettled||syncing||!imported;if(message.startsWith('Local-only')){cloudReady=false;status(rows.some(r=>r.pending)?'Changes saved on this device; cloud unavailable. Retry cloud sync when connected.':'Roster saved on this device; cloud unavailable.');}},
   receiveCloud(champions) {
    cloudReady=true;
