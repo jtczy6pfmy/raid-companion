@@ -174,7 +174,7 @@ export function initRoster() {
   $('importSummary').textContent=`${imported.length} copies in ${sourceFile}: ${totals.Add} to add, ${totals.Update} to update, ${totals.Unchanged} unchanged. Build notes are preserved.`;
   $('importPreview').hidden=false;$('applyImport').disabled=!cloudSettled||syncing;
  }
- $('chooseCSV').onclick=()=>$('csvFile').click();
+ // Native visible file input supports Safari on iPad.
  $('csvFile').onchange=async()=>{
   const file=$('csvFile').files[0];if(!file)return;const request=++fileRead;imported=null;$('importPreview').hidden=true;$('importError').textContent='';$('updateImportProgress').checked=false;
   try{if(file.size>2*1024*1024)throw new Error('Choose a CSV smaller than 2 MB.');const text=await file.text();if(request!==fileRead)return;imported=parseCSV(text);sourceFile=file.name;previewImport();}
