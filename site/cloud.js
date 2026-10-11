@@ -33,9 +33,6 @@ export async function initCloud({onStatus,onNotes,onRoster}) {
   const owner_id=session.user.id;
   ownerId=owner_id;
   let champions=check(await db.from('raid_champions').select(championFields).order('name'));
-  if(!champions.length){
-   champions=check(await db.from('raid_champions').insert(startingChampions.map(c=>({...c,owner_id}))).select(championFields));
-  }
   const cat=champions.find(c=>c.name==='Cheshire Cat');
   championId=cat?.id || null;
   if(cat){
@@ -92,4 +89,12 @@ export async function saveCloudPlan(plan){
   const saved=check(await db.from('raid_companion_plans').upsert(payload,{onConflict:'id'}).select('id,kind,payload,deleted,updated_at').single());
   return {saved:true,plan:saved};
  }catch(error){return {saved:false,reason:error?.message||'Cloud unavailable'};}
+}
+
+export async function clearCloudRoster(){
+ if(!connected||!ownerId)return {cleared:false,reason:'Cloud not connected'};
+ const {error}=await db.from('raid_champions').delete().eq('owner_id',ownerId);
+ if(error)return {cleared:false,reason:error.message};
+ championId=null;
+ return {cleared:true};
 }
