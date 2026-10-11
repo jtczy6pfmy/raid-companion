@@ -15,6 +15,7 @@ export function initRoster() {
  const $ = id => document.getElementById(id);
  const noteDrafts=new Map();
  const primaryChampion=()=>rows.find(r=>r.starterName==='Cheshire Cat')||rows.find(r=>r.name==='Cheshire Cat');
+ let rosterView=localStorage.getItem('raid-roster-view')==='grid'?'grid':'list';
  let rows, editingId=null, syncing=false, cloudReady=false, storageError=false,cloudSettled=false,imported=null,sourceFile='',previewSnapshot='',fileRead=0;
  try { rows=JSON.parse(localStorage.getItem(storageKey)||'null'); } catch {}
  if(!Array.isArray(rows) || !rows.length || rows.some(r=>!r.id || typeof r.name!=='string' || !Number.isInteger(r.rank) || !Number.isInteger(r.level))) {
@@ -35,6 +36,8 @@ export function initRoster() {
  }
  function render() {
   const container=$('championRoster');container.replaceChildren();
+  container.classList.toggle('hh-grid-view',rosterView==='grid');container.classList.toggle('hh-list-view',rosterView==='list');
+  for(const id of ['rosterGridView','rosterListView']){const b=$(id);if(b){const active=(id==='rosterGridView')===(rosterView==='grid');b.setAttribute('aria-pressed',String(active));b.classList.toggle('active',active);}}
   const query=$('rosterSearch').value.trim().toLocaleLowerCase();
   const counts=new Map();const copyLabels=new Map();
   for(const row of rows){const key=row.name.toLocaleLowerCase();const copy=(counts.get(key)||0)+1;counts.set(key,copy);copyLabels.set(row.id,copy);}
@@ -49,7 +52,18 @@ export function initRoster() {
    const view=document.createElement('button');view.type='button';view.className='roster-secondary';view.textContent='View dashboard';view.setAttribute('aria-label','View '+label);view.onclick=()=>{
     document.querySelector('[data-tab="champion"]').click();$('dashboardChampion').value=row.id;renderDashboard();window.scrollTo({top:0,behavior:'auto'});
    };
-   card.append(title,details,notes,sync);
+   const portrait=document.createElement('div');portrait.className='hh-portrait';
+   const img=document.createElement('img');img.alt='';img.loading='lazy';img.decoding='async';
+   const portraitKey=row.name.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+   img.src='./portraits/'+portraitKey+'.webp';img.onerror=()=>{img.remove();portrait.classList.add('portrait-missing');portrait.textContent=row.name.slice(0,2).toUpperCase();};
+   portrait.append(img);
+   const level=document.createElement('span');level.className='hh-portrait-level';level.textContent=row.level;portrait.append(level);
+   const openProfile=()=>{document.querySelector('[data-tab="champion"]').click();$('dashboardChampion').value=row.id;renderDashboard();window.scrollTo({top:0,behavior:'auto'});};
+   portrait.onclick=openProfile;portrait.setAttribute('role','button');portrait.tabIndex=0;portrait.setAttribute('aria-label','Open '+label+' profile');portrait.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openProfile();}};
+   const info=document.createElement('div');info.className='hh-roster-info';info.append(title,details);
+   const statsBlock=document.createElement('div');statsBlock.className='hh-eight-stats';
+   const allStats=statsFor(row);for(const [key,display] of [['hp','HP'],['atk','ATK'],['def','DEF'],['spd','SPD'],['critRate','C.RATE'],['critDamage','C.DMG'],['res','RES'],['acc','ACC']]){const cell=document.createElement('span');cell.textContent=display+'  '+(allStats[key]===null?'—':Number(allStats[key]).toLocaleString());statsBlock.append(cell);}
+   info.append(statsBlock,notes,sync);card.append(portrait,info);
    const importedValues=row.import_data?.values||{},stats=statsFor(row);
    const tags=document.createElement('p');tags.className='champion-tags';tags.textContent=[importedValues.Rarity,importedValues.Affinity,importedValues.Faction].filter(Boolean).join(' · ');
    if(tags.textContent)card.insertBefore(tags,notes);
@@ -151,6 +165,7 @@ export function initRoster() {
  };
  $('addChampion').onclick=()=>openEditor();$('cancelChampion').onclick=()=>{$('championForm').hidden=true;editingId=null;$('addChampion').focus();};
  $('championRank').onchange=updateLimits;$('rosterSearch').oninput=render;
+ for(const [id,view] of [['rosterGridView','grid'],['rosterListView','list']])if($(id))$(id).onclick=()=>{rosterView=view;localStorage.setItem('raid-roster-view',view);render();};
  for(const id of ['filterRarity','filterAffinity','filterFaction','filterRank','filterLeveling','rosterSort'])if($(id))$(id).addEventListener('change',render);
  if($('clearFilters'))$('clearFilters').onclick=()=>{for(const id of ['filterRarity','filterAffinity','filterFaction','filterRank'])$(id).value='';$('filterLeveling').checked=false;$('rosterSearch').value='';$('rosterSort').value='name';render();};
  if($('levelChampion'))$('levelChampion').addEventListener('change',()=>{
@@ -214,7 +229,7 @@ export function initRoster() {
     const labels={hp:'Total HP',atk:'Total ATK',def:'Total DEF',spd:'Total SPD',critRate:'Total C.RATE',critDamage:'Total C.DMG',res:'Total RES',acc:'Total ACC'};
     const values={};
     for(const [key,label] of Object.entries(labels))if(champion.stats[key]!==null)values[label]=String(champion.stats[key]);
-    Object.assign(row,{name:champion.name,rank:Math.max(1,Math.min(6,champion.rank||row.rank||1)),
+    Object.assign(row,{name:champion.name,rank:Math.max(1,Math.min(6,champion.rank||row.rank||Math.ceil((champion.level||1)/10))),
       level:Math.max(1,Math.min(60,champion.level||row.level||1)),
       ascension:Math.max(0,Math.min(6,champion.ascension??row.ascension??0)),
       import_key:key,import_data:{sourceFile:'HellHades authorized snapshot',values},
