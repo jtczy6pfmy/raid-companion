@@ -150,5 +150,17 @@ export function initCompanion(roster){
  $('retryTools').onclick=()=>window.dispatchEvent(new Event('raid-reconnect'));
  window.addEventListener('raid-roster-change',refreshRoster);
  refreshRoster();if(rows.length>1)$('compareB').value=rows[1].id;renderCompare();renderSaved();renderSession();summary();
- return {connectCloud,setOffline(){ready=false;status('Companion tools saved on this device · cloud unavailable.');},exportData:()=>({version:1,records:structuredClone(records)})};
+ return {connectCloud,setOffline(){ready=false;status('Companion tools saved on this device · cloud unavailable.');},restoreMissing(items){
+  if(!ready||loading||syncing||records.some(r=>r.pending))return {ok:false,reason:'Wait for companion cloud sync.'};
+  const known=new Set(records.map(r=>r.id)),seen=new Set(),add=[];
+  for(const r of items){
+   if(!validRecord(r))return {ok:false,reason:'Invalid companion record.'};
+   if(known.has(r.id)||seen.has(r.id))continue;
+   seen.add(r.id);add.push({...structuredClone(r),pending:true,updated_at:new Date().toISOString()});
+  }
+  if(!add.length)return {ok:true,added:0};
+  const before=records;records=[...records,...add];
+  if(!persist()){records=before;return {ok:false,reason:'Device storage unavailable.'};}
+  renderSaved();summary();void sync();return {ok:true,added:add.length};
+ },exportData:()=>({version:1,records:structuredClone(records)})};
 }
