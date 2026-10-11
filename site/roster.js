@@ -1,4 +1,4 @@
-import { saveCloudChampion } from './cloud.js';
+import { saveCloudChampion, clearCloudRoster } from './cloud.js';
 import { parseCSV, planImport, canonicalName } from './csv-import.js';
 import { filterChampions,statsFor } from './companion-model.js';
 
@@ -231,6 +231,14 @@ export function initRoster() {
  return {
   getChampions(){return structuredClone(rows);},
   importSnapshot,
+  async replaceWithSnapshot(snapshot){
+   if(syncing)throw new Error('Wait for cloud saves to finish.');
+   if(!snapshot?.champions?.length)throw new Error('No verified champions available.');
+   const result=await clearCloudRoster();
+   if(!result.cleared)throw new Error('Cloud roster could not be cleared: '+result.reason);
+   rows=[];persist();render();
+   return importSnapshot(snapshot);
+  },
   setCloudStatus(message){if(message.startsWith('Cloud connected')||message.startsWith('Local-only'))cloudSettled=true;$('applyImport').disabled=!cloudSettled||syncing||!imported;if(message.startsWith('Local-only')){cloudReady=false;status(rows.some(r=>r.pending)?'Changes saved on this device; cloud unavailable. Retry cloud sync when connected.':'Roster saved on this device; cloud unavailable.');}},
   receiveCloud(champions) {
    cloudReady=true;
