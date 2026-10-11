@@ -172,7 +172,7 @@ small{line-height:1.45}
 <div class="panel session-planner"><h3>Session estimate</h3><p class="muted">Enter your planned runs, energy cost and average duration. This estimates resources and time; it does not run the game.</p><div class="grid"><div><label for="sessionRuns">Number of runs</label><input id="sessionRuns" type="number" min="1" max="10000" step="1" value="20"></div><div><label for="sessionEnergy">Energy per run</label><input id="sessionEnergy" type="number" min="0" step="any" value="0"></div><div><label for="sessionSeconds">Seconds per run</label><input id="sessionSeconds" type="number" min="1" step="any" value="60"></div></div><p id="sessionResult" class="status-pill" role="status"></p></div></section>
 <section id="battles" class="panel" hidden><h2>My champions</h2><p class="muted">Manage your champions and keep their build notes together.</p><div class="roster-toolbar"><div><label for="rosterSearch">Find a champion</label><input id="rosterSearch" type="search" placeholder="Search by name" maxlength="100"></div><button class="action" id="addChampion" type="button">+ Add champion</button></div>
 <a class="roster-secondary csv-picker" href="./hellhades.html" style="display:inline-block;text-decoration:none;border:1px solid #3C626C;border-radius:9px;padding:12px 16px;color:#00DFF5">HellHades account connection ↗</a><input id="csvFile" type="file" hidden accept=".csv,text/csv,text/plain,application/vnd.ms-excel" aria-label="Choose champion CSV from Files">
-<p id="importError" class="notice" role="alert"></p>
+<div class="panel" style="margin-top:16px"><h3>Champion snapshot import</h3><p class="muted">Import a JSON snapshot obtained through an authorized export. A HellHades shared link alone cannot automatically supply this file. Your existing build notes are preserved.</p><label for="hhSnapshotFile">Select champion snapshot JSON</label><input id="hhSnapshotFile" type="file" accept=".json,application/json" style="min-height:48px"><p id="hhSnapshotStatus" class="muted" role="status"></p><button id="hhApplySnapshot" class="action" type="button" disabled>Import reviewed champions</button></div><p id="importError" class="notice" role="alert"></p>
 <div id="importPreview" class="panel" hidden><h3>Review CSV import</h3><p id="importSummary" role="status"></p><label class="import-checkbox"><input type="checkbox" id="updateImportProgress"> Update existing ranks, levels and ascension from this file</label><p class="muted">Leave unchecked to keep your latest progress. Separate champion copies are matched by name and copy order in the file. Review older exports carefully.</p><div class="import-table" tabindex="0" role="region" aria-label="Import changes"><table><thead><tr><th>Champion</th><th>Action</th><th>Current progress</th><th>After import</th></tr></thead><tbody id="importRows"></tbody></table></div><p class="roster-buttons"><button class="action" id="applyImport" type="button" disabled>Import these champions</button><button class="roster-secondary" id="cancelImport" type="button">Cancel import</button></p></div>
 <p id="rosterStatus" class="muted" role="status" aria-live="polite"></p><button id="retryRoster" type="button" class="roster-secondary">Retry cloud sync</button>
 <form id="championForm" class="panel roster-editor" hidden><h3 id="editorTitle">Add champion</h3><div class="grid"><div><label for="championName">Champion name</label><input id="championName" required maxlength="100" autocomplete="off"></div><div><label for="championRank">Rank</label><select id="championRank"><option value="1">1★</option><option value="2">2★</option><option value="3">3★</option><option value="4">4★</option><option value="5" selected>5★</option><option value="6">6★</option></select></div><div><label for="championLevel">Level</label><input id="championLevel" type="number" min="1" max="50" step="1" value="1" required></div><div><label for="championAscension">Ascension stars</label><input id="championAscension" type="number" min="0" max="5" step="1" value="0" required></div></div><label for="championBuildNotes">Build notes</label><textarea id="championBuildNotes" maxlength="10000" placeholder="Gear, stat targets, masteries, team roles…"></textarea><p id="editorError" class="notice" role="alert"></p><div class="roster-buttons"><button class="action" type="submit">Save champion</button><button class="roster-secondary" type="button" id="cancelChampion">Cancel</button></div></form>
@@ -188,8 +188,33 @@ small{line-height:1.45}
 <script type="module">
 import { initCloud } from "./cloud.js";
 import { initRoster } from "./roster.js";
+import { normalizeHellHadesSnapshot } from "./hellhades-import.js";
 import { initCompanion } from "./companion.js";
 const roster = initRoster();
+let reviewedSnapshot=null;
+const snapshotInput=document.getElementById('hhSnapshotFile');
+const snapshotStatus=document.getElementById('hhSnapshotStatus');
+const snapshotButton=document.getElementById('hhApplySnapshot');
+snapshotInput.addEventListener('change',async()=>{
+ reviewedSnapshot=null;snapshotButton.disabled=true;
+ const file=snapshotInput.files?.[0];if(!file)return;
+ try{
+  if(file.size>5*1024*1024)throw new Error('JSON file exceeds 5 MB.');
+  const data=JSON.parse(await file.text());
+  reviewedSnapshot=normalizeHellHadesSnapshot(data);
+  snapshotStatus.textContent='Ready to import '+reviewedSnapshot.counts.champions+' champion copies. Existing notes will be kept. Check that this is your own authorized export.';
+  snapshotButton.disabled=false;
+ }catch(error){snapshotStatus.textContent='Import validation failed: '+error.message;}
+});
+snapshotButton.addEventListener('click',()=>{
+ if(!reviewedSnapshot)return;
+ if(!confirm('Import '+reviewedSnapshot.counts.champions+' champion copies into your roster?'))return;
+ try{
+  const result=roster.importSnapshot(reviewedSnapshot);
+  snapshotStatus.textContent='Imported: '+result.added+' new, '+result.updated+' updated. Roster now contains '+result.total+' champion copies.';
+  reviewedSnapshot=null;snapshotButton.disabled=true;snapshotInput.value='';
+ }catch(error){snapshotStatus.textContent='Import failed: '+error.message;}
+});
 const companion = initCompanion(roster);
 const initial={hp:19222,atk:1971,def:1335,spd:167,critRate:71,critDamage:103,res:87,acc:125};
 document.querySelector('#saveNotes').onclick=async()=>{
