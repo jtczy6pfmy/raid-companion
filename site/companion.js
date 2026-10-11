@@ -78,7 +78,7 @@ export function initCompanion(roster){
   const current=statsFor(rowFor('buildChampion')),candidate=buildValues('candidate'),targets=buildValues('target');
   const proposed=Object.fromEntries(STAT_FIELDS.map(([stat])=>[stat,candidate[stat]===null?current[stat]:candidate[stat]]));
   $('buildResults').replaceChildren();for(const item of targetProgress(proposed,targets))appendRow($('buildResults'),[item.label,format(current[item.key]),format(proposed[item.key]),format(item.target),item.current===null?'Stat unavailable':item.met?'Target met':format(item.gap)+' short']);
-  if(!$('buildResults').childElementCount)appendRow($('buildResults'),['Set at least one target stat.','—','—','—','—']);
+  if(!$('buildResults').childElementCount){for(const [stat,label] of STAT_FIELDS)appendRow($('buildResults'),[label,format(current[stat]),format(proposed[stat]),'Not set','Set a target to compare']);}
  }
  $('buildChampion').onchange=renderBuild;
  function resetBuild(){buildId=null;$('buildForm').reset();$('buildMessage').textContent='';$('saveBuild').textContent='Save build plan';renderBuild();}
