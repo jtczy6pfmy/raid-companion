@@ -139,7 +139,7 @@ small{line-height:1.45}
 
 /* HellHades-inspired iPad roster: each copy keeps its own champion data. */
 .hh-view-switch{display:flex;justify-content:flex-end;gap:8px;margin:12px 0}.hh-view-switch button.active{border-color:#ffad32;background:#463018;color:#ffd088}
-#championRoster.hh-grid-view{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:4px;align-items:start}
+#championRoster.hh-grid-view{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));column-gap:4px;row-gap:1px;align-items:start}
 #championRoster.hh-grid-view .roster-card{min-width:0;padding:0;border:0;background:transparent;box-shadow:none;overflow:visible;gap:0}
 .hh-portrait{position:relative;aspect-ratio:1/1.13;background:linear-gradient(140deg,#23333b,#101216);border:2px solid #b48d4d;display:grid;place-items:center;color:#e5b15b;font-weight:800;font-size:18px;overflow:hidden;cursor:pointer}
 .hh-portrait img{width:100%;height:100%;object-fit:cover;display:block}.hh-portrait-level{position:absolute;bottom:0;right:0;background:#111d;color:white;padding:2px 5px;font-size:12px;font-weight:800}.hh-portrait.portrait-missing{border-style:dashed}
@@ -151,7 +151,7 @@ small{line-height:1.45}
 .hh-eight-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px 12px;font-size:13px;color:#f0e2c5}
 #championRoster.hh-list-view .roster-buttons{display:flex;flex-direction:column;gap:7px;min-width:115px}
 @media(max-width:1050px){#championRoster.hh-grid-view{grid-template-columns:repeat(7,minmax(0,1fr))}#championRoster.hh-list-view .roster-card{flex-wrap:wrap}#championRoster.hh-list-view .roster-buttons{flex-direction:row;width:100%}}
-@media(max-width:650px){#championRoster.hh-grid-view{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}#championRoster.hh-list-view .hh-portrait{width:82px;min-width:82px}#championRoster.hh-list-view .hh-eight-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){#championRoster.hh-grid-view{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:4px;row-gap:1px}#championRoster.hh-list-view .hh-portrait{width:82px;min-width:82px}#championRoster.hh-list-view .hh-eight-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style></head><body><div class="pc-banner" role="img" aria-label="MadMartian Studios RAID Companion banner: Plan, Level, Build, Dominate"><img src="./assets/raid-header-reference.jpeg" alt="" width="1448" height="1086" fetchpriority="high"><span class="banner-description">Your Champions. Our Strategy. Bigger Victories.</span></div><div class="app">
 <aside class="sidebar"><div class="brand"><div class="emblem">⚔</div><div><strong>RAID COMPANION</strong><span>CHAMPION COMMAND</span></div></div><nav class="side-nav" aria-label="Sections"><button class="active" data-tab="champion"><span>⌂</span>Dashboard</button><button data-tab="leveling"><span>↗</span>Leveling</button><button data-tab="gear"><span>⚒</span>Build Lab</button><button data-tab="compare"><span>⇄</span>Compare</button><button data-tab="teams"><span>♟</span>Team Planner</button><button data-tab="battles"><span>♜</span>My Champions</button><button data-tab="runs"><span>◷</span>Battle Log</button><button data-tab="settings"><span>☁</span>Storage</button></nav><div class="sidebar-foot">FULL DASHBOARD<br>PERSONAL RAID TRACKER</div></aside>
 <div class="content"><header class="hero"><div class="eyebrow">RAID COMPANION · FULL DASHBOARD</div><h1><b>Champion</b> Command</h1><p>LEVEL · BUILD · COMPARE · PLAN · TRACK</p></header>
