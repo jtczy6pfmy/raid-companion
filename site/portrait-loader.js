@@ -8,7 +8,7 @@
   document.querySelectorAll('#championRoster .roster-card').forEach(card=>{
    const title=card.querySelector('h3')?.textContent||'';
    const key=slug(title);
-   const url=key.startsWith('antigone')?'./portraits/antigone-man-slayer.webp':urls.get(key);
+   const url=key.startsWith('antigone')?'./portraits/93F56C1E-CBE3-4727-9ED4-05207426C948.png':urls.get(key);
    const portrait=card.querySelector('.hh-portrait');
    if(!url||!portrait)return;
    let img=portrait.querySelector('img');
