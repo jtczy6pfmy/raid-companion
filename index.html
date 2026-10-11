@@ -186,7 +186,7 @@ small{line-height:1.45}
 <section id="settings" class="panel" hidden><h2>Sync & storage</h2><p id="cloudStatus" role="status">Connecting…</p><p>A private device session is created automatically. Clearing browser data or changing devices can lose access to cloud records. Export backups regularly.</p><p class="notice">Never enter secret or service-role keys in this app.</p><h3>Companion plans</h3><p id="toolsStatus" class="muted" role="status" aria-live="polite"></p><p><button id="retryTools" class="roster-secondary" type="button">Retry companion sync</button></p><button class="action" id="export">Export my data (JSON)</button>
 <h3>Restore backup (JSON)</h3><p class="muted">Select an exported backup to validate its contents. Preview only: existing cloud and device records will not be changed.</p>
 <input id="restoreFile" type="file" accept=".json,application/json" aria-label="Choose RAID Companion JSON backup">
-<p id="restoreStatus" role="status" aria-live="polite" class="muted">No backup selected.</p></section>
+<p id="restoreStatus" role="status" aria-live="polite" class="muted">No backup selected.</p><button type="button" class="action" id="restoreApply" disabled>Restore missing records</button></section>
 </main></div></div>
 <script type="module">
 import { initCloud } from "./cloud.js";
@@ -204,6 +204,18 @@ let connecting=null;const connectCloud=()=>{if(connecting)return connecting;conn
 connectCloud();
 window.addEventListener('raid-reconnect',connectCloud);
 window.addEventListener('online',connectCloud);
+let validatedBackup=null;
+document.querySelector('#restoreApply').onclick=()=>{
+ if(!validatedBackup)return;
+ const current=roster.getChampions(),existingKeys=new Set(current.map(r=>r.import_key).filter(Boolean));
+ const missing=validatedBackup.champions.filter(c=>!existingKeys.has(c.import_key));
+ if(!confirm('Restore only missing records? Existing champions and cloud data will not be replaced. Missing champion copies: '+missing.length+'.'))return;
+ const result=roster.restoreMissing(validatedBackup.champions);
+ if(!result.ok){document.querySelector('#restoreStatus').textContent=result.reason;return;}
+ const plans=companion.restoreMissing(validatedBackup.companion.records);
+ document.querySelector('#restoreStatus').textContent='Restore queued: '+result.added+' champion copies, '+(plans.ok?plans.added:0)+' companion records. '+(plans.ok?'Check cloud sync and reload to verify.':plans.reason);
+ validatedBackup=null;document.querySelector('#restoreApply').disabled=true;
+};
 document.querySelector('#restoreFile').onchange=async event=>{
  const file=event.target.files?.[0],status=document.querySelector('#restoreStatus');
  if(!file)return;
@@ -215,8 +227,9 @@ document.querySelector('#restoreFile').onchange=async event=>{
   if(backup.champions.some(c=>!c||typeof c.name!=='string'||!c.name.trim()||!Number.isInteger(c.rank)||c.rank<1||c.rank>6||!Number.isInteger(c.level)||c.level<1||c.level>60))throw Error('Backup contains invalid champion records.');
   if(backup.companion.records.some(r=>!r||typeof r.id!=='string'||!['build','team','run'].includes(r.kind)||!r.payload||typeof r.payload!=='object'||Array.isArray(r.payload)))throw Error('Backup contains invalid companion records.');
   const counts={build:0,team:0,run:0};for(const r of backup.companion.records)if(!r.deleted)counts[r.kind]++;
+  validatedBackup=backup;document.querySelector('#restoreApply').disabled=false;
   status.textContent='Valid backup: '+backup.champions.length+' champion copies, '+counts.build+' builds, '+counts.team+' teams, '+counts.run+' battle logs. Preview only; no records changed. Restoration requires the next safety checkpoint.';
- }catch(error){status.textContent='Backup not accepted: '+error.message;}
+ }catch(error){validatedBackup=null;document.querySelector('#restoreApply').disabled=true;status.textContent='Backup not accepted: '+error.message;}
  finally{event.target.value='';}
 };
 document.querySelector('#export').onclick=()=>{const blob=new Blob([JSON.stringify({champion:'Cheshire Cat',baseline:initial,notes:localStorage.getItem('raid-notes-v1')||'',champions:roster.exportRoster(),companion:companion.exportData()},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='raid-companion-export.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
