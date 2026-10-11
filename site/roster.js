@@ -23,7 +23,7 @@ async function loadPortraitArchive(){
   const zip=await window.JSZip.loadAsync(await response.arrayBuffer());
   const entries=Object.values(zip.files).filter(file=>!file.dir&&file.name.endsWith('.webp'));
   await Promise.all(entries.map(async file=>{
-   const key=file.name.split('/').pop().replace(/\\.webp$/,'');
+   const key=file.name.split('/').pop().replace(/\.webp$/,'');
    const blob=await file.async('blob');
    portraitUrls.set(key,URL.createObjectURL(new Blob([blob],{type:'image/webp'})));
   }));
