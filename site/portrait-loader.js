@@ -12,7 +12,9 @@
    const portrait=card.querySelector('.hh-portrait');
    if(!url||!portrait)return;
    let img=portrait.querySelector('img');
-   if(!img){img=document.createElement('img');img.alt='';img.loading='lazy';portrait.prepend(img);}
+   if(img && img.dataset.archivePortrait!=='true'){img.remove();img=null;}
+   if(!img){img=document.createElement('img');img.alt='';img.loading='lazy';img.dataset.archivePortrait='true';portrait.prepend(img);}
+   img.onerror=null;
    if(img.src!==url)img.src=url;
    img.style.display='block';
    portrait.classList.remove('portrait-missing');
