@@ -89,10 +89,10 @@ export function initRoster() {
   const fields=[['HP','Total HP',19222],['ATK','Total ATK',1971],['DEF','Total DEF',1335],['SPD','Total SPD',167],['C.RATE %','Total C.RATE',71],['C.DMG %','Total C.DMG',103],['RES','Total RES',87],['ACC','Total ACC',125]];
   const snapshot=row.import_data?.values;
   const baseline=!snapshot&&row.id===primaryChampion()?.id;
-  $('statsSource').textContent=snapshot?'Imported CSV snapshot · '+(row.import_data.sourceFile||'source file')+' · values may differ from current in-game stats.':baseline?'Previous Cheshire Cat screenshot baseline · values may differ from current in-game stats.':'No stat snapshot saved for this champion. Import a CSV to add stats.';
+  $('statsSource').textContent=snapshot?'Saved champion snapshot · '+(row.import_data.sourceFile||'HellHades / imported data')+' · values may differ from current in-game stats.':baseline?'Previous Cheshire Cat screenshot baseline · values may differ from current in-game stats.':'Stats not yet synchronized for this champion. HellHades account import is pending.';
   $('stats').replaceChildren(...fields.map(([label,key,value])=>{
    const card=document.createElement('div');card.className='stat';const title=document.createElement('small');title.textContent=label;
-   const number=document.createElement('strong');number.textContent=snapshot?(snapshot[key]||'—'):baseline?value.toLocaleString():'—';card.append(title,number);return card;
+   const number=document.createElement('strong');number.textContent=snapshot?(snapshot[key]??'—'):baseline?value.toLocaleString():'—';card.append(title,number);return card;
   }));
   $('notes').value=noteDrafts.has(row.id)?noteDrafts.get(row.id):row.notes||'';
   $('notes').setAttribute('aria-label','Build notes for '+row.name);
