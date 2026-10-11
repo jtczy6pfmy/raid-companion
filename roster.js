@@ -218,6 +218,20 @@ export function initRoster() {
    }
    persist();render();summary();void syncPending();
   },
+  restoreMissing(champions){
+   if(!cloudReady||syncing||rows.some(r=>r.pending))return {ok:false,reason:'Wait for champion cloud sync to finish.'};
+   const keys=new Set(rows.map(r=>r.import_key).filter(Boolean)),seen=new Set(),add=[];
+   for(const c of champions){
+    if(!c.import_key||typeof c.import_key!=='string')return {ok:false,reason:'Backup has champion copies without stable import keys. No changes made.'};
+    if(keys.has(c.import_key)||seen.has(c.import_key))continue;
+    if(typeof c.name!=='string'||!c.name.trim()||!Number.isInteger(c.rank)||c.rank<1||c.rank>6||!Number.isInteger(c.level)||c.level<1||c.level>c.rank*10||!Number.isInteger(c.ascension)||c.ascension<0||c.ascension>c.rank)return {ok:false,reason:'Invalid champion data.'};
+    seen.add(c.import_key);add.push({id:crypto.randomUUID(),cloudId:null,starter:false,pending:true,revision:1,name:c.name,rank:c.rank,level:c.level,ascension:c.ascension,notes:typeof c.notes==='string'?c.notes:'',import_key:c.import_key,import_data:c.import_data||null});
+   }
+   if(!add.length)return {ok:true,added:0};
+   const before=rows;rows=[...rows,...add];
+   if(!persist()){rows=before;return {ok:false,reason:'Device storage unavailable.'};}
+   render();summary();void syncPending();return {ok:true,added:add.length};
+  },
   exportRoster(){return rows.map(({name,level,rank,ascension,notes,import_key,import_data})=>({name,level,rank,ascension,notes,import_key,import_data}));},
   async saveDashboardNotes(notes,id=primaryChampion()?.id){
    const row=rows.find(row=>row.id===id);
