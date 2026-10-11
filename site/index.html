@@ -211,7 +211,7 @@ small{line-height:1.45}
   document.querySelectorAll('main section[id]').forEach(section=>{section.hidden=section.id!==tab;});
  }
  document.querySelectorAll('.side-nav [data-tab]').forEach(button=>button.addEventListener('click',()=>activate(button.dataset.tab)));
- window.addEventListener('error',event=>{const status=document.getElementById('cloudStatus');if(status&&status.textContent.includes('Connecting'))status.textContent='App startup error: '+(event.message||'Unknown error');});
+ window.addEventListener('error',event=>{const status=document.getElementById('cloudStatus');if(status&&status.textContent.includes('Connecting'))status.textContent='App startup error: '+(event.message||'Unknown error')+(event.filename?' · '+event.filename.split('/').pop()+':'+event.lineno:'');});
  window.addEventListener('unhandledrejection',event=>{const status=document.getElementById('cloudStatus');if(status&&status.textContent.includes('Connecting'))status.textContent='Startup error: '+(event.reason?.message||'Cloud request failed');});
 })();
 </script>
