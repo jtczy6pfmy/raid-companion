@@ -183,7 +183,10 @@ small{line-height:1.45}
 <div><label for="filterRank">Rank</label><select id="filterRank"><option value="">All ranks</option><option value="1">1★</option><option value="2">2★</option><option value="3">3★</option><option value="4">4★</option><option value="5">5★</option><option value="6">6★</option></select></div>
 <div><label for="rosterSort">Sort by</label><select id="rosterSort"><option value="name">Name A–Z</option><option value="rank">Highest rank</option><option value="level">Highest level</option><option value="spd">Highest speed</option><option value="acc">Highest accuracy</option><option value="hp">Highest HP</option><option value="critDamage">Highest crit damage</option></select></div>
 </div><div class="roster-buttons filter-footer"><label class="import-checkbox"><input id="filterLeveling" type="checkbox"> Still needs leveling</label><button id="clearFilters" class="roster-secondary" type="button">Clear filters</button><span id="rosterCount" class="muted" role="status"></span></div><div id="championRoster" class="roster"></div><h3>Recent Minotaur runs</h3><table><thead><tr><th>Stage</th><th>Result</th><th>Time</th><th>Cheshire</th></tr></thead><tbody><tr><td>12</td><td>Victory</td><td>2:53</td><td>Survival unverified</td></tr><tr><td>13</td><td>Victory</td><td>2:25</td><td>Died before boss</td></tr><tr><td>13</td><td>Victory</td><td>2:34</td><td>Died in wave 2</td></tr></tbody></table><p class="muted">Team: Dorothy (leader), Kael, Vallyarn, Skathix, Cheshire Cat.</p></section>
-<section id="settings" class="panel" hidden><h2>Sync & storage</h2><p id="cloudStatus" role="status">Connecting…</p><p>A private device session is created automatically. Clearing browser data or changing devices can lose access to cloud records. Export backups regularly.</p><p class="notice">Never enter secret or service-role keys in this app.</p><h3>Companion plans</h3><p id="toolsStatus" class="muted" role="status" aria-live="polite"></p><p><button id="retryTools" class="roster-secondary" type="button">Retry companion sync</button></p><button class="action" id="export">Export my data (JSON)</button></section>
+<section id="settings" class="panel" hidden><h2>Sync & storage</h2><p id="cloudStatus" role="status">Connecting…</p><p>A private device session is created automatically. Clearing browser data or changing devices can lose access to cloud records. Export backups regularly.</p><p class="notice">Never enter secret or service-role keys in this app.</p><h3>Companion plans</h3><p id="toolsStatus" class="muted" role="status" aria-live="polite"></p><p><button id="retryTools" class="roster-secondary" type="button">Retry companion sync</button></p><button class="action" id="export">Export my data (JSON)</button>
+<h3>Restore backup (JSON)</h3><p class="muted">Select an exported backup to validate its contents. Preview only: existing cloud and device records will not be changed.</p>
+<input id="restoreFile" type="file" accept=".json,application/json" aria-label="Choose RAID Companion JSON backup">
+<p id="restoreStatus" role="status" aria-live="polite" class="muted">No backup selected.</p></section>
 </main></div></div>
 <script type="module">
 import { initCloud } from "./cloud.js";
@@ -201,6 +204,21 @@ let connecting=null;const connectCloud=()=>{if(connecting)return connecting;conn
 connectCloud();
 window.addEventListener('raid-reconnect',connectCloud);
 window.addEventListener('online',connectCloud);
+document.querySelector('#restoreFile').onchange=async event=>{
+ const file=event.target.files?.[0],status=document.querySelector('#restoreStatus');
+ if(!file)return;
+ status.textContent='Validating backup…';
+ try{
+  if(file.size>10*1024*1024)throw Error('Backup exceeds 10 MB.');
+  const backup=JSON.parse(await file.text());
+  if(!backup||typeof backup!=='object'||!Array.isArray(backup.champions)||!backup.companion||backup.companion.version!==1||!Array.isArray(backup.companion.records))throw Error('This is not a supported RAID Companion backup.');
+  if(backup.champions.some(c=>!c||typeof c.name!=='string'||!c.name.trim()||!Number.isInteger(c.rank)||c.rank<1||c.rank>6||!Number.isInteger(c.level)||c.level<1||c.level>60))throw Error('Backup contains invalid champion records.');
+  if(backup.companion.records.some(r=>!r||typeof r.id!=='string'||!['build','team','run'].includes(r.kind)||!r.payload||typeof r.payload!=='object'||Array.isArray(r.payload)))throw Error('Backup contains invalid companion records.');
+  const counts={build:0,team:0,run:0};for(const r of backup.companion.records)if(!r.deleted)counts[r.kind]++;
+  status.textContent='Valid backup: '+backup.champions.length+' champion copies, '+counts.build+' builds, '+counts.team+' teams, '+counts.run+' battle logs. Preview only; no records changed. Restoration requires the next safety checkpoint.';
+ }catch(error){status.textContent='Backup not accepted: '+error.message;}
+ finally{event.target.value='';}
+};
 document.querySelector('#export').onclick=()=>{const blob=new Blob([JSON.stringify({champion:'Cheshire Cat',baseline:initial,notes:localStorage.getItem('raid-notes-v1')||'',champions:roster.exportRoster(),companion:companion.exportData()},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='raid-companion-export.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
 </script><a href="./site/hellhades.html" style="position:fixed;right:18px;bottom:18px;z-index:100;background:#FF851B;color:#160C03;padding:12px 16px;border-radius:12px;font-weight:800;text-decoration:none;box-shadow:0 4px 18px #0009">HellHades Connection</a>
 </body></html>
