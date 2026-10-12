@@ -268,24 +268,30 @@ document.querySelector('#saveNotes').onclick=async()=>{
  alert(result.saved?'Notes saved on this device and Supabase.':result.localSaved?'Saved locally only. '+(result.reason||''):result.reason||'Notes could not be saved.');
 };
 const fusionKey='raid-ipad-fusions-v1';
+function rowsForFoodTarget(){return roster.getChampions().find(r=>String(r.id)===document.getElementById('levelChampion').value)}
+window.addEventListener('raid-plans-change',()=>reviewFoodRoster());
 function reviewFoodRoster(){
  const box=document.getElementById('foodAdvice');box.replaceChildren();
  const rank=Math.max(1,Math.min(6,Number(document.getElementById('currentRank').value)||1));
  const food=Math.max(0,Number(document.getElementById('foodOwned').value)||0);
  const chickens=Math.max(0,Number(document.getElementById('foodChickens').value)||0);
- const target=document.getElementById('levelChampion').selectedOptions[0]?.textContent||'your champion';
+ const selectedFoodTarget=rowsForFoodTarget();
+ const target=selectedFoodTarget?.name||document.getElementById('levelChampion').selectedOptions[0]?.textContent||'your champion';
  document.getElementById('foodGuideTitle').textContent='Build food for '+target;
  const info=document.createElement('p');info.textContent=rank>=Number(document.getElementById('targetRank').value)?target+' has reached the target rank. No rank-up food needed.':'To rank up '+target+', prepare '+rank+' matching '+rank+'★ materials. You have '+food+' food champions and '+chickens+' chickens counted; '+Math.max(0,rank-food-chickens)+' remain.';box.append(info);
  if(rank>=Number(document.getElementById('targetRank').value))return;
  let rows=[];try{rows=JSON.parse(localStorage.getItem('raid-roster-v1')||'[]')}catch{}
  if(!Array.isArray(rows)||!rows.length){const p=document.createElement('p');p.className='muted';p.textContent='No saved champions found. Add or import your roster in My Champions to see named food candidates.';box.append(p);return;}
  const counts=new Map();rows.forEach(r=>{const n=String(r.name||'').trim().toLowerCase();counts.set(n,(counts.get(n)||0)+1)});
- const protectedRow=r=>Boolean(r.starter||r.locked||r.protected||r.fusion||r.factionGuardian)||['epic','legendary','mythical'].includes(String(r.rarity||'').toLowerCase())||Number(r.rank)>=5;
+ let teams=[];try{teams=JSON.parse(localStorage.getItem('raid-companion-tools-v1')||'[]')}catch{}
+ const teamIds=new Set((Array.isArray(teams)?teams:[]).filter(t=>t.kind==='team'&&!t.deleted).flatMap(t=>t.payload?.members||[]).filter(Boolean).flatMap(ref=>[ref.id,ref.localId]));
+ const rarity=r=>String(r.rarity||r.import_data?.values?.Rarity||'').toLowerCase();
+ const protectedRow=r=>Boolean(r.starter||r.locked||r.isFavorite||r.protected||r.fusion||r.inFusion||r.factionGuardian||teamIds.has(r.id)||teamIds.has(r.cloudId))||['epic','legendary','mythical'].includes(rarity(r))||Number(r.rank)>=5;
  const fusionReserved=new Set(fusionData().map(r=>String(r.name).trim().toLowerCase()));
  const eligible=rows.filter(r=>!fusionReserved.has(String(r.name||'').trim().toLowerCase())&&String(r.name||'').trim()&&String(r.name).trim().toLowerCase()!==target.trim().toLowerCase()&&Number(r.rank)>=1&&Number(r.rank)<=rank&&!protectedRow(r));
- const confirmed=eligible.filter(r=>['common','uncommon'].includes(String(r.rarity||'').toLowerCase()));
- const uncertain=eligible.filter(r=>!['common','uncommon'].includes(String(r.rarity||'').toLowerCase()));
- const priorityScore=r=>{const v=Number(r.championScore??r.ratingScore??r.rating);return Number.isFinite(v)&&v>=0&&v<=100&&r.championScore!==''&&r.championScore!==null&&r.championScore!==undefined?v:null};
+ const confirmed=eligible.filter(r=>['common','uncommon'].includes(rarity(r)));
+ const uncertain=eligible.filter(r=>!['common','uncommon'].includes(rarity(r)));
+ const priorityScore=r=>{const raw=r.championScore??r.ratingScore??r.rating;const v=Number(raw);return raw!==''&&raw!==null&&raw!==undefined&&Number.isFinite(v)&&v>=0&&v<=100?v:null};
  const byPriority=(a,b)=>{const x=priorityScore(a),y=priorityScore(b);return x===null&&y===null?Number(b.rank)-Number(a.rank)||Number(b.level)-Number(a.level):x===null?1:y===null?-1:x-y||Number(b.rank)-Number(a.rank)};
  confirmed.sort(byPriority);
  uncertain.sort(byPriority);
@@ -354,7 +360,8 @@ function renderLevelRoadmap(){
  const selectedId=document.getElementById('levelChampion').value;
  const savedChampion=Array.isArray(saved)?saved.find(r=>String(r.id)===selectedId)||saved.find(r=>r.name===champion):null;
  const asc=Math.max(0,Math.min(rank,Number(savedChampion?.ascension)||0));
- const ascTarget=targetRank;
+ const selectedAscension=document.getElementById('targetAscension');
+ const ascTarget=selectedAscension?Number(selectedAscension.value):targetRank;
  const ascBox=document.createElement('div');ascBox.style.cssText='padding:12px;margin:10px 0;border:1px solid #34515B;border-radius:10px';
  const ascHeading=document.createElement('strong');ascHeading.textContent='Ascension path · '+asc+' / '+ascTarget+' stars';ascBox.append(ascHeading);
  const ascText=document.createElement('p');ascText.className='muted';
@@ -363,7 +370,8 @@ function renderLevelRoadmap(){
  if(rank<targetRank){const caution=document.createElement('p');caution.className='muted';caution.textContent='Ascension stars cannot exceed current rank. Rank up first to unlock higher ascension stages.';ascBox.append(caution)}
  el.append(ascBox);
  const next=document.getElementById('levelNextAction'),detail=document.getElementById('levelNextDetail');
- if(rank===targetRank){next.textContent=level>=targetLevel?'Target reached':'Level '+champion+' to '+targetLevel;detail.textContent=level>=targetLevel?'Selected rank and level target achieved.':'Currently level '+level+' / '+targetLevel+'. No rank-up materials needed.';}
+ if(rank===targetRank&&level>=targetLevel&&asc<ascTarget){next.textContent='Ascend '+champion+' to '+ascTarget+' stars';detail.textContent='Rank and level targets reached. Prepare the required affinity potions in RAID.';}
+ else if(rank===targetRank){next.textContent=level>=targetLevel?'Target reached':'Level '+champion+' to '+targetLevel;detail.textContent=level>=targetLevel?'Selected rank and level target achieved.':'Currently level '+level+' / '+targetLevel+'. No rank-up materials needed.';}
  else if(level<rank*10){next.textContent='Level '+champion+' to '+rank*10;detail.textContent='Reach the current rank cap before ranking up toward '+targetRank+'★.';}
  else if(ready<rank){next.textContent='Prepare '+(rank-ready)+' more '+rank+'★ materials';detail.textContent=food+' champion food + '+chickens+' chickens counted. Protect reserved champions.';}
  else{next.textContent='Ready to rank up to '+(rank+1)+'★';detail.textContent='Complete the rank-up in RAID, then update My Champions.';}
@@ -376,6 +384,7 @@ function renderLevelRoadmap(){
  }
  const note=document.createElement('p');note.className='muted';note.textContent='Each future rank-up requires its own matching-rank materials. Never sacrifice champions reserved for fusions, teams or faction guardians.';el.append(note);
 }
+window.addEventListener('raid-ascension-change',renderLevelRoadmap);
 ['levelChampion','currentRank','currentLevel','targetRank','levelTarget','foodOwned','foodChickens'].forEach(id=>document.getElementById(id).addEventListener('input',renderLevelRoadmap));renderLevelRoadmap();
 function renderFoodProduction(){
  const rank=Number(document.getElementById('currentRank').value)||1,targetRank=Math.max(rank,Number(document.getElementById('targetRank').value)||rank),food=Number(document.getElementById('foodOwned').value)||0,chickens=Number(document.getElementById('foodChickens').value)||0;
@@ -528,7 +537,7 @@ const planKey='raid-ipad-leveling-v1';const planFields=['levelChampion','targetR
  if(rosterImage?.src)portrait.src=rosterImage.src;
  const rank=Number(document.getElementById('currentRank').value)||1,level=Number(document.getElementById('currentLevel').value)||1;
  const rankTarget=document.getElementById('targetRank');rankTarget.value=String(Math.min(6,Math.max(rank,Number(rankTarget.value)||rank)));
- const targetField=document.getElementById('levelTarget');targetField.value=String(Math.max(1,Math.min(60,Number(targetField.value)||60)));
+ const targetField=document.getElementById('levelTarget');targetField.min=String(Number(rankTarget.value)===rank?level:1);targetField.value=String(Math.max(Number(targetField.min),Math.min(Number(rankTarget.value)*10,Number(targetField.value)||Number(rankTarget.value)*10)));
  const target=Math.min(Number(rankTarget.value)*10,Number(targetField.value));targetField.value=String(target);targetField.max=String(Number(rankTarget.value)*10);
  document.getElementById('levelTargetSummary').textContent='Current: '+rank+'★ Level '+level+' → Target: '+rankTarget.value+'★ Level '+target+(Number(rankTarget.value)>rank?' (rank-ups required)':'');
  for(const id of ['currentRank','currentLevel'])document.getElementById(id).dispatchEvent(new Event('input',{bubbles:false}));
@@ -578,7 +587,7 @@ document.getElementById('backupPreviewFile').addEventListener('change',async eve
   status.textContent='Backup validated for preview: '+file.name;details.hidden=false;
  }catch(error){status.textContent='Backup preview failed: '+error.message;}
 });
-document.querySelector('#export').onclick=()=>{const blob=new Blob([JSON.stringify({champion:'Cheshire Cat',baseline:initial,notes:localStorage.getItem('raid-notes-v1')||'',champions:roster.exportRoster(),companion:companion.exportData()},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='raid-companion-export.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+document.querySelector('#export').onclick=()=>{const blob=new Blob([JSON.stringify({champion:'Cheshire Cat',baseline:initial,notes:localStorage.getItem('raid-notes-v1')||'',champions:roster.exportRoster(),companion:companion.exportData(),workbench:window.raidWorkbenchExport?.()||null,fusions:fusionData(),leveling:JSON.parse(localStorage.getItem(planKey)||'null')},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='raid-companion-export.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
 </script>
 <script>
 (()=>{
@@ -599,7 +608,7 @@ document.querySelector('#export').onclick=()=>{const blob=new Blob([JSON.stringi
    const checks=Object.entries(goals).map(([key,target])=>{const current=number(stats[keys[key]]);return {key,target,current,met:current!==null&&current>=target,gap:current===null?null:Math.max(0,target-current)}});
    const known=checks.filter(c=>c.current!==null),met=known.filter(c=>c.met).length;
    return {r,checks,known:known.length,met,ratio:known.length?met/known.length:-1};
-  }).sort((a,b)=>a.ratio-b.ratio||String(a.r.name).localeCompare(String(b.r.name)));
+  }).sort((a,b)=>Number(!a.known)-Number(!b.known)||a.ratio-b.ratio||String(a.r.name).localeCompare(String(b.r.name)));
   $('optimizerSummary').textContent=selected.length+' champions · '+scored.filter(x=>x.known).length+' with usable stat snapshots · '+scored.filter(x=>!x.known).length+' awaiting import. Largest gaps shown first; unscored champions are listed separately.';
   scored.forEach(x=>{
    const card=document.createElement('details');card.style.cssText='padding:12px;margin:9px 0;border:1px solid #34515B;border-radius:10px';
@@ -619,5 +628,7 @@ document.querySelector('#export').onclick=()=>{const blob=new Blob([JSON.stringi
 </script>
 <script type="module">import {createClient} from 'https://esm.sh/@supabase/supabase-js@2.57.0';const db=createClient('https://lavsuaojwyzavwtbgkcs.supabase.co','sb_publishable_UGGiNae4Y9iLRQTaQ1za3A_rd8Amfp5',{auth:{persistSession:true,autoRefreshToken:true}});document.getElementById('hhTokenStart').addEventListener('click',async()=>{const out=document.getElementById('hhTokenStatus'),b=document.getElementById('hhTokenStart');b.disabled=true;out.textContent='Creating private transfer token…';try{let {data:{session},error}=await db.auth.getSession();if(error)throw error;if(!session){const login=await db.auth.signInAnonymously();if(login.error)throw login.error;session=login.data.session;}if(!session?.access_token)throw Error('No active session');const response=await fetch('https://lavsuaojwyzavwtbgkcs.supabase.co/functions/v1/raid-hh-sync',{method:'POST',headers:{Authorization:'Bearer '+session.access_token,apikey:'sb_publishable_UGGiNae4Y9iLRQTaQ1za3A_rd8Amfp5','Content-Type':'application/json'},body:JSON.stringify({action:'create_transfer_token'})});const data=await response.json();if(!response.ok)throw Error(data.error||'Token request failed');out.textContent='Transfer token (expires in 15 minutes): '+data.syncToken+' · Keep private; one use only.';}catch(err){out.textContent='Token creation failed: '+(err?.message||'Unknown error')}finally{b.disabled=false}});
 document.getElementById('hhSyncStart').addEventListener('click',async()=>{const out=document.getElementById('hhSyncStatus'),b=document.getElementById('hhSyncStart');b.disabled=true;out.textContent='Checking private roster snapshots…';try{let {data:{session},error}=await db.auth.getSession();if(error)throw error;if(!session){const login=await db.auth.signInAnonymously();if(login.error)throw login.error;session=login.data.session}if(!session?.access_token)throw Error('No session');const response=await fetch('https://lavsuaojwyzavwtbgkcs.supabase.co/functions/v1/raid-hh-sync',{headers:{Authorization:'Bearer '+session.access_token,apikey:'sb_publishable_UGGiNae4Y9iLRQTaQ1za3A_rd8Amfp5'}});const data=await response.json();if(!response.ok)throw Error(data.error||'Sync failed');if(!Array.isArray(data.champions)||!data.champions.length){out.textContent='No champion snapshots received yet. The HellHades page extractor must send them first.';return;}const snapshot={source:'private_supabase_snapshot',extractedAt:data.connection?.last_sync_at||null,champions:data.champions.map(ch=>({copyId:ch.copy_id,name:ch.name,level:ch.level,rank:ch.rank,ascension:ch.ascension,stats:ch.stats||{}}))};out.textContent='Received '+snapshot.champions.length+' champions. Review before import.';window.dispatchEvent(new CustomEvent('raid-hh-snapshot-ready',{detail:snapshot}));}catch(e){out.textContent='Sync failed: '+(e?.message||'Unknown error')}finally{b.disabled=false}});</script>
-<script src="./portrait-loader.js?v=f8c1b6b" defer></script>
+<script src="./portrait-loader.js?v=20261012-2" defer></script>
+<script type="module" src="./progression-ui.js?v=20261012-1"></script>
+<script type="module" src="./toolkit-ui.js?v=20261012-1"></script>
 </body></html>

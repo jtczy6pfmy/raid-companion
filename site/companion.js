@@ -143,7 +143,7 @@ export function initCompanion(roster){
   }
   const previous=$('runTeam').value;$('runTeam').replaceChildren();const empty=el('option','No saved team');empty.value='';$('runTeam').append(empty);
   for(const record of active('team')){const option=el('option',record.payload.name);option.value=record.id;$('runTeam').append(option);}if([...$('runTeam').options].some(o=>o.value===previous))$('runTeam').value=previous;
-  renderRuns();
+  renderRuns();window.dispatchEvent(new Event('raid-plans-change'));
  }
  function renderSession(){try{const plan=sessionEstimate(Number($('sessionRuns').value),Number($('sessionEnergy').value),Number($('sessionSeconds').value));$('sessionResult').textContent=plan.energy.toLocaleString()+' energy · '+duration(plan.seconds)+' total estimated time.';}catch(error){$('sessionResult').textContent=error.message;}}
  for(const id of ['sessionRuns','sessionEnergy','sessionSeconds'])$(id).oninput=renderSession;

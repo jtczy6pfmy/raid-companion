@@ -6,9 +6,9 @@ test('rank caps and invalid ranks',()=>{
  assert.throws(()=>levelCap(7),RangeError);
 });
 test('food recursion builds lower rank ingredients correctly',()=>{
- assert.deepEqual(foodRequirements(2,3),{1:2,2:2});
- assert.deepEqual(foodRequirements(3,4),{1:6,2:6,3:3});
- assert.deepEqual(foodRequirements(5,6),{1:120,2:120,3:60,4:20,5:5});
+ assert.deepEqual(foodRequirements(2,3),{1:4,2:2});
+ assert.deepEqual(foodRequirements(3,4),{1:18,2:9,3:3});
+ assert.deepEqual(foodRequirements(5,6),{1:600,2:300,3:100,4:25,5:5});
  assert.deepEqual(foodRequirements(6,6),{});
 });
 test('progression produces ordered rank-ups and ascension',()=>{

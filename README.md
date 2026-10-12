@@ -54,3 +54,17 @@ Team Planner saves up to six distinct champion copies, with the first slot as le
 Builds, teams and battles persist in `raid-companion-tools-v1` and retry private cloud upserts to `raid_companion_plans`. Cloud records retain deletion tombstones to avoid restoring removed plans; each plan ID has its own pending queue entry. Local pending records are retained during reconnect. The schema in `schema/companion-plans.sql` is additive and restricts SELECT/INSERT/UPDATE to the owning device session. Existing champion, run and inventory tables are not altered. JSON exports include the toolkit records.
 
 The web companion is inspired by the organisation and planning workflows of HellHades and RSL Helper. It has no affiliation with either, no login screen, and no native RAID game connection or auto-battle functionality.
+
+## Complete progression production plan
+The deployed Leveling Lab loads the pure progression engine and shows ordered leveling, rank-up and selected ascension steps. Recursive food totals include both promoted base champions and their sacrifices. Rows are successive production stages, not additive requirements; existing food and chickens are not deducted from fresh-start totals. Food advice protects saved team copies, favorites, fusion reservations and high-rarity champions and reads imported rarity metadata. Supplied scores sort ascending; missing scores remain unranked. No roster data is replaced by this update.
+
+## Artifact optimiser and run sessions
+Artifact Optimiser accepts a reviewed version-1 inventory JSON or manually entered pieces. Each artifact has a unique ID, one of six equipment slots, flat bonuses, optional base-percentage bonuses, set name, equipped copy ID and protection flag. Download the format from the optimiser. Set definitions must be supplied with piece counts and stat bonuses; unknown set names contribute no set bonus. Enter all eight unequipped stats for the selected champion copy. Minimum targets and stat weights are optional. Permanent bonuses may be included in the unequipped values; skills, conditional effects, accessories and multi-tier sets are not simulated. Only six artifact slots are searched.
+
+The module worker compares all eligible combinations up to 200,000. Larger searches return no result and request a narrower inventory; a partial search is never described as optimal. Locked pieces and other champions' equipment are excluded by default. Saved loadouts do not equip gear or update champion snapshots. Inventory and loadouts persist on this device and are included in JSON backups; these new records do not yet sync to cloud.
+
+Run Session Companion plans an affordable run count from energy budget, run cost and estimated duration. Each completed battle is recorded manually. Victories and defeats both count toward expenditure and session completion. Average victory duration excludes defeats. Sessions persist locally, allow undoing the last entry, and export with timestamps. No automatic battles, game control, refills or live resource reading occur.
+
+All 54 existing archive portraits now also ship as direct assets. Portrait loading no longer requires downloading JSZip from a CDN or extracting a ZIP at runtime.
+
+Storage now includes a reviewed workbench restore that adds missing artifact IDs, set definitions, loadouts and sessions while preserving existing records. Champion exports retain per-copy local/cloud IDs to keep plan references usable.

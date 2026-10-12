@@ -9,11 +9,12 @@ export function foodRequirements(currentRank, targetRank) {
     throw new RangeError('Invalid rank progression');
   const byRank = {};
   // To promote from rank r to r+1, consume r champions of rank r.
-  // Build these recursively from rank-one units; exclude the target champion.
+  // Every prepared food needs one promoted base plus rank-1 sacrifices.
+  // Counts at different ranks describe the same production tree, not extra food.
   function ingredients(rank, count) {
     if (!count) return;
     byRank[rank] = (byRank[rank] || 0) + count;
-    if (rank > 1) ingredients(rank - 1, count * (rank - 1));
+    if (rank > 1) ingredients(rank - 1, count * rank);
   }
   for (let rank = currentRank; rank < targetRank; rank++) {
     ingredients(rank, rank);

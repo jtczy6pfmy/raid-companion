@@ -1,15 +1,16 @@
 /* Optional portrait enhancement. Never participates in roster or cloud initialization. */
 (()=>{
  'use strict';
- const archive='./portraits/raid_companion_portraits.zip';
  const urls=new Map();
  const antigoneImage='./portraits/93F56C1E-CBE3-4727-9ED4-05207426C948.png';
  const slug=name=>name.toLowerCase().normalize('NFKD').replace(/\s*\(copy\s+\d+\)\s*$/i,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
- window.raidPortraitUrl=name=>{const key=slug(String(name||''));return key.startsWith('antigone')?antigoneImage:urls.get(key)||null};
+ const aliases={'cheshire-cat':'cheshire','dorothy-gale':'dorothy','vallaryn-the-equalizer':'vallaryn','vallyarn':'vallaryn','aox-the-rememberer':'aox','yaga-the-insatiable':'yaga'};
+ const portraitKey=name=>{const key=slug(String(name||''));return aliases[key]||key};
+ window.raidPortraitUrl=name=>{const key=portraitKey(name);return key.startsWith('antigone')?antigoneImage:urls.get(key)||null};
  function apply(){
   document.querySelectorAll('#championRoster .roster-card').forEach(card=>{
    const title=card.querySelector('h3')?.textContent||'';
-   const key=slug(title);
+   const key=portraitKey(title);
    const url=key.startsWith('antigone')?'./portraits/93F56C1E-CBE3-4727-9ED4-05207426C948.png':urls.get(key);
    const portrait=card.querySelector('.hh-portrait');
    if(!url||!portrait)return;
@@ -23,21 +24,10 @@
    portrait.querySelectorAll('span:not(.hh-portrait-level)').forEach(span=>span.remove());
   });
  }
- function loadLibrary(){return new Promise((resolve,reject)=>{
-  if(window.JSZip)return resolve(window.JSZip);
-  const tag=document.createElement('script');tag.src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';tag.onload=()=>window.JSZip?resolve(window.JSZip):reject(Error('ZIP library unavailable'));tag.onerror=()=>reject(Error('ZIP library blocked'));document.head.append(tag);
- });}
  async function start(){
   try{
-   const [JSZip,response]=await Promise.all([loadLibrary(),fetch(archive)]);
-   if(!response.ok)throw Error('Portrait archive unavailable');
-   const zip=await JSZip.loadAsync(await response.arrayBuffer());
-   const entries=Object.values(zip.files).filter(f=>!f.dir&&/\.webp$/i.test(f.name));
-   await Promise.all(entries.map(async f=>{
-    const key=f.name.split('/').pop().replace(/\.webp$/i,'');
-    const bytes=await f.async('uint8array');
-    urls.set(key,URL.createObjectURL(new Blob([bytes],{type:'image/webp'})));
-   }));
+   const names=["misericord", "lifetaker", "aristocrat", "heiress", "tomoe", "redeemer", "slither", "incubus", "dhampir", "commander", "pit-fighter", "warmaiden", "frostskin", "high-khatun", "gator", "yaga", "pit-cur", "diabolist", "swordsman", "valerie", "galek", "fionn", "stitched-beast", "vildrax", "oldbeard", "dorothy", "brute", "kael", "cait", "jaeger", "aox", "hound-spawn", "vilespawn", "templar", "rocktooth", "athel", "warchanter", "skathix", "outlaw-monk", "vallaryn", "stalwart", "skullsquire", "dervish", "jizoh", "antigone", "tracker", "militia", "hardscale", "sergeant", "justiciar", "cheshire", "satyr", "panthera", "maiden"];
+   for(const key of names)urls.set(key,'./portraits/'+key+'.webp');
    function applyFusion(){
     document.querySelectorAll('#fusionTrackerList img[data-fusion-champion]').forEach(img=>{
      const url=window.raidPortraitUrl(img.dataset.fusionChampion);
@@ -57,7 +47,9 @@
      if(url&&img.dataset.portraitResolved!==url){img.dataset.portraitResolved=url;img.src=url;}
     });
    }
-   apply();applyFusion();applyFood();
+   function applySelected(){const img=document.getElementById('levelSelectedImage'),name=document.getElementById('levelSelectedName')?.textContent;const url=window.raidPortraitUrl(name);if(img&&url&&img.getAttribute('src')!==url)img.src=url}
+   apply();applyFusion();applyFood();applySelected();
+   const selected=document.getElementById('levelSelectedName');if(selected)new MutationObserver(applySelected).observe(selected,{childList:true,subtree:true});
    const foodBox=document.getElementById('foodAdvice');
    if(foodBox){let pending=false;new MutationObserver(()=>{if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;applyFood()})}).observe(foodBox,{childList:true,subtree:true});}
    const fusion=document.getElementById('fusionTrackerList');
