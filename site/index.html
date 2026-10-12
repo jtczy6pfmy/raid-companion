@@ -267,6 +267,7 @@ document.querySelector('#saveNotes').onclick=async()=>{
  const result=await roster.saveDashboardNotes(document.querySelector('#notes').value,document.querySelector('#dashboardChampion').value);
  alert(result.saved?'Notes saved on this device and Supabase.':result.localSaved?'Saved locally only. '+(result.reason||''):result.reason||'Notes could not be saved.');
 };
+const fusionKey='raid-ipad-fusions-v1';
 function reviewFoodRoster(){
  const box=document.getElementById('foodAdvice');box.replaceChildren();
  const rank=Math.max(1,Math.min(6,Number(document.getElementById('currentRank').value)||1));
@@ -336,7 +337,7 @@ function renderLevelRoadmap(){
 }
 ['levelChampion','currentRank','currentLevel','foodOwned','foodChickens'].forEach(id=>document.getElementById(id).addEventListener('input',renderLevelRoadmap));renderLevelRoadmap();
 function renderFoodProduction(){const rank=Math.max(1,Math.min(6,Number(document.getElementById('currentRank').value)||1));const food=Math.max(0,Number(document.getElementById('foodOwned').value)||0);const chickens=Math.max(0,Number(document.getElementById('foodChickens').value)||0);const box=document.getElementById('foodProductionPlan');box.replaceChildren();const p=document.createElement('p');if(rank===6){p.textContent='Maximum rank reached. No more rank-up materials required.';}else{const needed=Math.max(0,rank-food-chickens);p.textContent=rank+'★ → '+(rank+1)+'★: '+rank+' matching-rank materials required · '+food+' champion food ready · '+chickens+' chickens · '+needed+' still needed.';}box.append(p);const note=document.createElement('p');note.className='muted';note.textContent='Only count champions you have explicitly cleared for food. This does not automatically identify safe sacrifices.';box.append(note)}['currentRank','foodOwned','foodChickens'].forEach(id=>document.getElementById(id).addEventListener('input',renderFoodProduction));renderFoodProduction();
-const fusionKey='raid-ipad-fusions-v1';
+
 function fusionData(){try{const v=JSON.parse(localStorage.getItem(fusionKey)||'[]');return Array.isArray(v)?v:[]}catch{return []}}
 const permanentFusions=[
  {name:'Relickeeper',repeat:'Repeatable',stages:[{name:'Justiciar',count:1},{name:'Executioner',count:1},{name:'Templar',count:1},{name:'Sorceress',count:1},{name:'Warmaiden',count:1},{name:'Diabolist',count:1},{name:'Spirithost',count:1},{name:'Heiress',count:1}],note:'Justiciar is made from Warmaiden, Diabolist, Spirithost and Heiress. The four top-tier Rare champions must be 4★ level 40 and fully ascended.'},
@@ -386,7 +387,7 @@ function renderFusion(){
  const treeTitle=document.createElement('h3');treeTitle.textContent='Fusion tree · in-game layout';tree.append(treeTitle);
  const treeHint=document.createElement('p');treeHint.className='muted';treeHint.textContent='Top row: intermediate champions. Below each: its four base ingredients. Lady Mikage and Rhazin groupings checked against HellHades; confirm readiness in the Portal.';tree.append(treeHint);
  const makeTile=(label,kind)=>{
- const name=String(label).replace(/ ×\\d+$/,'').replace(/ \\(listed as ingredient — verify\\)$/,'').replace(/ · Bazaar \\/ Void Shards$/,'');
+ const name=String(label).replace(/ ×[0-9]+$/,'').replace(' (listed as ingredient — verify)','').replace(' · Bazaar / Void Shards','');
  const state=championState(name),isReady=state.startsWith('Ready'),isMissing=state==='Missing',isVerify=state.includes('verify');
  const tile=document.createElement('div');tile.style.cssText='border:1px solid '+(isReady?'#39a874':isMissing?'#a65b60':'#b38c45')+';border-radius:9px;padding:9px;min-width:0;background:#102b39;display:flex;flex-direction:column;gap:5px';
  const portrait=document.createElement('div');portrait.style.cssText='height:80px;display:flex;align-items:center;justify-content:center;border-radius:7px;background:#1c3949;overflow:hidden';
