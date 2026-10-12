@@ -43,7 +43,15 @@
      if(url&&img.dataset.portraitResolved!==url){img.dataset.portraitResolved=url;img.onerror=()=>{img.style.display='none'};img.src=url;img.style.display='block';}
     });
    }
-   apply();applyFusion();
+   function applyFood(){
+    document.querySelectorAll('#foodAdvice img[data-food-champion]').forEach(img=>{
+     const url=window.raidPortraitUrl(img.dataset.foodChampion);
+     if(url&&img.dataset.portraitResolved!==url){img.dataset.portraitResolved=url;img.src=url;}
+    });
+   }
+   apply();applyFusion();applyFood();
+   const foodBox=document.getElementById('foodAdvice');
+   if(foodBox){let pending=false;new MutationObserver(()=>{if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;applyFood()})}).observe(foodBox,{childList:true,subtree:true});}
    const fusion=document.getElementById('fusionTrackerList');
    if(fusion){let pending=false;new MutationObserver(()=>{if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;applyFusion()})}).observe(fusion,{childList:true,subtree:true});}
    const roster=document.getElementById('championRoster');
