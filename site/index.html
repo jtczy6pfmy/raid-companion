@@ -411,6 +411,9 @@ function renderFusion(){
  const state=championState(name),isReady=state.startsWith('Ready'),isMissing=state==='Missing',isVerify=state.includes('verify');
  const tile=document.createElement('div');tile.style.cssText='border:1px solid '+(isReady?'#39a874':isMissing?'#a65b60':'#b38c45')+';border-radius:9px;padding:9px;min-width:0;background:#102b39;display:flex;flex-direction:column;gap:5px';
  const portrait=fusionPortrait(name);portrait.style.cssText+=';width:100%;height:105px;flex:auto';
+ tile.style.cursor='pointer';tile.setAttribute('role','button');tile.tabIndex=0;tile.title='Open '+name+' in Leveling Lab';
+ const openLevel=()=>{let roster=[];try{roster=JSON.parse(localStorage.getItem('raid-roster-v1')||'[]')}catch{}const found=roster.find(r=>String(r.name||'').toLowerCase()===name.toLowerCase());if(!found){document.getElementById('fusionStatus').textContent=name+' is missing from My Champions. Add it to your roster to plan its leveling.';return;}document.querySelector('[data-tab="leveling"]').click();const sel=document.getElementById('levelChampion');sel.value=String(found.id);sel.dispatchEvent(new Event('change'));const required=requiredRank(name);if(required){document.getElementById('targetRank').value=String(Math.max(Number(found.rank)||1,required));document.getElementById('levelTarget').value=String(required*10)}document.getElementById('targetRank').dispatchEvent(new Event('change'));document.getElementById('levelTarget').dispatchEvent(new Event('input'));window.scrollTo({top:0,behavior:'auto'})};
+ tile.addEventListener('click',openLevel);tile.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openLevel()}});
  const strong=document.createElement('strong');strong.textContent=label;strong.style.cssText='display:block;overflow-wrap:anywhere;font-size:13px';
  const badge=document.createElement('span');badge.textContent=(isReady?'✓ ':isMissing?'○ ':isVerify?'? ':'! ')+state;badge.style.cssText='font-size:12px;font-weight:700;color:'+(isReady?'#7ce5b0':isMissing?'#ff9da3':'#f2ce79');
  tile.append(portrait,strong,badge);
@@ -428,7 +431,7 @@ function renderFusion(){
   if(i===baseRows.length&&intermediateRows.length){const heading=document.createElement('h3');heading.textContent='Intermediate fusion champions';box.append(heading);const note=document.createElement('p');note.className='muted';note.textContent='These are made from the base champions above; do not add both stages together as separate material costs.';box.append(note)}
 
   const line=document.createElement('div');line.className='panel';line.style.margin='10px 0';
-  const h=document.createElement('h3');h.textContent=r.name;const head=document.createElement('div');head.style.cssText='display:flex;gap:12px;align-items:center';head.append(fusionPortrait(r.name),h);line.append(head);
+  const h=document.createElement('h3');h.textContent=r.name;const head=document.createElement('div');head.style.cssText='display:flex;gap:12px;align-items:center';head.append(fusionPortrait(r.name),h);line.append(head);head.title='Select this champion in the fusion tree to open its leveling plan.';
   const own=counts.get(String(r.name||'').trim().toLowerCase())||0;
   const p=document.createElement('p');p.className='muted';p.textContent='Roster: '+own+' · '+championState(r.name)+' · Manually confirmed ready: '+(Number(r.owned)||0)+' / '+r.count+' · Missing copies: '+Math.max(0,Number(r.count)-own);line.append(p);
   const controls=document.createElement('div');controls.style.cssText='display:flex;gap:8px;align-items:center;flex-wrap:wrap';
