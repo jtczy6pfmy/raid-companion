@@ -275,8 +275,8 @@ function reviewFoodRoster(){
  const chickens=Math.max(0,Number(document.getElementById('foodChickens').value)||0);
  const target=document.getElementById('levelChampion').selectedOptions[0]?.textContent||'your champion';
  document.getElementById('foodGuideTitle').textContent='Build food for '+target;
- const info=document.createElement('p');info.textContent=rank===6?target+' is already 6★. No rank-up food needed.':'To rank up '+target+', prepare '+rank+' matching '+rank+'★ materials. You have '+food+' food champions and '+chickens+' chickens counted; '+Math.max(0,rank-food-chickens)+' remain.';box.append(info);
- if(rank===6)return;
+ const info=document.createElement('p');info.textContent=rank>=Number(document.getElementById('targetRank').value)?target+' has reached the target rank. No rank-up food needed.':'To rank up '+target+', prepare '+rank+' matching '+rank+'★ materials. You have '+food+' food champions and '+chickens+' chickens counted; '+Math.max(0,rank-food-chickens)+' remain.';box.append(info);
+ if(rank>=Number(document.getElementById('targetRank').value))return;
  let rows=[];try{rows=JSON.parse(localStorage.getItem('raid-roster-v1')||'[]')}catch{}
  if(!Array.isArray(rows)||!rows.length){const p=document.createElement('p');p.className='muted';p.textContent='No saved champions found. Add or import your roster in My Champions to see named food candidates.';box.append(p);return;}
  const counts=new Map();rows.forEach(r=>{const n=String(r.name||'').trim().toLowerCase();counts.set(n,(counts.get(n)||0)+1)});
@@ -306,37 +306,48 @@ function reviewFoodRoster(){
  const footer=document.createElement('p');footer.className='muted';footer.textContent='Food consumed while ranking up these candidates is additional to the '+rank+' final '+rank+'★ materials. This guide does not spend champions or modify your roster.';box.append(footer);
 }
 ['levelChampion','currentRank','foodOwned','foodChickens'].forEach(id=>document.getElementById(id).addEventListener('input',reviewFoodRoster));reviewFoodRoster();
-function renderVisualLeveling(){const get=id=>document.getElementById(id);const rank=Math.max(1,Math.min(6,Number(get('currentRank').value)||1));const level=Math.max(1,Number(get('currentLevel').value)||1);const food=Math.max(0,Number(get('foodOwned').value)||0);const selected=get('levelChampion');get('visualLevelTitle').textContent=(selected.selectedOptions[0]?.textContent||'Champion')+' · progression';get('visualCurrentRank').textContent=rank+'★';get('visualCurrentLevel').textContent='Level '+level+' / '+(rank*10);get('visualTargetRank').textContent=rank===6?'MAX':(rank+1)+'★';get('visualTargetLevel').textContent=rank===6?'Maximum rank':'Starts at level 1';get('visualFoodCount').textContent=rank===6?'—':Math.min(food,rank)+' / '+rank;get('visualFoodLabel').textContent=rank===6?'No food required':rank+'★ champions';get('visualPathProgress').style.width=(rank===6?100:Math.min(food,rank)/rank*100)+'%';get('visualPathStatus').textContent=rank===6?'Maximum rank reached. Level to 60 if needed.':level<rank*10?'Step 1: Level to '+rank*10+'. Step 2: Prepare '+rank+' matching '+rank+'★ food champions.':food<rank?'Level cap reached. Prepare '+(rank-food)+' more '+rank+'★ food champions.':'Ready to rank up in RAID (planning only).';}['levelChampion','currentRank','currentLevel','foodOwned'].forEach(id=>document.getElementById(id).addEventListener('input',renderVisualLeveling));renderVisualLeveling();
+function renderVisualLeveling(){
+ const get=id=>document.getElementById(id),rank=Number(get('currentRank').value)||1,level=Number(get('currentLevel').value)||1,targetRank=Math.max(rank,Number(get('targetRank').value)||rank),targetLevel=Math.min(targetRank*10,Math.max(1,Number(get('levelTarget').value)||targetRank*10)),food=Number(get('foodOwned').value)||0,chickens=Number(get('foodChickens').value)||0;
+ const name=get('levelChampion').selectedOptions[0]?.textContent||'Champion';
+ get('visualLevelTitle').textContent=name+' · '+rank+'★ Lv '+level+' → '+targetRank+'★ Lv '+targetLevel;
+ get('visualCurrentRank').textContent=rank+'★';get('visualCurrentLevel').textContent='Level '+level+' / '+rank*10;
+ get('visualTargetRank').textContent=targetRank+'★';get('visualTargetLevel').textContent='Level '+targetLevel+' target';
+ const needed=rank<targetRank?rank:0;get('visualFoodCount').textContent=needed?Math.min(needed,food+chickens)+' / '+needed:'0 / 0';
+ get('visualFoodLabel').textContent=needed?rank+'★ materials':'No rank-up needed';
+ get('visualPathProgress').style.width=(needed?Math.min(100,100*(food+chickens)/needed):100)+'%';
+ get('visualPathStatus').textContent=rank===targetRank?(level>=targetLevel?'Target reached':'Level to '+targetLevel):'Rank up from '+rank+'★ toward '+targetRank+'★. Next rank requires '+rank+' matching-rank materials.';
+}
+['levelChampion','currentRank','currentLevel','targetRank','levelTarget','foodOwned','foodChickens'].forEach(id=>document.getElementById(id).addEventListener('input',renderVisualLeveling));renderVisualLeveling();
 function renderLevelRoadmap(){
  const el=document.getElementById('levelRoadmap');el.replaceChildren();
- const rank=Math.max(1,Math.min(6,Number(document.getElementById('currentRank').value)||1));
- const level=Math.max(1,Number(document.getElementById('currentLevel').value)||1);
- const food=Math.max(0,Number(document.getElementById('foodOwned').value)||0);
- const chickens=Math.max(0,Number(document.getElementById('foodChickens').value)||0);
- const ready=food+chickens;
+ const rank=Number(document.getElementById('currentRank').value)||1,level=Number(document.getElementById('currentLevel').value)||1;
+ const targetRank=Math.max(rank,Number(document.getElementById('targetRank').value)||rank),targetLevel=Math.min(targetRank*10,Math.max(1,Number(document.getElementById('levelTarget').value)||targetRank*10));
+ const food=Number(document.getElementById('foodOwned').value)||0,chickens=Number(document.getElementById('foodChickens').value)||0,ready=food+chickens;
  const champion=document.getElementById('levelChampion').selectedOptions[0]?.textContent||'Champion';
- document.getElementById('roadmapTitle').textContent=champion+' · Road to 6★ Level 60';
+ document.getElementById('roadmapTitle').textContent=champion+' · Road to '+targetRank+'★ Level '+targetLevel;
  const next=document.getElementById('levelNextAction'),detail=document.getElementById('levelNextDetail');
- if(rank===6){next.textContent=level>=60?'Development complete':'Level '+champion+' to 60';detail.textContent=level>=60?'Maximum rank and level reached.':'Currently level '+level+' / 60. No more rank-up food needed.';}
- else if(level<rank*10){next.textContent='Level '+champion+' to '+(rank*10);detail.textContent='Current level '+level+' / '+(rank*10)+'. Prepare '+Math.max(0,rank-ready)+' more '+rank+'★ materials while leveling.';}
- else if(ready<rank){next.textContent='Prepare '+(rank-ready)+' more '+rank+'★ food materials';detail.textContent=food+' champion food + '+chickens+' chickens ready. Review candidates before using them.';}
- else{next.textContent='Ready for '+(rank+1)+'★ rank-up';detail.textContent='Level cap reached and '+rank+' matching-rank materials counted. Complete the rank-up manually in RAID.';}
- const milestones=[];
- for(let r=rank;r<=6;r++){
-  const cap=r*10;
-  milestones.push({title:r+'★ · Reach level '+cap,detail:r===rank?'Current level: '+level+' / '+cap:'After reaching '+r+'★, level to '+cap,status:r===rank?(level>=cap?'Complete':'In progress'):'Upcoming'});
-  if(r<6)milestones.push({title:'Prepare '+r+' × '+r+'★ rank-up materials',detail:r===rank?food+' food champions + '+chickens+' chickens · '+Math.max(0,r-ready)+' remaining':'Future requirement: '+r+' matching-rank food champions or chickens',status:r===rank?(ready>=r?'Ready':'In progress'):'Upcoming'});
+ if(rank===targetRank){next.textContent=level>=targetLevel?'Target reached':'Level '+champion+' to '+targetLevel;detail.textContent=level>=targetLevel?'Selected rank and level target achieved.':'Currently level '+level+' / '+targetLevel+'. No rank-up materials needed.';}
+ else if(level<rank*10){next.textContent='Level '+champion+' to '+rank*10;detail.textContent='Reach the current rank cap before ranking up toward '+targetRank+'★.';}
+ else if(ready<rank){next.textContent='Prepare '+(rank-ready)+' more '+rank+'★ materials';detail.textContent=food+' champion food + '+chickens+' chickens counted. Protect reserved champions.';}
+ else{next.textContent='Ready to rank up to '+(rank+1)+'★';detail.textContent='Complete the rank-up in RAID, then update My Champions.';}
+ let index=0;
+ const add=(title,detail,status)=>{const row=document.createElement('div');row.style.cssText='display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #34515B';const dot=document.createElement('span');dot.style.cssText='display:grid;place-items:center;flex:0 0 30px;height:30px;border-radius:50%;background:'+(status==='Complete'||status==='Ready'?'#27694F':status==='In progress'?'#835b22':'#253841')+';color:#fff;font-weight:700';dot.textContent=status==='Complete'||status==='Ready'?'✓':String(++index);const body=document.createElement('div'),h=document.createElement('strong'),p=document.createElement('p');h.textContent=title;p.className='muted';p.style.margin='4px 0 0';p.textContent=status+' · '+detail;body.append(h,p);row.append(dot,body);el.append(row)};
+ for(let r=rank;r<=targetRank;r++){
+  const goal=r===targetRank?targetLevel:r*10;
+  add(r+'★ · Reach level '+goal,r===rank?'Current level '+level+' / '+goal:'Level after ranking up to '+r+'★',r===rank?(level>=goal?'Complete':'In progress'):'Upcoming');
+  if(r<targetRank)add('Rank up to '+(r+1)+'★ · '+r+' matching '+r+'★ materials',r===rank?food+' champion food + '+chickens+' chickens counted · '+Math.max(0,r-ready)+' remaining':'Future materials are not included in the current food count',r===rank?(ready>=r?'Ready':'In progress'):'Upcoming');
  }
- milestones.forEach((m,i)=>{
-  const row=document.createElement('div');row.style.cssText='display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #34515B';
-  const dot=document.createElement('span');dot.style.cssText='display:grid;place-items:center;flex:0 0 30px;height:30px;border-radius:50%;background:'+(m.status==='Complete'||m.status==='Ready'?'#27694F':m.status==='In progress'?'#835b22':'#253841')+';color:#fff;font-weight:700';dot.textContent=m.status==='Complete'||m.status==='Ready'?'✓':String(i+1);
-  const content=document.createElement('div');const h=document.createElement('strong');h.textContent=m.title;
-  const p=document.createElement('p');p.className='muted';p.style.margin='4px 0 0';p.textContent=m.status+' · '+m.detail;content.append(h,p);row.append(dot,content);el.append(row);
- });
- const note=document.createElement('p');note.className='muted';note.textContent='Future-rank materials are separate from your current food count. Protect champions needed for faction guardians, fusions or teams.';el.append(note);
+ const note=document.createElement('p');note.className='muted';note.textContent='Each future rank-up requires its own matching-rank materials. Never sacrifice champions reserved for fusions, teams or faction guardians.';el.append(note);
 }
-['levelChampion','currentRank','currentLevel','foodOwned','foodChickens'].forEach(id=>document.getElementById(id).addEventListener('input',renderLevelRoadmap));renderLevelRoadmap();
-function renderFoodProduction(){const rank=Math.max(1,Math.min(6,Number(document.getElementById('currentRank').value)||1));const food=Math.max(0,Number(document.getElementById('foodOwned').value)||0);const chickens=Math.max(0,Number(document.getElementById('foodChickens').value)||0);const box=document.getElementById('foodProductionPlan');box.replaceChildren();const p=document.createElement('p');if(rank===6){p.textContent='Maximum rank reached. No more rank-up materials required.';}else{const needed=Math.max(0,rank-food-chickens);p.textContent=rank+'★ → '+(rank+1)+'★: '+rank+' matching-rank materials required · '+food+' champion food ready · '+chickens+' chickens · '+needed+' still needed.';}box.append(p);const note=document.createElement('p');note.className='muted';note.textContent='Only count champions you have explicitly cleared for food. This does not automatically identify safe sacrifices.';box.append(note)}['currentRank','foodOwned','foodChickens'].forEach(id=>document.getElementById(id).addEventListener('input',renderFoodProduction));renderFoodProduction();
+['levelChampion','currentRank','currentLevel','targetRank','levelTarget','foodOwned','foodChickens'].forEach(id=>document.getElementById(id).addEventListener('input',renderLevelRoadmap));renderLevelRoadmap();
+function renderFoodProduction(){
+ const rank=Number(document.getElementById('currentRank').value)||1,targetRank=Math.max(rank,Number(document.getElementById('targetRank').value)||rank),food=Number(document.getElementById('foodOwned').value)||0,chickens=Number(document.getElementById('foodChickens').value)||0;
+ const box=document.getElementById('foodProductionPlan');box.replaceChildren();const p=document.createElement('p');
+ if(rank>=targetRank)p.textContent='Target rank reached. No rank-up food needed.';
+ else{const total=Array.from({length:targetRank-rank},(_,i)=>rank+i).reduce((a,b)=>a+b,0);p.textContent=rank+'★ → '+targetRank+'★: '+total+' total matching-rank materials across all rank-ups. Next: '+rank+' × '+rank+'★, with '+food+' food and '+chickens+' chickens counted ('+Math.max(0,rank-food-chickens)+' remaining). Future ranks require different-rank food.';}
+ box.append(p);const note=document.createElement('p');note.className='muted';note.textContent='Only use champions explicitly cleared for food; do not sacrifice fusion or protected champions.';box.append(note);
+}
+['currentRank','targetRank','foodOwned','foodChickens'].forEach(id=>document.getElementById(id).addEventListener('input',renderFoodProduction));renderFoodProduction();
 
 function fusionData(){try{const v=JSON.parse(localStorage.getItem(fusionKey)||'[]');return Array.isArray(v)?v:[]}catch{return []}}
 const permanentFusions=[
