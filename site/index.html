@@ -278,27 +278,28 @@ function reviewFoodRoster(){
  let rows=[];try{rows=JSON.parse(localStorage.getItem('raid-roster-v1')||'[]')}catch{}
  if(!Array.isArray(rows)||!rows.length){const p=document.createElement('p');p.className='muted';p.textContent='No saved champions found. Add or import your roster in My Champions to see named food candidates.';box.append(p);return;}
  const counts=new Map();rows.forEach(r=>{const n=String(r.name||'').trim().toLowerCase();counts.set(n,(counts.get(n)||0)+1)});
- const candidates=rows.filter(r=>{
-  const rarity=String(r.rarity||'').toLowerCase();
-  const name=String(r.name||'').trim();
-  return name&&name.toLowerCase()!==target.trim().toLowerCase()&&
-   (rarity==='common'||rarity==='uncommon')&&!r.starter&&
-   Number(r.rank)>=1&&Number(r.rank)<=rank&&Number(r.level)<40&&Number(r.rank)<5&&
-   !r.locked&&!r.protected&&!r.fusion&&!r.factionGuardian;
- }).sort((a,b)=>Number(b.rank)-Number(a.rank)||Number(b.level)-Number(a.level));
- const h=document.createElement('h4');h.textContent='Possible food candidates ('+candidates.length+')';box.append(h);
- if(!candidates.length){const p=document.createElement('p');p.className='muted';p.textContent='No confidently low-rarity candidates found. Champions with unknown rarity, protected status or higher rarity are not recommended. Add rarity details in your roster or raise fresh Common/Uncommon food.';box.append(p);}
- candidates.slice(0,12).forEach(r=>{
+ const protectedRow=r=>Boolean(r.starter||r.locked||r.protected||r.fusion||r.factionGuardian)||['epic','legendary','mythical'].includes(String(r.rarity||'').toLowerCase())||Number(r.rank)>=5;
+ const eligible=rows.filter(r=>String(r.name||'').trim()&&String(r.name).trim().toLowerCase()!==target.trim().toLowerCase()&&Number(r.rank)>=1&&Number(r.rank)<=rank&&!protectedRow(r));
+ const confirmed=eligible.filter(r=>['common','uncommon'].includes(String(r.rarity||'').toLowerCase()));
+ const uncertain=eligible.filter(r=>!['common','uncommon'].includes(String(r.rarity||'').toLowerCase()));
+ confirmed.sort((a,b)=>Number(b.rank)-Number(a.rank)||Number(b.level)-Number(a.level));
+ uncertain.sort((a,b)=>Number(b.rank)-Number(a.rank)||Number(b.level)-Number(a.level));
+ const heading=document.createElement('h4');heading.textContent='Low-rarity food candidates ('+confirmed.length+')';box.append(heading);
+ function showCandidate(r,unknown){
   const name=String(r.name),startRank=Math.max(1,Math.min(rank,Number(r.rank)||1)),startLevel=Math.max(1,Number(r.level)||1);
   const card=document.createElement('div');card.style.cssText='border:1px solid #34515B;border-radius:12px;padding:12px;margin:10px 0';
-  const title=document.createElement('strong');title.textContent=name+' · '+startRank+'★ level '+startLevel+' · '+String(r.rarity);card.append(title);
-  const steps=[];for(let k=startRank;k<rank;k++){steps.push('Level '+name+' to '+(k*10)+' at '+k+'★'+(k===startRank?' (currently '+startLevel+')':''));steps.push('Use '+k+' other '+k+'★ food materials to rank '+name+' up to '+(k+1)+'★');}
-  if(startRank===rank)steps.push('Already '+rank+'★ — no more leveling required to use as matching-rank food');
-  else steps.push('Stop at '+rank+'★ level 1 — matching-rank food is ready');
+  const title=document.createElement('strong');title.textContent=name+' · '+startRank+'★ level '+startLevel+' · '+(r.rarity||'rarity unknown');card.append(title);
+  const steps=[];for(let k=startRank;k<rank;k++){steps.push('Level to '+(k*10)+' at '+k+'★'+(k===startRank?' (currently '+startLevel+')':''));steps.push('Use '+k+' other '+k+'★ food materials to rank up to '+(k+1)+'★');}
+  steps.push(startRank===rank?'Already at the required food rank — no leveling needed':'Stop at '+rank+'★ level 1 for final rank-up food');
   const list=document.createElement('ol');steps.forEach(step=>{const li=document.createElement('li');li.textContent=step;list.append(li)});card.append(list);
-  const note=document.createElement('p');note.className='muted';note.textContent='Candidate only — verify this copy is not needed for factions, fusion or another team.';card.append(note);box.append(card);
- });
- if(candidates.length>12){const p=document.createElement('p');p.className='muted';p.textContent='Showing the first 12 candidates, prioritized by current rank and level.';box.append(p);}
+  const note=document.createElement('p');note.className='muted';note.textContent=unknown?'NOT RECOMMENDED AS FOOD YET: rarity is missing or not low-rarity. Verify rarity, faction guardians, fusions and team use first.':'Possible food only: confirm this copy is not needed for faction guardians, fusions or teams.';card.append(note);box.append(card);
+ }
+ if(!confirmed.length){const p=document.createElement('p');p.className='muted';p.textContent='No Common or Uncommon champions with confirmed rarity found in this saved roster. You can still view other champions below, but they are not approved as food.';box.append(p);}
+ confirmed.slice(0,12).forEach(r=>showCandidate(r,false));
+ const h=document.createElement('h4');h.textContent='Other champions to review ('+uncertain.length+')';box.append(h);
+ const explain=document.createElement('p');explain.className='muted';explain.textContent='These are shown so the lab is useful even when imports omit rarity. Do not sacrifice them until you verify their value.';box.append(explain);
+ uncertain.slice(0,12).forEach(r=>showCandidate(r,true));
+ if(!uncertain.length&&!confirmed.length){const p=document.createElement('p');p.textContent='Your saved roster currently contains only protected or high-rank champions. Raise fresh Common/Uncommon champions as food instead of sacrificing your main team.';box.append(p);}
  const footer=document.createElement('p');footer.className='muted';footer.textContent='Food consumed while ranking up these candidates is additional to the '+rank+' final '+rank+'★ materials. This guide does not spend champions or modify your roster.';box.append(footer);
 }
 ['levelChampion','currentRank','foodOwned','foodChickens'].forEach(id=>document.getElementById(id).addEventListener('input',reviewFoodRoster));reviewFoodRoster();
