@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {planSession,recordSessionRun,sessionProgress} from '../site/session-engine.js';
+test('session estimates respect budget without assuming refills',()=>{assert.deepEqual(planSession({runs:20,energyPerRun:16,secondsPerRun:45,energyBudget:100}),{runs:6,requestedRuns:20,energy:96,seconds:270,shortfall:220});assert.throws(()=>planSession({runs:1,energyPerRun:16,secondsPerRun:0,energyBudget:100}))});
+test('session metrics count losses for expenditure and victories for clear time',()=>{let s={plan:{runs:2},results:[]};s=recordSessionRun(s,{result:'Victory',energy:16,seconds:45});s=recordSessionRun(s,{result:'Defeat',energy:16,seconds:70});assert.deepEqual(sessionProgress(s),{completed:2,remaining:0,energy:32,seconds:115,wins:1,winRate:50,averageVictory:45});assert.throws(()=>recordSessionRun(s,{result:'Victory',energy:16,seconds:45}))});

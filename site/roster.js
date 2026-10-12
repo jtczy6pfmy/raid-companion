@@ -273,7 +273,7 @@ export function initRoster() {
    }
    persist();render();summary();void syncPending();
   },
-  exportRoster(){return rows.map(({name,level,rank,ascension,notes,import_key,import_data})=>({name,level,rank,ascension,notes,import_key,import_data}));},
+  exportRoster(){return rows.map(({id,cloudId,name,level,rank,ascension,notes,import_key,import_data})=>({id,cloudId,name,level,rank,ascension,notes,import_key,import_data}));},
   async saveDashboardNotes(notes,id=primaryChampion()?.id){
    const row=rows.find(row=>row.id===id);
    if(!row)return {saved:false,localSaved:false,reason:'Select a champion in the roster'};
