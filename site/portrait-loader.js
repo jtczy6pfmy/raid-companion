@@ -36,7 +36,7 @@
     const bytes=await f.async('uint8array');
     urls.set(key,URL.createObjectURL(new Blob([bytes],{type:'image/webp'})));
    }));
-   window.raidPortraitUrl=name=>urls.get(slug(String(name||'')))||null;
+   window.raidPortraitUrl=name=>{const key=slug(String(name||''));return key.startsWith('antigone')?'./portraits/93F56C1E-CBE3-4727-9ED4-05207426C948.png':urls.get(key)||null};
    function applyFusion(){
     document.querySelectorAll('#fusionTrackerList img[data-fusion-champion]').forEach(img=>{
      const url=window.raidPortraitUrl(img.dataset.fusionChampion);
