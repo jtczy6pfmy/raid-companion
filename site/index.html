@@ -373,9 +373,20 @@ function renderFusion(){
  if(!group.length){overview.textContent=recipe&&!recipe.stages.length?'Recipe not yet verified. Add confirmed ingredients under Custom fusion requirement.':'No requirements saved yet.';return}
  let roster=[];try{const v=JSON.parse(localStorage.getItem('raid-roster-v1')||'[]');if(Array.isArray(v))roster=v}catch{}
  const counts=new Map();roster.forEach(r=>{const name=String(r.name||'').trim().toLowerCase();counts.set(name,(counts.get(name)||0)+1)});
- const total=group.reduce((n,r)=>n+(Number(r.count)||0),0),ready=group.reduce((n,r)=>n+Math.min(Number(r.count)||0,Number(r.owned)||0),0);
- overview.textContent=ready+' / '+total+' manually marked ready. '+(recipe&&['Relickeeper','Rhazin Scarhide','Theimios the Everdrinker'].includes(target)?'This is a staged recipe; intermediate champions and lower-tier ingredients overlap.':'');
- group.forEach(r=>{
+ const baseNames=target==='Relickeeper'?['Warmaiden','Diabolist','Spirithost','Heiress']:target==='Rhazin Scarhide'?recipe.stages.slice(4).map(x=>x.name):target==='Theimios the Everdrinker'?['Shore-spear Fionn']:recipe?recipe.stages.map(x=>x.name):group.map(x=>x.name);
+ const baseSet=new Set(baseNames.map(x=>x.toLowerCase()));
+ const baseRows=group.filter(r=>baseSet.has(String(r.name).toLowerCase()));
+ const intermediateRows=group.filter(r=>!baseSet.has(String(r.name).toLowerCase()));
+ const baseTotal=baseRows.reduce((n,r)=>n+(Number(r.count)||0),0);
+ const baseReady=baseRows.reduce((n,r)=>n+Math.min(Number(r.count)||0,Number(r.owned)||0),0);
+ overview.textContent='Base champions: '+baseReady+' / '+baseTotal+' marked ready. '+(intermediateRows.length?'Intermediate fusion champions are shown separately below.':'');
+ const baseHeading=document.createElement('h3');baseHeading.textContent='Base champions required';box.append(baseHeading);
+ const baseNote=document.createElement('p');baseNote.className='muted';baseNote.textContent='These are the starting champions to collect, level and ascend. Your roster is checked by champion name.';box.append(baseNote);
+ if(!baseRows.length){const p=document.createElement('p');p.className='muted';p.textContent='Base recipe not verified yet. Check the in-game Fusion Portal.';box.append(p)}
+ const ordered=[...baseRows,...intermediateRows];
+ ordered.forEach((r,i)=>{
+  if(i===baseRows.length&&intermediateRows.length){const heading=document.createElement('h3');heading.textContent='Intermediate fusion champions';box.append(heading);const note=document.createElement('p');note.className='muted';note.textContent='These are made from the base champions above; do not add both stages together as separate material costs.';box.append(note)}
+
   const line=document.createElement('div');line.className='panel';line.style.margin='10px 0';
   const h=document.createElement('h3');h.textContent=r.name;line.append(h);
   const own=counts.get(String(r.name||'').trim().toLowerCase())||0;
