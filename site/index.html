@@ -399,11 +399,12 @@ function renderFusion(){
  const treeHint=document.createElement('p');treeHint.className='muted';treeHint.textContent='Top row: intermediate champions. Below each: its four base ingredients. Lady Mikage and Rhazin groupings checked against HellHades; confirm readiness in the Portal.';tree.append(treeHint);
  const fusionPortrait=(name)=>{
   const frame=document.createElement('div');frame.style.cssText='width:76px;height:76px;flex:0 0 76px;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:9px;background:#1c3949';
-  const img=document.createElement('img');img.alt=name+' champion portrait';img.loading='lazy';img.decoding='async';img.style.cssText='width:100%;height:100%;object-fit:cover';
+  const img=document.createElement('img');img.alt=name+' champion portrait';img.dataset.fusionChampion=name;img.loading='lazy';img.decoding='async';img.style.cssText='width:100%;height:100%;object-fit:cover';
   const slug=String(name).toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-  img.src='https://patpat1567.github.io/RaidShadowLegendsData/images/avatar/'+String(name).replace(/[^A-Za-z0-9 ]/g,'').trim().replace(/ +/g,'_')+'.png';
+  img.src=window.raidPortraitUrl?.(name)||'./portraits/'+slug+'.webp';
   img.referrerPolicy='no-referrer';
-  img.onerror=()=>{img.remove();const initials=document.createElement('strong');initials.textContent=name.slice(0,2).toUpperCase();initials.style.cssText='font-size:23px;opacity:.7';frame.append(initials)};
+  img.onload=()=>{frame.querySelector('.portrait-initials')?.remove();img.style.display='block'};
+  img.onerror=()=>{img.style.display='none';if(!frame.querySelector('.portrait-initials')){const initials=document.createElement('strong');initials.className='portrait-initials';initials.textContent=name.slice(0,2).toUpperCase();initials.style.cssText='font-size:23px;opacity:.7';frame.append(initials)}};
   frame.append(img);return frame;
  };
  const makeTile=(label,kind)=>{
