@@ -299,9 +299,25 @@ function reviewFoodRoster(){
   const slug=name.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
   img.src=window.raidPortraitUrl?.(name)||'./portraits/'+slug+'.webp';
   const title=document.createElement('strong');title.textContent=name+' · '+startRank+'★ level '+startLevel+' · '+(r.rarity||'rarity unknown');header.append(portrait,title);card.append(header);
-  const steps=[];for(let k=startRank;k<rank;k++){steps.push('Level to '+(k*10)+' at '+k+'★'+(k===startRank?' (currently '+startLevel+')':''));steps.push('Use '+k+' other '+k+'★ food materials to rank up to '+(k+1)+'★');}
-  steps.push(startRank===rank?'Already at the required food rank — no leveling needed':'Stop at '+rank+'★ level 1 for final rank-up food');
-  const list=document.createElement('ol');steps.forEach(step=>{const li=document.createElement('li');li.textContent=step;list.append(li)});card.append(list);
+  const guide=document.createElement('details');guide.open=true;guide.style.cssText='margin-top:12px;padding:10px;border:1px solid #34515B;border-radius:10px';
+  const summary=document.createElement('summary');summary.style.cssText='cursor:pointer;font-weight:700';summary.textContent='Leveling & rank-up path · '+startRank+'★ → '+rank+'★';guide.append(summary);
+  const intro=document.createElement('p');intro.className='muted';intro.textContent='Current: '+startRank+'★ Level '+startLevel+' · Food target: '+rank+'★ Level 1. Follow each step in RAID; this planner does not consume champions.';guide.append(intro);
+  const steps=[];
+  if(startRank===rank){
+   steps.push({title:'Food rank already reached',detail:'Keep this champion at '+rank+'★. No additional leveling or ranking up is required for final rank-up food.',state:'Ready to review'});
+  }else{
+   for(let k=startRank;k<rank;k++){
+    const current=k===startRank,cap=k*10;
+    steps.push({title:'Level '+name+' at '+k+'★ to Level '+cap,detail:current?'Currently Level '+startLevel+' / '+cap+'. '+(startLevel>=cap?'Level cap reached; continue to rank-up.':'Gain '+Math.max(0,cap-startLevel)+' levels using campaign battles, brews or other available XP sources.'):'After the previous rank-up, start at Level 1 and gain '+(cap-1)+' levels to reach the '+k+'★ cap.',state:current&&startLevel>=cap?'Level complete':current?'Do next':'Future'});
+    steps.push({title:'Prepare '+k+' matching '+k+'★ food materials',detail:'Collect '+k+' separate '+k+'★ champions or appropriate chickens. These materials are consumed in the rank-up; do not use '+name+' itself. Each material must be prepared separately.',state:'Required'});
+    steps.push({title:'Rank up '+name+' from '+k+'★ to '+(k+1)+'★',detail:'In RAID, select '+name+' and consume the '+k+' prepared '+k+'★ materials. '+name+' becomes '+(k+1)+'★ Level 1. Update its rank and level in My Champions afterward.',state:'After materials ready'});
+   }
+   steps.push({title:'STOP: '+rank+'★ Level 1 food prepared',detail:'Do not level this food champion further. It can count as one of the '+rank+' matching-rank materials for the selected main champion, after confirming it is safe to sacrifice.',state:'Final target'});
+  }
+  const list=document.createElement('ol');list.style.cssText='padding-left:22px;margin:8px 0';
+  steps.forEach(step=>{const li=document.createElement('li');li.style.cssText='margin:0 0 13px;padding-left:4px';const heading=document.createElement('strong');heading.textContent=step.title;const detail=document.createElement('p');detail.className='muted';detail.style.margin='4px 0';detail.textContent=step.detail;const status=document.createElement('small');status.textContent=step.state;status.style.cssText='font-weight:700;color:#d6a959';li.append(heading,detail,status);list.append(li)});guide.append(list);
+  if(startRank<rank){const total=Array.from({length:rank-startRank},(_,i)=>startRank+i).reduce((sum,k)=>sum+k,0);const materials=document.createElement('p');materials.className='muted';materials.textContent='Preparation total for this one champion: '+total+' rank-up materials across '+(rank-startRank)+' rank-up'+(rank-startRank===1?'':'s')+'. Each step requires its specified star rank; these materials are separate from the final food requirement.';guide.append(materials)}
+  card.append(guide);
   const note=document.createElement('p');note.className='muted';note.textContent=unknown?'NOT RECOMMENDED AS FOOD YET: rarity is missing or not low-rarity. Verify rarity, faction guardians, fusions and team use first.':'Possible food only: confirm this copy is not needed for faction guardians, fusions or teams.';card.append(note);box.append(card);
  }
  if(!confirmed.length){const p=document.createElement('p');p.className='muted';p.textContent='No Common or Uncommon champions with confirmed rarity found in this saved roster. You can still view other champions below, but they are not approved as food.';box.append(p);}
