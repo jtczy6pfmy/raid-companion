@@ -82,3 +82,11 @@ Run `npm ci`, `npm test`, and `npm run test:dom`. DOM integration checks preserv
 
 ## Platform branches
 iPadOS development and GitHub Pages deployment use `ipados`. PC development and Windows installer builds use `main`. See [PLATFORMS.md](PLATFORMS.md) for source/deployment details and the separate Cloudflare production-branch setting.
+
+## Roster-based leveling roadmap
+
+Leveling Lab stores a separate plan for each champion copy. Select a target, choose food copies (Common first, then Uncommon; lowest rank first within each rarity), and enter chickens by rank. Locked, favorite, protected, faction-guardian, team and tracked-fusion copies are excluded. Missing rarity is resolved only through the public RSL-X reference when the name matches; otherwise the copy is not suggested. Ratings are used only when already supplied.
+
+The roadmap separates the bases to level from the sacrifices needed to promote them. Existing rank-specific supplies are allocated once; chickens never replace promotion bases. Each selected copy has an action, and remaining quantities identify additional champions needed. Fusion Tracker can send its rank/level target into the lab. Plans are local and included in JSON exports; no game champions or resources are consumed. Update My Champions after completing actions in RAID.
+
+XP tables come from https://raid.guide/en/guides/how-maximize-speed-building-champion-level-60/ and were checked against the six full-rank totals. Campaign presets come from https://ayumilove.net/raid-shadow-legends-champion-leveling-guide/. Estimates round upward by stage and training batch, assume successful runs and four battle participants, and treat the main champion and food sessions separately. Measured reward inputs accommodate other bonuses. Partial XP for food copies is not imported. Ascension potion quantities remain in the game, rather than being inferred from incomplete affinity/rarity data.

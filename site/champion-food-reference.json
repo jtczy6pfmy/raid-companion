@@ -1,0 +1,3065 @@
+{
+  "source": "https://rsl-x.vercel.app/tools/champions-index/",
+  "champions": {
+    "joan the luminant": {
+      "rarity": "Mythical"
+    },
+    "androc the glorious": {
+      "rarity": "Mythical"
+    },
+    "lord champfort": {
+      "rarity": "Legendary"
+    },
+    "sethallia": {
+      "rarity": "Legendary"
+    },
+    "cillian the lucky": {
+      "rarity": "Legendary"
+    },
+    "sigmund the highshield": {
+      "rarity": "Legendary"
+    },
+    "ronda": {
+      "rarity": "Legendary"
+    },
+    "black knight": {
+      "rarity": "Legendary"
+    },
+    "staltus dragonbane": {
+      "rarity": "Legendary"
+    },
+    "minaya": {
+      "rarity": "Legendary"
+    },
+    "helior": {
+      "rarity": "Legendary"
+    },
+    "timit the fool": {
+      "rarity": "Legendary"
+    },
+    "rathalos blademaster": {
+      "rarity": "Legendary"
+    },
+    "chronicler adelyn": {
+      "rarity": "Legendary"
+    },
+    "edward kenway": {
+      "rarity": "Legendary"
+    },
+    "lugan the steadfast": {
+      "rarity": "Legendary"
+    },
+    "septimus": {
+      "rarity": "Legendary"
+    },
+    "richtoff the bold": {
+      "rarity": "Legendary"
+    },
+    "kaja the wry": {
+      "rarity": "Legendary"
+    },
+    "acelin the stalwart": {
+      "rarity": "Legendary"
+    },
+    "michelangelo": {
+      "rarity": "Legendary"
+    },
+    "raglin": {
+      "rarity": "Legendary"
+    },
+    "baron": {
+      "rarity": "Legendary"
+    },
+    "taras the fierce": {
+      "rarity": "Legendary"
+    },
+    "marichka the unbreakable": {
+      "rarity": "Legendary"
+    },
+    "quintus the triumphant": {
+      "rarity": "Legendary"
+    },
+    "titus blackplume": {
+      "rarity": "Legendary"
+    },
+    "cecilia the red hope": {
+      "rarity": "Legendary"
+    },
+    "hordin": {
+      "rarity": "Epic"
+    },
+    "lordly legionary": {
+      "rarity": "Epic"
+    },
+    "archmage hellmut": {
+      "rarity": "Epic"
+    },
+    "gerhard the stone": {
+      "rarity": "Epic"
+    },
+    "arndulf": {
+      "rarity": "Epic"
+    },
+    "signy of highshield": {
+      "rarity": "Epic"
+    },
+    "oathbound": {
+      "rarity": "Epic"
+    },
+    "chancellor yasmin": {
+      "rarity": "Epic"
+    },
+    "seneschal": {
+      "rarity": "Epic"
+    },
+    "alaric the hooded": {
+      "rarity": "Epic"
+    },
+    "lady quilen": {
+      "rarity": "Epic"
+    },
+    "sir artimage": {
+      "rarity": "Epic"
+    },
+    "knight errant": {
+      "rarity": "Epic"
+    },
+    "stag knight": {
+      "rarity": "Epic"
+    },
+    "masked fearmonger": {
+      "rarity": "Epic"
+    },
+    "giscard the sigiled": {
+      "rarity": "Epic"
+    },
+    "eolfrig": {
+      "rarity": "Epic"
+    },
+    "lady annabelle": {
+      "rarity": "Epic"
+    },
+    "rowan": {
+      "rarity": "Epic"
+    },
+    "azure": {
+      "rarity": "Epic"
+    },
+    "warcaster": {
+      "rarity": "Epic"
+    },
+    "ursala the mourner": {
+      "rarity": "Epic"
+    },
+    "crossbowman": {
+      "rarity": "Rare"
+    },
+    "valerie": {
+      "rarity": "Rare"
+    },
+    "grandmaster": {
+      "rarity": "Rare"
+    },
+    "myrmidon": {
+      "rarity": "Rare"
+    },
+    "misericord": {
+      "rarity": "Rare"
+    },
+    "preserver": {
+      "rarity": "Rare"
+    },
+    "courtier": {
+      "rarity": "Rare"
+    },
+    "bombardier": {
+      "rarity": "Rare"
+    },
+    "quaestor": {
+      "rarity": "Rare"
+    },
+    "spymaster": {
+      "rarity": "Rare"
+    },
+    "cataphract": {
+      "rarity": "Rare"
+    },
+    "conquerer": {
+      "rarity": "Rare"
+    },
+    "halberdier": {
+      "rarity": "Rare"
+    },
+    "riscarm": {
+      "rarity": "Rare"
+    },
+    "chevalier": {
+      "rarity": "Rare"
+    },
+    "vanguard": {
+      "rarity": "Rare"
+    },
+    "steadfast marshal": {
+      "rarity": "Rare"
+    },
+    "dagger": {
+      "rarity": "Rare"
+    },
+    "denid": {
+      "rarity": "Rare"
+    },
+    "silvain the paramour": {
+      "rarity": "Rare"
+    },
+    "archer": {
+      "rarity": "Uncommon"
+    },
+    "stalwart": {
+      "rarity": "Uncommon"
+    },
+    "word bearer": {
+      "rarity": "Uncommon"
+    },
+    "duelist": {
+      "rarity": "Uncommon"
+    },
+    "commander": {
+      "rarity": "Uncommon"
+    },
+    "squire": {
+      "rarity": "Uncommon"
+    },
+    "fireblade": {
+      "rarity": "Uncommon"
+    },
+    "frontline warrior": {
+      "rarity": "Uncommon"
+    },
+    "swordsman": {
+      "rarity": "Common"
+    },
+    "pikeman": {
+      "rarity": "Common"
+    },
+    "axeman": {
+      "rarity": "Common"
+    },
+    "bandit": {
+      "rarity": "Common"
+    },
+    "starsage galathir": {
+      "rarity": "Mythical"
+    },
+    "sabrael the distant": {
+      "rarity": "Mythical"
+    },
+    "elenaril": {
+      "rarity": "Legendary"
+    },
+    "pyxniel": {
+      "rarity": "Legendary"
+    },
+    "aleksandr the sharpshooter": {
+      "rarity": "Legendary"
+    },
+    "strategos islin": {
+      "rarity": "Legendary"
+    },
+    "fyna, blade of aravia": {
+      "rarity": "Legendary"
+    },
+    "wallmaster othorion": {
+      "rarity": "Legendary"
+    },
+    "shirimani": {
+      "rarity": "Legendary"
+    },
+    "lonatharil": {
+      "rarity": "Legendary"
+    },
+    "basileus roanas": {
+      "rarity": "Legendary"
+    },
+    "deliana": {
+      "rarity": "Legendary"
+    },
+    "the incarnate": {
+      "rarity": "Legendary"
+    },
+    "lyssandra": {
+      "rarity": "Legendary"
+    },
+    "royal huntsman": {
+      "rarity": "Legendary"
+    },
+    "yannica": {
+      "rarity": "Legendary"
+    },
+    "tatura rimehide": {
+      "rarity": "Legendary"
+    },
+    "high keeper prysma": {
+      "rarity": "Legendary"
+    },
+    "lysanthir": {
+      "rarity": "Legendary"
+    },
+    "ithos": {
+      "rarity": "Legendary"
+    },
+    "belanor": {
+      "rarity": "Legendary"
+    },
+    "arbiter": {
+      "rarity": "Legendary"
+    },
+    "supreme elhain": {
+      "rarity": "Legendary"
+    },
+    "solanar the gleaming": {
+      "rarity": "Legendary"
+    },
+    "royal guard": {
+      "rarity": "Epic"
+    },
+    "tayrel": {
+      "rarity": "Epic"
+    },
+    "skeuramis": {
+      "rarity": "Epic"
+    },
+    "endalia": {
+      "rarity": "Epic"
+    },
+    "thenasil": {
+      "rarity": "Epic"
+    },
+    "luthiea": {
+      "rarity": "Epic"
+    },
+    "ilysinya": {
+      "rarity": "Epic"
+    },
+    "ambassador lethelin": {
+      "rarity": "Epic"
+    },
+    "neldor rimeblade": {
+      "rarity": "Epic"
+    },
+    "vergis": {
+      "rarity": "Epic"
+    },
+    "marksman": {
+      "rarity": "Epic"
+    },
+    "jinglehunter": {
+      "rarity": "Epic"
+    },
+    "battlesage": {
+      "rarity": "Epic"
+    },
+    "exemplar": {
+      "rarity": "Epic"
+    },
+    "andryssia": {
+      "rarity": "Epic"
+    },
+    "ethlen the golden": {
+      "rarity": "Epic"
+    },
+    "lightward siendra": {
+      "rarity": "Epic"
+    },
+    "apothecary": {
+      "rarity": "Rare"
+    },
+    "avenger": {
+      "rarity": "Rare"
+    },
+    "elhain": {
+      "rarity": "Rare"
+    },
+    "adjudicator": {
+      "rarity": "Rare"
+    },
+    "heiress": {
+      "rarity": "Rare"
+    },
+    "magister": {
+      "rarity": "Rare"
+    },
+    "fencer": {
+      "rarity": "Rare"
+    },
+    "hyria": {
+      "rarity": "Rare"
+    },
+    "prosecutor": {
+      "rarity": "Rare"
+    },
+    "medicus": {
+      "rarity": "Rare"
+    },
+    "interceptor": {
+      "rarity": "Rare"
+    },
+    "reliquary tender": {
+      "rarity": "Rare"
+    },
+    "selinia nightcloak": {
+      "rarity": "Rare"
+    },
+    "aristocrat": {
+      "rarity": "Uncommon"
+    },
+    "jaeger": {
+      "rarity": "Uncommon"
+    },
+    "elfguard": {
+      "rarity": "Uncommon"
+    },
+    "siegfrund the nephilim": {
+      "rarity": "Mythical"
+    },
+    "polara fireheart": {
+      "rarity": "Mythical"
+    },
+    "roshcard the tower": {
+      "rarity": "Legendary"
+    },
+    "corvis the corruptor": {
+      "rarity": "Legendary"
+    },
+    "astralon": {
+      "rarity": "Legendary"
+    },
+    "holsring": {
+      "rarity": "Legendary"
+    },
+    "hansel witchhunter": {
+      "rarity": "Legendary"
+    },
+    "he-man": {
+      "rarity": "Legendary"
+    },
+    "alice the wanderer": {
+      "rarity": "Legendary"
+    },
+    "april o'neil": {
+      "rarity": "Legendary"
+    },
+    "errol": {
+      "rarity": "Legendary"
+    },
+    "abbess": {
+      "rarity": "Legendary"
+    },
+    "gliseah soulguide": {
+      "rarity": "Legendary"
+    },
+    "highmother maud": {
+      "rarity": "Legendary"
+    },
+    "vault keeper wixwell": {
+      "rarity": "Legendary"
+    },
+    "mathias blackflail": {
+      "rarity": "Legendary"
+    },
+    "gretel hagbane": {
+      "rarity": "Legendary"
+    },
+    "basim": {
+      "rarity": "Legendary"
+    },
+    "martyr": {
+      "rarity": "Legendary"
+    },
+    "cupidus": {
+      "rarity": "Legendary"
+    },
+    "archbishop pinthroy": {
+      "rarity": "Legendary"
+    },
+    "bivald of the thorn": {
+      "rarity": "Legendary"
+    },
+    "falmond mournsword": {
+      "rarity": "Legendary"
+    },
+    "iudex artor": {
+      "rarity": "Legendary"
+    },
+    "ezio auditore": {
+      "rarity": "Legendary"
+    },
+    "sir nicholas": {
+      "rarity": "Legendary"
+    },
+    "venus": {
+      "rarity": "Legendary"
+    },
+    "cardiel": {
+      "rarity": "Legendary"
+    },
+    "konstantin the dayborn": {
+      "rarity": "Legendary"
+    },
+    "supreme athel": {
+      "rarity": "Legendary"
+    },
+    "vitrius the anointed": {
+      "rarity": "Legendary"
+    },
+    "lady noelle": {
+      "rarity": "Legendary"
+    },
+    "canoness": {
+      "rarity": "Epic"
+    },
+    "adriel": {
+      "rarity": "Epic"
+    },
+    "hope": {
+      "rarity": "Epic"
+    },
+    "frostbringer": {
+      "rarity": "Epic"
+    },
+    "tallia": {
+      "rarity": "Epic"
+    },
+    "juliana": {
+      "rarity": "Epic"
+    },
+    "sanguinia": {
+      "rarity": "Epic"
+    },
+    "aothar": {
+      "rarity": "Epic"
+    },
+    "relickeeper": {
+      "rarity": "Epic"
+    },
+    "missionary": {
+      "rarity": "Epic"
+    },
+    "romero": {
+      "rarity": "Epic"
+    },
+    "lady etessa": {
+      "rarity": "Epic"
+    },
+    "mordecai": {
+      "rarity": "Epic"
+    },
+    "bushi": {
+      "rarity": "Epic"
+    },
+    "fenax": {
+      "rarity": "Epic"
+    },
+    "deacon armstrong": {
+      "rarity": "Epic"
+    },
+    "mistress of hymns": {
+      "rarity": "Epic"
+    },
+    "lodric falconheart": {
+      "rarity": "Epic"
+    },
+    "anchorite": {
+      "rarity": "Epic"
+    },
+    "carlinia": {
+      "rarity": "Epic"
+    },
+    "cardinal": {
+      "rarity": "Epic"
+    },
+    "lightsworn": {
+      "rarity": "Epic"
+    },
+    "inquisitor shamael": {
+      "rarity": "Epic"
+    },
+    "godseeker aniri": {
+      "rarity": "Epic"
+    },
+    "athel": {
+      "rarity": "Rare"
+    },
+    "witness": {
+      "rarity": "Rare"
+    },
+    "hospitaller": {
+      "rarity": "Rare"
+    },
+    "purgator": {
+      "rarity": "Rare"
+    },
+    "castigator": {
+      "rarity": "Rare"
+    },
+    "chaplain": {
+      "rarity": "Rare"
+    },
+    "lamellar": {
+      "rarity": "Rare"
+    },
+    "solaris": {
+      "rarity": "Rare"
+    },
+    "renouncer": {
+      "rarity": "Rare"
+    },
+    "templar": {
+      "rarity": "Rare"
+    },
+    "penitent": {
+      "rarity": "Rare"
+    },
+    "warpriest": {
+      "rarity": "Rare"
+    },
+    "judicator": {
+      "rarity": "Rare"
+    },
+    "maiden": {
+      "rarity": "Rare"
+    },
+    "mother superior": {
+      "rarity": "Rare"
+    },
+    "headsman": {
+      "rarity": "Rare"
+    },
+    "sanctum protector": {
+      "rarity": "Rare"
+    },
+    "confessor": {
+      "rarity": "Rare"
+    },
+    "justiciar": {
+      "rarity": "Rare"
+    },
+    "harrier": {
+      "rarity": "Rare"
+    },
+    "draconis": {
+      "rarity": "Rare"
+    },
+    "drillmaster": {
+      "rarity": "Uncommon"
+    },
+    "battle sister": {
+      "rarity": "Uncommon"
+    },
+    "outlaw monk": {
+      "rarity": "Uncommon"
+    },
+    "sergeant": {
+      "rarity": "Uncommon"
+    },
+    "intercessor": {
+      "rarity": "Uncommon"
+    },
+    "pilgrim": {
+      "rarity": "Uncommon"
+    },
+    "crusader": {
+      "rarity": "Uncommon"
+    },
+    "militia": {
+      "rarity": "Uncommon"
+    },
+    "vigilante": {
+      "rarity": "Uncommon"
+    },
+    "armiger": {
+      "rarity": "Uncommon"
+    },
+    "yeoman": {
+      "rarity": "Common"
+    },
+    "sister militant": {
+      "rarity": "Common"
+    },
+    "preacher": {
+      "rarity": "Common"
+    },
+    "knecht": {
+      "rarity": "Common"
+    },
+    "novitiate": {
+      "rarity": "Common"
+    },
+    "arne the white": {
+      "rarity": "Mythical"
+    },
+    "alaz the sunbearer": {
+      "rarity": "Mythical"
+    },
+    "altan": {
+      "rarity": "Legendary"
+    },
+    "scyl of the drakes": {
+      "rarity": "Legendary"
+    },
+    "opardin clanfather": {
+      "rarity": "Legendary"
+    },
+    "crohnam": {
+      "rarity": "Legendary"
+    },
+    "armanz the magnificent": {
+      "rarity": "Legendary"
+    },
+    "thor faehammer": {
+      "rarity": "Legendary"
+    },
+    "kantra the cyclone": {
+      "rarity": "Legendary"
+    },
+    "elder skarg": {
+      "rarity": "Legendary"
+    },
+    "alsgor crimsonhorn": {
+      "rarity": "Legendary"
+    },
+    "xena: warrior princess": {
+      "rarity": "Legendary"
+    },
+    "dune lord greggor": {
+      "rarity": "Legendary"
+    },
+    "freyja fateweaver": {
+      "rarity": "Legendary"
+    },
+    "esme the dancer": {
+      "rarity": "Legendary"
+    },
+    "dune herald zaharis": {
+      "rarity": "Legendary"
+    },
+    "raphael": {
+      "rarity": "Legendary"
+    },
+    "valkyrie": {
+      "rarity": "Legendary"
+    },
+    "roric wyrmbane": {
+      "rarity": "Legendary"
+    },
+    "raf-matab": {
+      "rarity": "Legendary"
+    },
+    "jetni the giant": {
+      "rarity": "Legendary"
+    },
+    "r. nergigante archer": {
+      "rarity": "Legendary"
+    },
+    "loki the deceiver": {
+      "rarity": "Legendary"
+    },
+    "turvold": {
+      "rarity": "Legendary"
+    },
+    "ursuga warcaller": {
+      "rarity": "Legendary"
+    },
+    "yakarl the scourge": {
+      "rarity": "Legendary"
+    },
+    "tuhanarak": {
+      "rarity": "Legendary"
+    },
+    "odin faefather": {
+      "rarity": "Legendary"
+    },
+    "bayek": {
+      "rarity": "Legendary"
+    },
+    "aina": {
+      "rarity": "Epic"
+    },
+    "jotunn": {
+      "rarity": "Epic"
+    },
+    "sikara": {
+      "rarity": "Epic"
+    },
+    "atur": {
+      "rarity": "Epic"
+    },
+    "armina": {
+      "rarity": "Epic"
+    },
+    "alika": {
+      "rarity": "Epic"
+    },
+    "teshada": {
+      "rarity": "Epic"
+    },
+    "kallia": {
+      "rarity": "Epic"
+    },
+    "maeve": {
+      "rarity": "Epic"
+    },
+    "baroth the bloodsoaked": {
+      "rarity": "Epic"
+    },
+    "djamarsa": {
+      "rarity": "Epic"
+    },
+    "woad-painted": {
+      "rarity": "Epic"
+    },
+    "high khatun": {
+      "rarity": "Epic"
+    },
+    "valla": {
+      "rarity": "Epic"
+    },
+    "fahrakin the fat": {
+      "rarity": "Epic"
+    },
+    "hoskarul": {
+      "rarity": "Epic"
+    },
+    "haarken greatblade": {
+      "rarity": "Epic"
+    },
+    "suwai firstborn": {
+      "rarity": "Epic"
+    },
+    "skytouched shaman": {
+      "rarity": "Epic"
+    },
+    "marked": {
+      "rarity": "Rare"
+    },
+    "elder": {
+      "rarity": "Rare"
+    },
+    "hill nomad": {
+      "rarity": "Rare"
+    },
+    "dunestrider": {
+      "rarity": "Rare"
+    },
+    "trugorr": {
+      "rarity": "Rare"
+    },
+    "sentinel": {
+      "rarity": "Rare"
+    },
+    "warmaiden": {
+      "rarity": "Rare"
+    },
+    "slayer": {
+      "rarity": "Rare"
+    },
+    "anointed": {
+      "rarity": "Rare"
+    },
+    "berserker": {
+      "rarity": "Rare"
+    },
+    "bloodbraid": {
+      "rarity": "Rare"
+    },
+    "soulbond bowyer": {
+      "rarity": "Rare"
+    },
+    "tigersoul": {
+      "rarity": "Rare"
+    },
+    "skirmisher": {
+      "rarity": "Rare"
+    },
+    "ox": {
+      "rarity": "Rare"
+    },
+    "ragemonger": {
+      "rarity": "Rare"
+    },
+    "scrapper": {
+      "rarity": "Rare"
+    },
+    "ritualist": {
+      "rarity": "Uncommon"
+    },
+    "dervish": {
+      "rarity": "Uncommon"
+    },
+    "head taker": {
+      "rarity": "Uncommon"
+    },
+    "spiritwalker": {
+      "rarity": "Uncommon"
+    },
+    "pit fighter": {
+      "rarity": "Uncommon"
+    },
+    "outlander": {
+      "rarity": "Uncommon"
+    },
+    "shieldguard": {
+      "rarity": "Uncommon"
+    },
+    "outrider": {
+      "rarity": "Uncommon"
+    },
+    "crusher": {
+      "rarity": "Uncommon"
+    },
+    "zephyr sniper": {
+      "rarity": "Uncommon"
+    },
+    "sandbow": {
+      "rarity": "Uncommon"
+    },
+    "bully": {
+      "rarity": "Common"
+    },
+    "gizmak the terrible": {
+      "rarity": "Mythical"
+    },
+    "big 'un": {
+      "rarity": "Legendary"
+    },
+    "war mother": {
+      "rarity": "Legendary"
+    },
+    "ignatius": {
+      "rarity": "Legendary"
+    },
+    "vizug the noxious": {
+      "rarity": "Legendary"
+    },
+    "grugtha darkseer": {
+      "rarity": "Legendary"
+    },
+    "gurptuk moss-beard": {
+      "rarity": "Legendary"
+    },
+    "guurda bogbrew": {
+      "rarity": "Legendary"
+    },
+    "korugar death-bell": {
+      "rarity": "Legendary"
+    },
+    "brewguard jeroboam": {
+      "rarity": "Legendary"
+    },
+    "craklin the blackened": {
+      "rarity": "Legendary"
+    },
+    "modo of the peal": {
+      "rarity": "Legendary"
+    },
+    "first ax tuskkor": {
+      "rarity": "Legendary"
+    },
+    "shamrock": {
+      "rarity": "Legendary"
+    },
+    "drokgul the gaunt": {
+      "rarity": "Legendary"
+    },
+    "ugir the wyrmeater": {
+      "rarity": "Legendary"
+    },
+    "blizaar the howler": {
+      "rarity": "Legendary"
+    },
+    "stokk the broken": {
+      "rarity": "Legendary"
+    },
+    "kroz wallbreaker": {
+      "rarity": "Legendary"
+    },
+    "gurgoh the augur": {
+      "rarity": "Legendary"
+    },
+    "graazur irongut": {
+      "rarity": "Legendary"
+    },
+    "togron the conjoined": {
+      "rarity": "Legendary"
+    },
+    "belletar mage-slayer": {
+      "rarity": "Legendary"
+    },
+    "diamant coppercoin": {
+      "rarity": "Legendary"
+    },
+    "klaazag keyhulk": {
+      "rarity": "Legendary"
+    },
+    "grimskin": {
+      "rarity": "Epic"
+    },
+    "uugo": {
+      "rarity": "Epic"
+    },
+    "klodd beastfeeder": {
+      "rarity": "Epic"
+    },
+    "siegehulk": {
+      "rarity": "Epic"
+    },
+    "lorn the cutter": {
+      "rarity": "Epic"
+    },
+    "skullcrusher": {
+      "rarity": "Epic"
+    },
+    "shatterbones": {
+      "rarity": "Epic"
+    },
+    "grunch killjoy": {
+      "rarity": "Epic"
+    },
+    "ceez": {
+      "rarity": "Epic"
+    },
+    "old ghrukkus": {
+      "rarity": "Epic"
+    },
+    "galkut": {
+      "rarity": "Epic"
+    },
+    "cagebreaker": {
+      "rarity": "Epic"
+    },
+    "occult brawler": {
+      "rarity": "Epic"
+    },
+    "ghrush the mangler": {
+      "rarity": "Epic"
+    },
+    "wuzgar": {
+      "rarity": "Epic"
+    },
+    "maneater": {
+      "rarity": "Epic"
+    },
+    "towering titan": {
+      "rarity": "Epic"
+    },
+    "skraank": {
+      "rarity": "Epic"
+    },
+    "prundar": {
+      "rarity": "Epic"
+    },
+    "urogrim": {
+      "rarity": "Epic"
+    },
+    "rocktooth": {
+      "rarity": "Rare"
+    },
+    "pounder": {
+      "rarity": "Rare"
+    },
+    "fortress goon": {
+      "rarity": "Rare"
+    },
+    "wagonbane": {
+      "rarity": "Rare"
+    },
+    "magmablood": {
+      "rarity": "Rare"
+    },
+    "ruffstone": {
+      "rarity": "Rare"
+    },
+    "ogryn jailer": {
+      "rarity": "Rare"
+    },
+    "lumberer": {
+      "rarity": "Rare"
+    },
+    "furystoker": {
+      "rarity": "Rare"
+    },
+    "siegebreaker": {
+      "rarity": "Rare"
+    },
+    "flesheater": {
+      "rarity": "Rare"
+    },
+    "rockbeast": {
+      "rarity": "Rare"
+    },
+    "bellower": {
+      "rarity": "Rare"
+    },
+    "geargrinder": {
+      "rarity": "Rare"
+    },
+    "mycolus": {
+      "rarity": "Rare"
+    },
+    "brute": {
+      "rarity": "Uncommon"
+    },
+    "frostskin": {
+      "rarity": "Uncommon"
+    },
+    "oldbeard": {
+      "rarity": "Uncommon"
+    },
+    "hungerer": {
+      "rarity": "Uncommon"
+    },
+    "thrasher": {
+      "rarity": "Uncommon"
+    },
+    "hierophant lazarius": {
+      "rarity": "Mythical"
+    },
+    "anaxia the reborn": {
+      "rarity": "Mythical"
+    },
+    "dracomorph": {
+      "rarity": "Legendary"
+    },
+    "roxam": {
+      "rarity": "Legendary"
+    },
+    "ba satha": {
+      "rarity": "Legendary"
+    },
+    "kerin the harvester": {
+      "rarity": "Legendary"
+    },
+    "amoch the first satrap": {
+      "rarity": "Legendary"
+    },
+    "donatello": {
+      "rarity": "Legendary"
+    },
+    "xiloco the encrusted": {
+      "rarity": "Legendary"
+    },
+    "fu-shan": {
+      "rarity": "Legendary"
+    },
+    "rhazin scarhide": {
+      "rarity": "Legendary"
+    },
+    "skull lord var-gall": {
+      "rarity": "Legendary"
+    },
+    "pythion": {
+      "rarity": "Legendary"
+    },
+    "predator": {
+      "rarity": "Legendary"
+    },
+    "kosk of two skins": {
+      "rarity": "Legendary"
+    },
+    "vergumkaar": {
+      "rarity": "Legendary"
+    },
+    "nekmo thaar": {
+      "rarity": "Legendary"
+    },
+    "krok'mar the devourer": {
+      "rarity": "Legendary"
+    },
+    "legate teox": {
+      "rarity": "Legendary"
+    },
+    "krisk the ageless": {
+      "rarity": "Legendary"
+    },
+    "ramantu drakesblood": {
+      "rarity": "Legendary"
+    },
+    "chaagur": {
+      "rarity": "Legendary"
+    },
+    "sulfuryion": {
+      "rarity": "Legendary"
+    },
+    "pheidi tealcrest": {
+      "rarity": "Legendary"
+    },
+    "jarang": {
+      "rarity": "Epic"
+    },
+    "jareg": {
+      "rarity": "Epic"
+    },
+    "venomage": {
+      "rarity": "Epic"
+    },
+    "galapo the recluse": {
+      "rarity": "Epic"
+    },
+    "basilisk": {
+      "rarity": "Epic"
+    },
+    "aox the rememberer": {
+      "rarity": "Epic"
+    },
+    "broodlord": {
+      "rarity": "Epic"
+    },
+    "zii ixchi": {
+      "rarity": "Epic"
+    },
+    "drake": {
+      "rarity": "Epic"
+    },
+    "jizoh": {
+      "rarity": "Epic"
+    },
+    "quargan the crowned": {
+      "rarity": "Epic"
+    },
+    "delaaja": {
+      "rarity": "Epic"
+    },
+    "broadmaw": {
+      "rarity": "Epic"
+    },
+    "skathix": {
+      "rarity": "Epic"
+    },
+    "slixus stripehide": {
+      "rarity": "Epic"
+    },
+    "muckstalker": {
+      "rarity": "Rare"
+    },
+    "skink": {
+      "rarity": "Rare"
+    },
+    "gator": {
+      "rarity": "Rare"
+    },
+    "slitherbrute": {
+      "rarity": "Rare"
+    },
+    "bogwalker": {
+      "rarity": "Rare"
+    },
+    "skullsworn": {
+      "rarity": "Rare"
+    },
+    "hurler": {
+      "rarity": "Rare"
+    },
+    "flinger": {
+      "rarity": "Rare"
+    },
+    "slasher": {
+      "rarity": "Rare"
+    },
+    "metalshaper": {
+      "rarity": "Rare"
+    },
+    "haruspex": {
+      "rarity": "Rare"
+    },
+    "cagebound": {
+      "rarity": "Rare"
+    },
+    "teryx the restless": {
+      "rarity": "Rare"
+    },
+    "skinner": {
+      "rarity": "Uncommon"
+    },
+    "hardscale": {
+      "rarity": "Uncommon"
+    },
+    "stalker": {
+      "rarity": "Uncommon"
+    },
+    "saurus": {
+      "rarity": "Uncommon"
+    },
+    "troglodyte": {
+      "rarity": "Common"
+    },
+    "galleus bloodcrest": {
+      "rarity": "Mythical"
+    },
+    "mezomel luperfang": {
+      "rarity": "Mythical"
+    },
+    "norog": {
+      "rarity": "Legendary"
+    },
+    "longbeard": {
+      "rarity": "Legendary"
+    },
+    "hakkorhn smashlord": {
+      "rarity": "Legendary"
+    },
+    "razelvarg": {
+      "rarity": "Legendary"
+    },
+    "bambus fourleaf": {
+      "rarity": "Legendary"
+    },
+    "warchief": {
+      "rarity": "Legendary"
+    },
+    "mighty ukko": {
+      "rarity": "Legendary"
+    },
+    "brakus the shifter": {
+      "rarity": "Legendary"
+    },
+    "gnishak verminlord": {
+      "rarity": "Legendary"
+    },
+    "gwyndolin the silent": {
+      "rarity": "Legendary"
+    },
+    "bolint freewalker": {
+      "rarity": "Legendary"
+    },
+    "sniktraak": {
+      "rarity": "Legendary"
+    },
+    "samson the masher": {
+      "rarity": "Legendary"
+    },
+    "cleopterix": {
+      "rarity": "Legendary"
+    },
+    "ragash": {
+      "rarity": "Legendary"
+    },
+    "greathoof loriaca": {
+      "rarity": "Legendary"
+    },
+    "sun wukong": {
+      "rarity": "Legendary"
+    },
+    "khoronar": {
+      "rarity": "Legendary"
+    },
+    "teumesia": {
+      "rarity": "Legendary"
+    },
+    "leorius the proud": {
+      "rarity": "Legendary"
+    },
+    "marius the gallant": {
+      "rarity": "Legendary"
+    },
+    "taurus": {
+      "rarity": "Epic"
+    },
+    "flesh-tearer": {
+      "rarity": "Epic"
+    },
+    "scabrius": {
+      "rarity": "Epic"
+    },
+    "gnarox blackhorn": {
+      "rarity": "Epic"
+    },
+    "ripper": {
+      "rarity": "Epic"
+    },
+    "reinbeast": {
+      "rarity": "Epic"
+    },
+    "snorting thug": {
+      "rarity": "Epic"
+    },
+    "yaga the insatiable": {
+      "rarity": "Epic"
+    },
+    "ursine icecrusher": {
+      "rarity": "Epic"
+    },
+    "ursine ironhide": {
+      "rarity": "Epic"
+    },
+    "hoforees the tusked": {
+      "rarity": "Epic"
+    },
+    "steelskull": {
+      "rarity": "Epic"
+    },
+    "fayne": {
+      "rarity": "Epic"
+    },
+    "bovos sharphorn": {
+      "rarity": "Epic"
+    },
+    "bowf the rancid": {
+      "rarity": "Epic"
+    },
+    "basher": {
+      "rarity": "Epic"
+    },
+    "akemtum": {
+      "rarity": "Epic"
+    },
+    "weregren suncursed": {
+      "rarity": "Epic"
+    },
+    "fren'zi the cackler": {
+      "rarity": "Epic"
+    },
+    "yuzan the marooned": {
+      "rarity": "Epic"
+    },
+    "ghomm yellowhand": {
+      "rarity": "Epic"
+    },
+    "graybeard": {
+      "rarity": "Rare"
+    },
+    "fleshmonger": {
+      "rarity": "Rare"
+    },
+    "hidestitcher boorn": {
+      "rarity": "Rare"
+    },
+    "bloodpainter": {
+      "rarity": "Rare"
+    },
+    "meatcarver tolog": {
+      "rarity": "Rare"
+    },
+    "gnarlhorn": {
+      "rarity": "Rare"
+    },
+    "channeler": {
+      "rarity": "Rare"
+    },
+    "grappler": {
+      "rarity": "Rare"
+    },
+    "lamibur": {
+      "rarity": "Rare"
+    },
+    "bloodhorn": {
+      "rarity": "Rare"
+    },
+    "panthera": {
+      "rarity": "Rare"
+    },
+    "windtalker": {
+      "rarity": "Uncommon"
+    },
+    "satyr": {
+      "rarity": "Uncommon"
+    },
+    "ash'nar dragonsoul": {
+      "rarity": "Mythical"
+    },
+    "gharol bloodmaul": {
+      "rarity": "Mythical"
+    },
+    "grohak the bloodied": {
+      "rarity": "Legendary"
+    },
+    "kreela witch-arm": {
+      "rarity": "Legendary"
+    },
+    "teela goremane": {
+      "rarity": "Legendary"
+    },
+    "danag skullreap": {
+      "rarity": "Legendary"
+    },
+    "artak": {
+      "rarity": "Legendary"
+    },
+    "kro'khad the throatripper": {
+      "rarity": "Legendary"
+    },
+    "robar": {
+      "rarity": "Legendary"
+    },
+    "gomlok skyhide": {
+      "rarity": "Legendary"
+    },
+    "king garog": {
+      "rarity": "Legendary"
+    },
+    "packmaster shy'ek": {
+      "rarity": "Legendary"
+    },
+    "aragaz wyldking": {
+      "rarity": "Legendary"
+    },
+    "matriarch zarguna": {
+      "rarity": "Legendary"
+    },
+    "nogdar the headhunter": {
+      "rarity": "Legendary"
+    },
+    "iron brago": {
+      "rarity": "Legendary"
+    },
+    "varl the destroyer": {
+      "rarity": "Legendary"
+    },
+    "jagg bonesaw": {
+      "rarity": "Legendary"
+    },
+    "belz the reckoner": {
+      "rarity": "Legendary"
+    },
+    "warlord": {
+      "rarity": "Legendary"
+    },
+    "angar": {
+      "rarity": "Legendary"
+    },
+    "rakka viletide": {
+      "rarity": "Legendary"
+    },
+    "supreme galek": {
+      "rarity": "Legendary"
+    },
+    "kawn branchbreaker": {
+      "rarity": "Legendary"
+    },
+    "gaellut, son of the pact": {
+      "rarity": "Legendary"
+    },
+    "ultimate galek": {
+      "rarity": "Epic"
+    },
+    "dhukk the pierced": {
+      "rarity": "Epic"
+    },
+    "old hermit jorrg": {
+      "rarity": "Epic"
+    },
+    "tagoar": {
+      "rarity": "Epic"
+    },
+    "merouka": {
+      "rarity": "Epic"
+    },
+    "torturehelm": {
+      "rarity": "Epic"
+    },
+    "zargala": {
+      "rarity": "Epic"
+    },
+    "bloodfeather": {
+      "rarity": "Epic"
+    },
+    "bonekeeper": {
+      "rarity": "Epic"
+    },
+    "shaman": {
+      "rarity": "Epic"
+    },
+    "terrorbeast": {
+      "rarity": "Epic"
+    },
+    "vrask": {
+      "rarity": "Epic"
+    },
+    "sandlashed survivor": {
+      "rarity": "Epic"
+    },
+    "yelagirna": {
+      "rarity": "Epic"
+    },
+    "trumborr": {
+      "rarity": "Epic"
+    },
+    "seer": {
+      "rarity": "Epic"
+    },
+    "tuhak the wanderer": {
+      "rarity": "Epic"
+    },
+    "tolf the maimed": {
+      "rarity": "Epic"
+    },
+    "liburga": {
+      "rarity": "Epic"
+    },
+    "deathchanter": {
+      "rarity": "Rare"
+    },
+    "chopper": {
+      "rarity": "Rare"
+    },
+    "galek": {
+      "rarity": "Rare"
+    },
+    "spikehead": {
+      "rarity": "Rare"
+    },
+    "pigsticker": {
+      "rarity": "Rare"
+    },
+    "ironclad": {
+      "rarity": "Rare"
+    },
+    "goremask": {
+      "rarity": "Rare"
+    },
+    "treefeller": {
+      "rarity": "Rare"
+    },
+    "twinclaw disciple": {
+      "rarity": "Rare"
+    },
+    "raider": {
+      "rarity": "Rare"
+    },
+    "totem": {
+      "rarity": "Rare"
+    },
+    "wyvernbane": {
+      "rarity": "Rare"
+    },
+    "veteran": {
+      "rarity": "Rare"
+    },
+    "huntress": {
+      "rarity": "Rare"
+    },
+    "ripperfist": {
+      "rarity": "Rare"
+    },
+    "warchanter": {
+      "rarity": "Uncommon"
+    },
+    "suntribe": {
+      "rarity": "Uncommon"
+    },
+    "tracker": {
+      "rarity": "Uncommon"
+    },
+    "throatcutter": {
+      "rarity": "Uncommon"
+    },
+    "warboy": {
+      "rarity": "Common"
+    },
+    "komidus darksmile": {
+      "rarity": "Mythical"
+    },
+    "kurosa the covetous": {
+      "rarity": "Mythical"
+    },
+    "karnage the anarch": {
+      "rarity": "Mythical"
+    },
+    "prince kymar": {
+      "rarity": "Legendary"
+    },
+    "tyrant ixlimor": {
+      "rarity": "Legendary"
+    },
+    "countess lix": {
+      "rarity": "Legendary"
+    },
+    "hephraak": {
+      "rarity": "Legendary"
+    },
+    "skorid the halfspawn": {
+      "rarity": "Legendary"
+    },
+    "drexthar bloodtwin": {
+      "rarity": "Legendary"
+    },
+    "candraphon": {
+      "rarity": "Legendary"
+    },
+    "sicia flametongue": {
+      "rarity": "Legendary"
+    },
+    "vasal of the seal": {
+      "rarity": "Legendary"
+    },
+    "wythir the crowned": {
+      "rarity": "Legendary"
+    },
+    "vulkanos fumor": {
+      "rarity": "Legendary"
+    },
+    "praeva the slitherer": {
+      "rarity": "Legendary"
+    },
+    "mortu-macaab": {
+      "rarity": "Legendary"
+    },
+    "lord shazar": {
+      "rarity": "Legendary"
+    },
+    "duchess lilitu": {
+      "rarity": "Legendary"
+    },
+    "helicath": {
+      "rarity": "Legendary"
+    },
+    "cheshire cat": {
+      "rarity": "Legendary"
+    },
+    "gracchos turn-drake": {
+      "rarity": "Legendary"
+    },
+    "cruetraxa": {
+      "rarity": "Legendary"
+    },
+    "inithwe bloodtwin": {
+      "rarity": "Legendary"
+    },
+    "authoratrix lamasu": {
+      "rarity": "Legendary"
+    },
+    "chalco the blind": {
+      "rarity": "Legendary"
+    },
+    "alure": {
+      "rarity": "Epic"
+    },
+    "excruciator": {
+      "rarity": "Epic"
+    },
+    "akoth the seared": {
+      "rarity": "Epic"
+    },
+    "vildrax": {
+      "rarity": "Epic"
+    },
+    "scion": {
+      "rarity": "Epic"
+    },
+    "erinyes": {
+      "rarity": "Epic"
+    },
+    "souldrinker": {
+      "rarity": "Epic"
+    },
+    "nazana": {
+      "rarity": "Epic"
+    },
+    "infernal baroness": {
+      "rarity": "Epic"
+    },
+    "tainix hateflower": {
+      "rarity": "Epic"
+    },
+    "achak the wendarin": {
+      "rarity": "Epic"
+    },
+    "hellgazer": {
+      "rarity": "Epic"
+    },
+    "tarshon": {
+      "rarity": "Epic"
+    },
+    "gorlos hellmaw": {
+      "rarity": "Epic"
+    },
+    "magnarr": {
+      "rarity": "Epic"
+    },
+    "duhr the hungerer": {
+      "rarity": "Epic"
+    },
+    "urticata": {
+      "rarity": "Epic"
+    },
+    "peydma": {
+      "rarity": "Epic"
+    },
+    "umbral enchantress": {
+      "rarity": "Epic"
+    },
+    "skimfos the consumed": {
+      "rarity": "Epic"
+    },
+    "diabolist": {
+      "rarity": "Rare"
+    },
+    "tormentor": {
+      "rarity": "Rare"
+    },
+    "petrifya rockroot": {
+      "rarity": "Rare"
+    },
+    "hound spawn": {
+      "rarity": "Rare"
+    },
+    "hellfang": {
+      "rarity": "Rare"
+    },
+    "marquess": {
+      "rarity": "Rare"
+    },
+    "abyssal": {
+      "rarity": "Rare"
+    },
+    "hellborn sprite": {
+      "rarity": "Rare"
+    },
+    "hellfreak": {
+      "rarity": "Rare"
+    },
+    "ifrit": {
+      "rarity": "Rare"
+    },
+    "marquis": {
+      "rarity": "Rare"
+    },
+    "fellhound": {
+      "rarity": "Rare"
+    },
+    "malbranche": {
+      "rarity": "Rare"
+    },
+    "lemure": {
+      "rarity": "Uncommon"
+    },
+    "incubus": {
+      "rarity": "Uncommon"
+    },
+    "pit cur": {
+      "rarity": "Uncommon"
+    },
+    "pitspawn": {
+      "rarity": "Uncommon"
+    },
+    "vilespawn": {
+      "rarity": "Uncommon"
+    },
+    "blood marchioness mina": {
+      "rarity": "Mythical"
+    },
+    "theodosia the disgraced": {
+      "rarity": "Mythical"
+    },
+    "the calamitus": {
+      "rarity": "Mythical"
+    },
+    "crypt-king graal": {
+      "rarity": "Legendary"
+    },
+    "rotos the lost groom": {
+      "rarity": "Legendary"
+    },
+    "saito": {
+      "rarity": "Legendary"
+    },
+    "elegaius": {
+      "rarity": "Legendary"
+    },
+    "morrigaine": {
+      "rarity": "Legendary"
+    },
+    "skartorsis": {
+      "rarity": "Legendary"
+    },
+    "bad-el-kazar": {
+      "rarity": "Legendary"
+    },
+    "bloodgorged": {
+      "rarity": "Legendary"
+    },
+    "ultimate deathknight": {
+      "rarity": "Legendary"
+    },
+    "knave of hearts": {
+      "rarity": "Legendary"
+    },
+    "sanguine maria": {
+      "rarity": "Legendary"
+    },
+    "ma'shalled": {
+      "rarity": "Legendary"
+    },
+    "nethril": {
+      "rarity": "Legendary"
+    },
+    "suzerain katonn": {
+      "rarity": "Legendary"
+    },
+    "harvest jack": {
+      "rarity": "Legendary"
+    },
+    "tribune herakletes": {
+      "rarity": "Legendary"
+    },
+    "lord entertainer fabian": {
+      "rarity": "Legendary"
+    },
+    "siphi the lost bride": {
+      "rarity": "Legendary"
+    },
+    "nekhret the great": {
+      "rarity": "Legendary"
+    },
+    "urost the soulcage": {
+      "rarity": "Legendary"
+    },
+    "little miss annie": {
+      "rarity": "Legendary"
+    },
+    "vlad the nightborn": {
+      "rarity": "Legendary"
+    },
+    "valkanen": {
+      "rarity": "Legendary"
+    },
+    "gaspard the accused": {
+      "rarity": "Legendary"
+    },
+    "gorgorab": {
+      "rarity": "Epic"
+    },
+    "seeker": {
+      "rarity": "Epic"
+    },
+    "catacomb councilor": {
+      "rarity": "Epic"
+    },
+    "dark athel": {
+      "rarity": "Epic"
+    },
+    "dark elhain": {
+      "rarity": "Epic"
+    },
+    "husk": {
+      "rarity": "Epic"
+    },
+    "karam": {
+      "rarity": "Epic"
+    },
+    "lich": {
+      "rarity": "Epic"
+    },
+    "hexia": {
+      "rarity": "Epic"
+    },
+    "defiled sinner": {
+      "rarity": "Epic"
+    },
+    "corpse collector": {
+      "rarity": "Epic"
+    },
+    "mausoleum mage": {
+      "rarity": "Epic"
+    },
+    "zelotah": {
+      "rarity": "Epic"
+    },
+    "vogoth": {
+      "rarity": "Epic"
+    },
+    "balthus drauglord": {
+      "rarity": "Epic"
+    },
+    "anax": {
+      "rarity": "Epic"
+    },
+    "ostrox boneglaive": {
+      "rarity": "Epic"
+    },
+    "khafru the deathkeeper": {
+      "rarity": "Epic"
+    },
+    "banshee": {
+      "rarity": "Rare"
+    },
+    "temptress": {
+      "rarity": "Rare"
+    },
+    "frozen banshee": {
+      "rarity": "Rare"
+    },
+    "gravechill killer": {
+      "rarity": "Rare"
+    },
+    "sorceress": {
+      "rarity": "Rare"
+    },
+    "grinner": {
+      "rarity": "Rare"
+    },
+    "wretch": {
+      "rarity": "Rare"
+    },
+    "bone knight": {
+      "rarity": "Rare"
+    },
+    "rotting mage": {
+      "rarity": "Rare"
+    },
+    "ghoulish ranger": {
+      "rarity": "Rare"
+    },
+    "corpulent cadaver": {
+      "rarity": "Rare"
+    },
+    "arbalester": {
+      "rarity": "Rare"
+    },
+    "doomscreech": {
+      "rarity": "Rare"
+    },
+    "hollow": {
+      "rarity": "Rare"
+    },
+    "seducer": {
+      "rarity": "Rare"
+    },
+    "stitched beast": {
+      "rarity": "Rare"
+    },
+    "amarantine skeleton": {
+      "rarity": "Rare"
+    },
+    "drowned bloatwraith": {
+      "rarity": "Rare"
+    },
+    "skullsquire": {
+      "rarity": "Uncommon"
+    },
+    "skellag": {
+      "rarity": "Uncommon"
+    },
+    "vulpine": {
+      "rarity": "Uncommon"
+    },
+    "dead crusader": {
+      "rarity": "Uncommon"
+    },
+    "dhampir": {
+      "rarity": "Uncommon"
+    },
+    "deathknight": {
+      "rarity": "Common"
+    },
+    "death hound": {
+      "rarity": "Common"
+    },
+    "hellhound": {
+      "rarity": "Common"
+    },
+    "aphidus the hivelord": {
+      "rarity": "Mythical"
+    },
+    "arachoa moonspinner": {
+      "rarity": "Mythical"
+    },
+    "rae": {
+      "rarity": "Legendary"
+    },
+    "lanakis the chosen": {
+      "rarity": "Legendary"
+    },
+    "foli": {
+      "rarity": "Legendary"
+    },
+    "noct the paralyzer": {
+      "rarity": "Legendary"
+    },
+    "truath": {
+      "rarity": "Legendary"
+    },
+    "xenomorph": {
+      "rarity": "Legendary"
+    },
+    "mavara the web diviner": {
+      "rarity": "Legendary"
+    },
+    "zavia": {
+      "rarity": "Legendary"
+    },
+    "maranix": {
+      "rarity": "Legendary"
+    },
+    "vizier ovelis": {
+      "rarity": "Legendary"
+    },
+    "cromax moonblood": {
+      "rarity": "Legendary"
+    },
+    "swarmspeaker zyclic": {
+      "rarity": "Legendary"
+    },
+    "noldua the gloaming": {
+      "rarity": "Legendary"
+    },
+    "astralith": {
+      "rarity": "Legendary"
+    },
+    "queen eva": {
+      "rarity": "Legendary"
+    },
+    "ghostborn": {
+      "rarity": "Legendary"
+    },
+    "ruel the huntmaster": {
+      "rarity": "Legendary"
+    },
+    "ultan of the shell": {
+      "rarity": "Legendary"
+    },
+    "sydax king-killer": {
+      "rarity": "Legendary"
+    },
+    "blind seer": {
+      "rarity": "Legendary"
+    },
+    "lydia the deathsiren": {
+      "rarity": "Legendary"
+    },
+    "visix the unbowed": {
+      "rarity": "Legendary"
+    },
+    "mithrala lifebane": {
+      "rarity": "Legendary"
+    },
+    "tramaria": {
+      "rarity": "Legendary"
+    },
+    "supreme kael": {
+      "rarity": "Legendary"
+    },
+    "fatalis blademaster": {
+      "rarity": "Legendary"
+    },
+    "captain temila": {
+      "rarity": "Epic"
+    },
+    "kaiden": {
+      "rarity": "Epic"
+    },
+    "dark kael": {
+      "rarity": "Epic"
+    },
+    "gwynneth": {
+      "rarity": "Epic"
+    },
+    "spider": {
+      "rarity": "Epic"
+    },
+    "dirandil": {
+      "rarity": "Epic"
+    },
+    "rian the conjurer": {
+      "rarity": "Epic"
+    },
+    "theresc": {
+      "rarity": "Epic"
+    },
+    "krakarth": {
+      "rarity": "Epic"
+    },
+    "luria": {
+      "rarity": "Epic"
+    },
+    "crimson helm": {
+      "rarity": "Epic"
+    },
+    "warden": {
+      "rarity": "Epic"
+    },
+    "delver": {
+      "rarity": "Epic"
+    },
+    "fang cleric": {
+      "rarity": "Epic"
+    },
+    "visionary": {
+      "rarity": "Epic"
+    },
+    "lua": {
+      "rarity": "Epic"
+    },
+    "psylar": {
+      "rarity": "Epic"
+    },
+    "madame serris": {
+      "rarity": "Epic"
+    },
+    "judge": {
+      "rarity": "Rare"
+    },
+    "kael": {
+      "rarity": "Rare"
+    },
+    "mystic hand": {
+      "rarity": "Rare"
+    },
+    "steel bowyer": {
+      "rarity": "Rare"
+    },
+    "ordinator": {
+      "rarity": "Rare"
+    },
+    "spirithost": {
+      "rarity": "Rare"
+    },
+    "hexweaver": {
+      "rarity": "Rare"
+    },
+    "wanderer": {
+      "rarity": "Rare"
+    },
+    "coldheart": {
+      "rarity": "Rare"
+    },
+    "paragon": {
+      "rarity": "Rare"
+    },
+    "retainer": {
+      "rarity": "Rare"
+    },
+    "eviscerator": {
+      "rarity": "Rare"
+    },
+    "pain keeper": {
+      "rarity": "Rare"
+    },
+    "harvester": {
+      "rarity": "Rare"
+    },
+    "sniper": {
+      "rarity": "Uncommon"
+    },
+    "redeemer": {
+      "rarity": "Uncommon"
+    },
+    "heartpiercer": {
+      "rarity": "Uncommon"
+    },
+    "lurker": {
+      "rarity": "Common"
+    },
+    "ranger": {
+      "rarity": "Common"
+    },
+    "magekiller": {
+      "rarity": "Common"
+    },
+    "embrys the anomaly": {
+      "rarity": "Mythical"
+    },
+    "night queen krixia": {
+      "rarity": "Mythical"
+    },
+    "narma the returned": {
+      "rarity": "Legendary"
+    },
+    "gaius the gleeful": {
+      "rarity": "Legendary"
+    },
+    "shemnath": {
+      "rarity": "Legendary"
+    },
+    "arix": {
+      "rarity": "Legendary"
+    },
+    "wight queen ankora": {
+      "rarity": "Legendary"
+    },
+    "giath the truthshield": {
+      "rarity": "Legendary"
+    },
+    "bystophus": {
+      "rarity": "Legendary"
+    },
+    "thea the tomb angel": {
+      "rarity": "Legendary"
+    },
+    "versulf the grim": {
+      "rarity": "Legendary"
+    },
+    "mother cybele": {
+      "rarity": "Legendary"
+    },
+    "losan k'leth": {
+      "rarity": "Legendary"
+    },
+    "mad hatter": {
+      "rarity": "Legendary"
+    },
+    "venalicia thrallmother": {
+      "rarity": "Legendary"
+    },
+    "tomb lord": {
+      "rarity": "Legendary"
+    },
+    "teodor the savant": {
+      "rarity": "Legendary"
+    },
+    "kalvalax": {
+      "rarity": "Legendary"
+    },
+    "walking tomb dreng": {
+      "rarity": "Legendary"
+    },
+    "alatreon blademaster": {
+      "rarity": "Legendary"
+    },
+    "skeletor": {
+      "rarity": "Legendary"
+    },
+    "soulless": {
+      "rarity": "Legendary"
+    },
+    "hegemon": {
+      "rarity": "Legendary"
+    },
+    "wurlim frostking": {
+      "rarity": "Legendary"
+    },
+    "fortus": {
+      "rarity": "Legendary"
+    },
+    "georgid the breaker": {
+      "rarity": "Legendary"
+    },
+    "karilon the ringer": {
+      "rarity": "Legendary"
+    },
+    "wight king narses": {
+      "rarity": "Legendary"
+    },
+    "queen of hearts": {
+      "rarity": "Legendary"
+    },
+    "pontiff augustin": {
+      "rarity": "Legendary"
+    },
+    "crypt witch": {
+      "rarity": "Epic"
+    },
+    "pitiless one": {
+      "rarity": "Epic"
+    },
+    "necrohunter": {
+      "rarity": "Epic"
+    },
+    "miscreated monster": {
+      "rarity": "Epic"
+    },
+    "pharsalas gravedirt": {
+      "rarity": "Epic"
+    },
+    "aeshma": {
+      "rarity": "Epic"
+    },
+    "sinesha": {
+      "rarity": "Epic"
+    },
+    "doompriest": {
+      "rarity": "Epic"
+    },
+    "sepulcher sentinel": {
+      "rarity": "Epic"
+    },
+    "rector drath": {
+      "rarity": "Epic"
+    },
+    "thylessia": {
+      "rarity": "Epic"
+    },
+    "lady eresh": {
+      "rarity": "Epic"
+    },
+    "deathless": {
+      "rarity": "Epic"
+    },
+    "kytis": {
+      "rarity": "Epic"
+    },
+    "bergoth the malformed": {
+      "rarity": "Epic"
+    },
+    "pestilus": {
+      "rarity": "Epic"
+    },
+    "phranox": {
+      "rarity": "Epic"
+    },
+    "malkith bloodflock": {
+      "rarity": "Epic"
+    },
+    "faceless": {
+      "rarity": "Epic"
+    },
+    "skullcrown": {
+      "rarity": "Epic"
+    },
+    "golden reaper": {
+      "rarity": "Epic"
+    },
+    "whisper": {
+      "rarity": "Epic"
+    },
+    "dawncaller sabitha": {
+      "rarity": "Epic"
+    },
+    "executioner": {
+      "rarity": "Rare"
+    },
+    "theurgist": {
+      "rarity": "Rare"
+    },
+    "magus": {
+      "rarity": "Rare"
+    },
+    "coffin smasher": {
+      "rarity": "Rare"
+    },
+    "arcanist": {
+      "rarity": "Rare"
+    },
+    "gladiator": {
+      "rarity": "Rare"
+    },
+    "acolyte": {
+      "rarity": "Rare"
+    },
+    "guardian": {
+      "rarity": "Rare"
+    },
+    "crimson slayer": {
+      "rarity": "Rare"
+    },
+    "longsword torrux": {
+      "rarity": "Rare"
+    },
+    "renegade": {
+      "rarity": "Rare"
+    },
+    "daywalker": {
+      "rarity": "Rare"
+    },
+    "centurion": {
+      "rarity": "Rare"
+    },
+    "ashwalker": {
+      "rarity": "Rare"
+    },
+    "cultist": {
+      "rarity": "Uncommon"
+    },
+    "admonitor": {
+      "rarity": "Uncommon"
+    },
+    "herald": {
+      "rarity": "Uncommon"
+    },
+    "thrall": {
+      "rarity": "Common"
+    },
+    "frolni the mechanist": {
+      "rarity": "Mythical"
+    },
+    "cinda forgeheart": {
+      "rarity": "Mythical"
+    },
+    "fjorad wolfheart": {
+      "rarity": "Mythical"
+    },
+    "trunda giltmallet": {
+      "rarity": "Legendary"
+    },
+    "underpriest brogni": {
+      "rarity": "Legendary"
+    },
+    "hurndig": {
+      "rarity": "Legendary"
+    },
+    "goffred brassclad": {
+      "rarity": "Legendary"
+    },
+    "osgrun the defiler": {
+      "rarity": "Legendary"
+    },
+    "mountain king": {
+      "rarity": "Legendary"
+    },
+    "boragar the elder": {
+      "rarity": "Legendary"
+    },
+    "gronjarr": {
+      "rarity": "Legendary"
+    },
+    "nari the lucky": {
+      "rarity": "Legendary"
+    },
+    "tholin foulbeard": {
+      "rarity": "Legendary"
+    },
+    "hilvi the rime-called": {
+      "rarity": "Legendary"
+    },
+    "maulie tankard": {
+      "rarity": "Legendary"
+    },
+    "samar gemcursed": {
+      "rarity": "Legendary"
+    },
+    "keeyra the watcher": {
+      "rarity": "Legendary"
+    },
+    "gnut": {
+      "rarity": "Legendary"
+    },
+    "admiral blacktusk": {
+      "rarity": "Legendary"
+    },
+    "uzol of the jade": {
+      "rarity": "Legendary"
+    },
+    "granyt doorkeep": {
+      "rarity": "Legendary"
+    },
+    "tormin the cold": {
+      "rarity": "Legendary"
+    },
+    "acrizia": {
+      "rarity": "Legendary"
+    },
+    "senna amberheart": {
+      "rarity": "Legendary"
+    },
+    "arnorn the shining": {
+      "rarity": "Legendary"
+    },
+    "grizzled jarl": {
+      "rarity": "Epic"
+    },
+    "conellia": {
+      "rarity": "Epic"
+    },
+    "fylja": {
+      "rarity": "Epic"
+    },
+    "maddak, eyes of skyiron": {
+      "rarity": "Epic"
+    },
+    "rearguard sergeant": {
+      "rarity": "Epic"
+    },
+    "geomancer": {
+      "rarity": "Epic"
+    },
+    "fyr-gun isbeil": {
+      "rarity": "Epic"
+    },
+    "hilda arnorndottr": {
+      "rarity": "Epic"
+    },
+    "rock breaker": {
+      "rarity": "Epic"
+    },
+    "melga steelgirdle": {
+      "rarity": "Epic"
+    },
+    "fodbor the bard": {
+      "rarity": "Epic"
+    },
+    "morag bronzelock": {
+      "rarity": "Epic"
+    },
+    "runekeeper dazdurk": {
+      "rarity": "Epic"
+    },
+    "baerdal fellhammer": {
+      "rarity": "Epic"
+    },
+    "gala longbraids": {
+      "rarity": "Epic"
+    },
+    "rugnor goldgleam": {
+      "rarity": "Epic"
+    },
+    "demytha": {
+      "rarity": "Epic"
+    },
+    "grumbler": {
+      "rarity": "Rare"
+    },
+    "runic warder": {
+      "rarity": "Rare"
+    },
+    "stout axeman": {
+      "rarity": "Rare"
+    },
+    "cudgeler": {
+      "rarity": "Rare"
+    },
+    "avir the alchemage": {
+      "rarity": "Rare"
+    },
+    "flailer": {
+      "rarity": "Rare"
+    },
+    "candleguard": {
+      "rarity": "Rare"
+    },
+    "beast wrestler": {
+      "rarity": "Rare"
+    },
+    "honor guard": {
+      "rarity": "Rare"
+    },
+    "perforator": {
+      "rarity": "Rare"
+    },
+    "dolor lorekeeper": {
+      "rarity": "Rare"
+    },
+    "boltsmith": {
+      "rarity": "Rare"
+    },
+    "madman": {
+      "rarity": "Rare"
+    },
+    "master butcher": {
+      "rarity": "Rare"
+    },
+    "hatchet slinger": {
+      "rarity": "Rare"
+    },
+    "gloril brutebane": {
+      "rarity": "Rare"
+    },
+    "bulwark": {
+      "rarity": "Rare"
+    },
+    "painsmith": {
+      "rarity": "Rare"
+    },
+    "dilgol": {
+      "rarity": "Rare"
+    },
+    "kurzad deepheart": {
+      "rarity": "Rare"
+    },
+    "chemist": {
+      "rarity": "Uncommon"
+    },
+    "line infantry": {
+      "rarity": "Uncommon"
+    },
+    "icebound prospector": {
+      "rarity": "Uncommon"
+    },
+    "slicer": {
+      "rarity": "Uncommon"
+    },
+    "tunnel steward": {
+      "rarity": "Uncommon"
+    },
+    "toshiro the bloody": {
+      "rarity": "Mythical"
+    },
+    "lady mikage": {
+      "rarity": "Mythical"
+    },
+    "jintoro": {
+      "rarity": "Legendary"
+    },
+    "lady kimi": {
+      "rarity": "Legendary"
+    },
+    "ninja": {
+      "rarity": "Legendary"
+    },
+    "michinaki": {
+      "rarity": "Legendary"
+    },
+    "zinogre blademaster": {
+      "rarity": "Legendary"
+    },
+    "tetsuya the deliverer": {
+      "rarity": "Legendary"
+    },
+    "harima": {
+      "rarity": "Legendary"
+    },
+    "yoshi the drunkard": {
+      "rarity": "Legendary"
+    },
+    "nobel": {
+      "rarity": "Legendary"
+    },
+    "tatsu": {
+      "rarity": "Legendary"
+    },
+    "yukimasa, demon of ice": {
+      "rarity": "Legendary"
+    },
+    "masahiro the bell monk": {
+      "rarity": "Legendary"
+    },
+    "genzin": {
+      "rarity": "Legendary"
+    },
+    "kyoku": {
+      "rarity": "Legendary"
+    },
+    "gamuran": {
+      "rarity": "Legendary"
+    },
+    "karato foxhunter": {
+      "rarity": "Legendary"
+    },
+    "arashi the riptide": {
+      "rarity": "Legendary"
+    },
+    "ishiyama the immovable": {
+      "rarity": "Legendary"
+    },
+    "riho bonespear": {
+      "rarity": "Legendary"
+    },
+    "jingwon": {
+      "rarity": "Legendary"
+    },
+    "yumeko": {
+      "rarity": "Legendary"
+    },
+    "ginro the stork": {
+      "rarity": "Legendary"
+    },
+    "shu-zhen the valorous": {
+      "rarity": "Legendary"
+    },
+    "onryo ieyasu": {
+      "rarity": "Legendary"
+    },
+    "leonardo": {
+      "rarity": "Legendary"
+    },
+    "shredder": {
+      "rarity": "Legendary"
+    },
+    "toragi the frog": {
+      "rarity": "Epic"
+    },
+    "hotatsu": {
+      "rarity": "Epic"
+    },
+    "chani": {
+      "rarity": "Epic"
+    },
+    "nogoryo": {
+      "rarity": "Epic"
+    },
+    "umetogi": {
+      "rarity": "Epic"
+    },
+    "tomoe": {
+      "rarity": "Epic"
+    },
+    "sachi": {
+      "rarity": "Epic"
+    },
+    "fenshi": {
+      "rarity": "Epic"
+    },
+    "burangiri": {
+      "rarity": "Epic"
+    },
+    "kunoichi": {
+      "rarity": "Epic"
+    },
+    "wuji": {
+      "rarity": "Epic"
+    },
+    "suiren": {
+      "rarity": "Epic"
+    },
+    "chonoru": {
+      "rarity": "Epic"
+    },
+    "gory": {
+      "rarity": "Epic"
+    },
+    "jurojin": {
+      "rarity": "Epic"
+    },
+    "kinagashi": {
+      "rarity": "Epic"
+    },
+    "masamoto": {
+      "rarity": "Epic"
+    },
+    "oboro": {
+      "rarity": "Epic"
+    },
+    "genbo the dishonored": {
+      "rarity": "Epic"
+    },
+    "taya": {
+      "rarity": "Epic"
+    },
+    "lifetaker": {
+      "rarity": "Rare"
+    },
+    "assassin": {
+      "rarity": "Rare"
+    },
+    "redcloak taneko": {
+      "rarity": "Rare"
+    },
+    "bloodmask": {
+      "rarity": "Rare"
+    },
+    "odachi": {
+      "rarity": "Rare"
+    },
+    "itinerant": {
+      "rarity": "Rare"
+    },
+    "marauder": {
+      "rarity": "Rare"
+    },
+    "vagabond": {
+      "rarity": "Rare"
+    },
+    "fanatic": {
+      "rarity": "Rare"
+    },
+    "infiltrator": {
+      "rarity": "Uncommon"
+    },
+    "conscript": {
+      "rarity": "Uncommon"
+    },
+    "nais the shadowthief": {
+      "rarity": "Mythical"
+    },
+    "nell blackteeth": {
+      "rarity": "Mythical"
+    },
+    "arbais the stonethorn": {
+      "rarity": "Mythical"
+    },
+    "elva autumnborn": {
+      "rarity": "Legendary"
+    },
+    "king gallcobar": {
+      "rarity": "Legendary"
+    },
+    "oella": {
+      "rarity": "Legendary"
+    },
+    "caoilte the asharrow": {
+      "rarity": "Legendary"
+    },
+    "vestele riverthorn": {
+      "rarity": "Legendary"
+    },
+    "baerd the broad": {
+      "rarity": "Legendary"
+    },
+    "greenwarden ruarc": {
+      "rarity": "Legendary"
+    },
+    "searsha the charred": {
+      "rarity": "Legendary"
+    },
+    "eostrid dreamsong": {
+      "rarity": "Legendary"
+    },
+    "glaicad of the meltwater": {
+      "rarity": "Legendary"
+    },
+    "leminisi the gold-wing": {
+      "rarity": "Legendary"
+    },
+    "lady of ireth": {
+      "rarity": "Legendary"
+    },
+    "firrol the barkhorn": {
+      "rarity": "Legendary"
+    },
+    "grand oak padraig": {
+      "rarity": "Legendary"
+    },
+    "bladechorister caldor": {
+      "rarity": "Legendary"
+    },
+    "balar the lost": {
+      "rarity": "Legendary"
+    },
+    "ailil": {
+      "rarity": "Legendary"
+    },
+    "claidna": {
+      "rarity": "Legendary"
+    },
+    "emic trunkheart": {
+      "rarity": "Legendary"
+    },
+    "yncensa grail-bearer": {
+      "rarity": "Legendary"
+    },
+    "aratheia corpseflower": {
+      "rarity": "Legendary"
+    },
+    "niamhe, spear of nyresa": {
+      "rarity": "Legendary"
+    },
+    "cormac the highpeak": {
+      "rarity": "Epic"
+    },
+    "kellan the shrike": {
+      "rarity": "Epic"
+    },
+    "locwain": {
+      "rarity": "Epic"
+    },
+    "criodan the blue": {
+      "rarity": "Epic"
+    },
+    "duedan the runic": {
+      "rarity": "Epic"
+    },
+    "mistrider daithi": {
+      "rarity": "Epic"
+    },
+    "pann the bowhorn": {
+      "rarity": "Epic"
+    },
+    "arwydd quivergrass": {
+      "rarity": "Epic"
+    },
+    "myciliac priest orn": {
+      "rarity": "Epic"
+    },
+    "ruella": {
+      "rarity": "Epic"
+    },
+    "enda moonbeam": {
+      "rarity": "Epic"
+    },
+    "wyrennon the silken": {
+      "rarity": "Epic"
+    },
+    "white dryad nia": {
+      "rarity": "Epic"
+    },
+    "aeila lifebraid": {
+      "rarity": "Epic"
+    },
+    "dyana gloompiercer": {
+      "rarity": "Epic"
+    },
+    "wysteri vineguard": {
+      "rarity": "Epic"
+    },
+    "thorn golem": {
+      "rarity": "Epic"
+    },
+    "pathfinder cait": {
+      "rarity": "Rare"
+    },
+    "tribuck colwyn": {
+      "rarity": "Rare"
+    },
+    "margrave greenhawk": {
+      "rarity": "Rare"
+    },
+    "loneblade riab": {
+      "rarity": "Rare"
+    },
+    "boughsmith flannan": {
+      "rarity": "Rare"
+    },
+    "shadowbow tirlac": {
+      "rarity": "Rare"
+    },
+    "ingid twyst-staff": {
+      "rarity": "Rare"
+    },
+    "treeshield knott": {
+      "rarity": "Rare"
+    },
+    "branch-arm lasair": {
+      "rarity": "Rare"
+    },
+    "glensage cithrel": {
+      "rarity": "Rare"
+    },
+    "gladewulf": {
+      "rarity": "Rare"
+    },
+    "glenspear": {
+      "rarity": "Uncommon"
+    },
+    "branchweaver": {
+      "rarity": "Uncommon"
+    },
+    "kassandra": {
+      "rarity": "Legendary"
+    },
+    "glorious pallas": {
+      "rarity": "Legendary"
+    },
+    "phemo the shepherd": {
+      "rarity": "Legendary"
+    },
+    "keberon the underflame": {
+      "rarity": "Legendary"
+    },
+    "knosson the bronze bull": {
+      "rarity": "Legendary"
+    },
+    "pelops the victor": {
+      "rarity": "Legendary"
+    },
+    "pelagus the wavewalker": {
+      "rarity": "Legendary"
+    },
+    "storm herald hekaton": {
+      "rarity": "Legendary"
+    },
+    "tekteon fissureflesh": {
+      "rarity": "Legendary"
+    },
+    "tidemaster dexikos": {
+      "rarity": "Epic"
+    },
+    "lionsguard galatea": {
+      "rarity": "Epic"
+    },
+    "stonebound thisbe": {
+      "rarity": "Epic"
+    },
+    "deephook nagis": {
+      "rarity": "Epic"
+    },
+    "bladerider": {
+      "rarity": "Rare"
+    },
+    "crimson pegason": {
+      "rarity": "Rare"
+    },
+    "acolyte of the slither": {
+      "rarity": "Rare"
+    },
+    "sunken sentinel": {
+      "rarity": "Rare"
+    }
+  }
+}

@@ -10,7 +10,7 @@ localStorage.setItem('raid-roster-v1',JSON.stringify(rows));
 localStorage.setItem('raid-companion-workbench-v1',JSON.stringify({version:1,inventory:{version:1,artifacts:SLOTS.map(slot=>({id:slot,slot,flat:{spd:1}})),sets:[]},loadouts:[],sessions:[]}));
 const select=document.getElementById('levelChampion');select.replaceChildren();for(const c of rows){const o=document.createElement('option');o.value=c.id;o.textContent=c.name;select.append(o)}
 document.getElementById('targetRank').value='6';document.getElementById('levelTarget').value='60';
-await import('../site/progression-ui.js');assert.equal(document.getElementById('targetAscension').value,'6');assert.ok(document.getElementById('leveling').textContent.includes('600 × 1★'));
+await import('../site/progression-ui.js');assert.equal(document.getElementById('targetAscension').value,'1');assert.ok(document.getElementById('preciseRoadmap').textContent.includes('Collect 600'));
 await import('../site/toolkit-ui.js');assert.equal(document.getElementById('artifactChampion').options.length,65);
 const findInput=label=>[...document.querySelectorAll('label')].find(e=>e.textContent===label)?.querySelector('input');
 const findForm=text=>[...document.querySelectorAll('form')].find(f=>f.textContent.includes(text));
