@@ -291,7 +291,14 @@ function reviewFoodRoster(){
  function showCandidate(r,unknown){
   const name=String(r.name),startRank=Math.max(1,Math.min(rank,Number(r.rank)||1)),startLevel=Math.max(1,Number(r.level)||1);
   const card=document.createElement('div');card.style.cssText='border:1px solid #34515B;border-radius:12px;padding:12px;margin:10px 0';
-  const title=document.createElement('strong');title.textContent=name+' · '+startRank+'★ level '+startLevel+' · '+(r.rarity||'rarity unknown');card.append(title);
+  const header=document.createElement('div');header.style.cssText='display:flex;align-items:center;gap:12px;min-width:0';
+  const portrait=document.createElement('div');portrait.style.cssText='width:68px;height:68px;flex:0 0 68px;border-radius:10px;overflow:hidden;display:grid;place-items:center;background:#1c3949;border:1px solid #34515B';
+  const img=document.createElement('img');img.alt=name+' portrait';img.loading='lazy';img.dataset.foodChampion=name;img.style.cssText='width:100%;height:100%;object-fit:cover';
+  const fallback=document.createElement('strong');fallback.textContent=name.slice(0,2).toUpperCase();fallback.style.cssText='font-size:20px;opacity:.7';
+  portrait.append(fallback,img);img.onload=()=>{fallback.style.display='none';img.style.display='block'};img.onerror=()=>{img.style.display='none';fallback.style.display='block'};
+  const slug=name.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  img.src=window.raidPortraitUrl?.(name)||'./portraits/'+slug+'.webp';
+  const title=document.createElement('strong');title.textContent=name+' · '+startRank+'★ level '+startLevel+' · '+(r.rarity||'rarity unknown');header.append(portrait,title);card.append(header);
   const steps=[];for(let k=startRank;k<rank;k++){steps.push('Level to '+(k*10)+' at '+k+'★'+(k===startRank?' (currently '+startLevel+')':''));steps.push('Use '+k+' other '+k+'★ food materials to rank up to '+(k+1)+'★');}
   steps.push(startRank===rank?'Already at the required food rank — no leveling needed':'Stop at '+rank+'★ level 1 for final rank-up food');
   const list=document.createElement('ol');steps.forEach(step=>{const li=document.createElement('li');li.textContent=step;list.append(li)});card.append(list);
@@ -305,7 +312,7 @@ function reviewFoodRoster(){
  if(!uncertain.length&&!confirmed.length){const p=document.createElement('p');p.textContent='Your saved roster currently contains only protected or high-rank champions. Raise fresh Common/Uncommon champions as food instead of sacrificing your main team.';box.append(p);}
  const footer=document.createElement('p');footer.className='muted';footer.textContent='Food consumed while ranking up these candidates is additional to the '+rank+' final '+rank+'★ materials. This guide does not spend champions or modify your roster.';box.append(footer);
 }
-['levelChampion','currentRank','foodOwned','foodChickens'].forEach(id=>document.getElementById(id).addEventListener('input',reviewFoodRoster));reviewFoodRoster();
+['levelChampion','currentRank','targetRank','foodOwned','foodChickens'].forEach(id=>document.getElementById(id).addEventListener('input',reviewFoodRoster));reviewFoodRoster();
 function renderVisualLeveling(){
  const get=id=>document.getElementById(id),rank=Number(get('currentRank').value)||1,level=Number(get('currentLevel').value)||1,targetRank=Math.max(rank,Number(get('targetRank').value)||rank),targetLevel=Math.min(targetRank*10,Math.max(1,Number(get('levelTarget').value)||targetRank*10)),food=Number(get('foodOwned').value)||0,chickens=Number(get('foodChickens').value)||0;
  const name=get('levelChampion').selectedOptions[0]?.textContent||'Champion';
