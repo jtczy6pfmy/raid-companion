@@ -98,3 +98,20 @@ export async function clearCloudRoster(){
  championId=null;
  return {cleared:true};
 }
+
+export async function loadCloudWorkbench(){
+ if(!connected||!ownerId)return {loaded:false,reason:'Cloud not connected'};
+ try{const data=check(await db.from('raid_companion_workbench').select('payload,revision').eq('owner_id',ownerId).maybeSingle());return {loaded:true,state:data?.payload||null,revision:data?.revision||0,ownerId}}
+ catch(error){return {loaded:false,reason:error?.message||'Cloud unavailable'}}
+}
+export async function saveCloudWorkbench(state,expectedRevision){
+ if(!connected||!ownerId)return {saved:false,reason:'Cloud not connected'};
+ if(!state||state.version!==1||!Number.isSafeInteger(expectedRevision)||expectedRevision<0||new TextEncoder().encode(JSON.stringify(state)).length>1900000)return {saved:false,reason:'Invalid or oversized workbench state'};
+ try{
+  const payload={owner_id:ownerId,payload:state,revision:expectedRevision+1,updated_at:new Date().toISOString()};
+  const result=expectedRevision===0?await db.from('raid_companion_workbench').insert(payload).select('revision').single():await db.from('raid_companion_workbench').update(payload).eq('owner_id',ownerId).eq('revision',expectedRevision).select('revision').maybeSingle();
+  if(result.error?.code==='23505'||(!result.error&&!result.data))return {saved:false,conflict:true,reason:'Workbench changed in another tab. Reload cloud state before saving.'};
+  if(result.error)throw result.error;
+  return {saved:true,revision:result.data.revision};
+ }catch(error){return {saved:false,reason:error?.message||'Cloud unavailable'}}
+}

@@ -1,4 +1,4 @@
-import {planProgression} from './progression-engine.js';
+import {planProgression} from './progression-engine.js?v=20261012-3';
 const $=id=>document.getElementById(id);
 const section=$('leveling');
 const panel=document.createElement('div');panel.className='panel';panel.style.marginTop='18px';

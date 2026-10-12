@@ -1,5 +1,5 @@
-import {loadCloudPlans,saveCloudPlan} from './cloud.js';
-import {STAT_FIELDS,statsFor,championRef,resolveChampion,compareStats,targetProgress,runSummary,sessionEstimate,duration,numberOrNull} from './companion-model.js';
+import {loadCloudPlans,saveCloudPlan} from './cloud.js?v=20261012-3';
+import {STAT_FIELDS,statsFor,championRef,resolveChampion,compareStats,targetProgress,runSummary,sessionEstimate,duration,numberOrNull} from './companion-model.js?v=20261012-3';
 
 const key='raid-companion-tools-v1';
 export function initCompanion(roster){
