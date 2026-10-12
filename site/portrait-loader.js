@@ -36,7 +36,16 @@
     const bytes=await f.async('uint8array');
     urls.set(key,URL.createObjectURL(new Blob([bytes],{type:'image/webp'})));
    }));
-   apply();
+   window.raidPortraitUrl=name=>urls.get(slug(String(name||'')))||null;
+   function applyFusion(){
+    document.querySelectorAll('#fusionTrackerList img[data-fusion-champion]').forEach(img=>{
+     const url=window.raidPortraitUrl(img.dataset.fusionChampion);
+     if(url&&img.dataset.portraitResolved!==url){img.dataset.portraitResolved=url;img.onerror=()=>{img.style.display='none'};img.src=url;img.style.display='block';}
+    });
+   }
+   apply();applyFusion();
+   const fusion=document.getElementById('fusionTrackerList');
+   if(fusion){let pending=false;new MutationObserver(()=>{if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;applyFusion()})}).observe(fusion,{childList:true,subtree:true});}
    const roster=document.getElementById('championRoster');
    if(roster){let pending=false;new MutationObserver(()=>{
     if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;apply();});
