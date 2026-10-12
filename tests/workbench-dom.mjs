@@ -1,0 +1,23 @@
+import {Window} from 'happy-dom';
+import fs from 'node:fs';import assert from 'node:assert/strict';
+import {optimiseArtifacts,SLOTS,STAT_KEYS} from '../site/artifact-engine.js';
+const w=new Window({url:'http://localhost:8765',settings:{disableJavaScriptEvaluation:true,disableCSSFileLoading:true,disableJavaScriptFileLoading:true}});
+w.document.write(fs.readFileSync(new URL('../site/index.html',import.meta.url),'utf8').replace(/<script[\s\S]*?<\/script>/g,''));
+for(const name of ['window','document','localStorage','Event','CustomEvent','Blob'])globalThis[name]=w[name];
+globalThis.Worker=class {postMessage(data){queueMicrotask(()=>{try{this.onmessage({data:{ok:true,...optimiseArtifacts(data)}})}catch(error){this.onerror(error)}})}terminate(){}};
+const rows=Array.from({length:65},(_,i)=>({id:'champion-'+i,name:'Champion '+i,rank:5,level:50,ascension:1}));
+localStorage.setItem('raid-roster-v1',JSON.stringify(rows));
+localStorage.setItem('raid-companion-workbench-v1',JSON.stringify({version:1,inventory:{version:1,artifacts:SLOTS.map(slot=>({id:slot,slot,flat:{spd:1}})),sets:[]},loadouts:[],sessions:[]}));
+const select=document.getElementById('levelChampion');select.replaceChildren();for(const c of rows){const o=document.createElement('option');o.value=c.id;o.textContent=c.name;select.append(o)}
+document.getElementById('targetRank').value='6';document.getElementById('levelTarget').value='60';
+await import('../site/progression-ui.js');assert.equal(document.getElementById('targetAscension').value,'6');assert.ok(document.getElementById('leveling').textContent.includes('600 × 1★'));
+await import('../site/toolkit-ui.js');assert.equal(document.getElementById('artifactChampion').options.length,65);
+const findInput=label=>[...document.querySelectorAll('label')].find(e=>e.textContent===label)?.querySelector('input');
+const findForm=text=>[...document.querySelectorAll('form')].find(f=>f.textContent.includes(text));
+const sessionForm=findForm('Save run session');findInput('Session name').value='Dragon test';sessionForm.dispatchEvent(new Event('submit',{cancelable:true}));assert.equal(window.raidWorkbenchExport().sessions.length,1);
+findForm('Record completed battle').dispatchEvent(new Event('submit',{cancelable:true}));assert.equal(window.raidWorkbenchExport().sessions[0].results.length,1);
+const artifactForm=findForm('Save artifact');findInput('Unique artifact ID').value='test-artifact';findInput('Artifact name').value='Test Weapon';artifactForm.dispatchEvent(new Event('submit',{cancelable:true}));assert.equal(window.raidWorkbenchExport().inventory.artifacts.length,7);
+for(const key of STAT_KEYS)findInput(key).value='100';findForm('Find best builds').dispatchEvent(new Event('submit',{cancelable:true}));await Promise.resolve();
+const saveLoadout=[...document.querySelectorAll('button')].find(e=>e.textContent==='Save loadout plan');assert.ok(saveLoadout);saveLoadout.click();assert.equal(window.raidWorkbenchExport().loadouts.length,1);
+assert.deepEqual(JSON.parse(localStorage.getItem('raid-roster-v1')),rows);
+console.log('DOM checks passed: 65-copy roster preserved, production path rendered, artifact/session saves and optimiser/loadout workflow work.');await w.happyDOM.abort();

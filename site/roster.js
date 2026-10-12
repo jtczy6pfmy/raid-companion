@@ -1,6 +1,6 @@
-import { saveCloudChampion, clearCloudRoster } from './cloud.js';
-import { parseCSV, planImport, canonicalName } from './csv-import.js';
-import { filterChampions,statsFor } from './companion-model.js';
+import { saveCloudChampion, clearCloudRoster } from './cloud.js?v=20261012-3';
+import { parseCSV, planImport, canonicalName } from './csv-import.js?v=20261012-3';
+import { filterChampions,statsFor } from './companion-model.js?v=20261012-3';
 
 const storageKey = 'raid-roster-v1';
 const starters = [
