@@ -389,7 +389,22 @@ function renderFusion(){
  });
 }
 document.getElementById('fusionFocus').addEventListener('change',()=>{const name=document.getElementById('fusionFocus').value;if(name)ensureFusionRecipe(name);renderFusion()});
-document.getElementById('fusionRefresh').addEventListener('click',renderFusion);
+function refreshFusionRoster(){
+ const status=document.getElementById('fusionStatus');
+ let roster;try{roster=JSON.parse(localStorage.getItem('raid-roster-v1')||'null')}catch{status.textContent='Roster data could not be read. Open My Champions and check your saved roster.';return}
+ if(!Array.isArray(roster)||!roster.length){status.textContent='No saved roster found on this device. Open My Champions and import or save your champions first.';renderFusion();return}
+ const target=document.getElementById('fusionFocus').value;
+ if(!target){status.textContent='Found '+roster.length+' saved champions. Select a fusion champion above to compare requirements.';renderFusion();return}
+ ensureFusionRecipe(target);
+ const requirements=fusionData().filter(r=>r.target===target);
+ const counts=new Map();roster.forEach(r=>{const name=String(r.name||'').trim().toLowerCase();counts.set(name,(counts.get(name)||0)+1)});
+ const matched=requirements.filter(r=>(counts.get(String(r.name||'').trim().toLowerCase())||0)>0).length;
+ renderFusion();
+ status.textContent='Refreshed '+target+': checked '+roster.length+' saved champions; found '+matched+' of '+requirements.length+' ingredient types in My Champions. Ready counts remain manually confirmed.';
+}
+document.getElementById('fusionRefresh').addEventListener('click',refreshFusionRoster);
+window.addEventListener('storage',event=>{if(event.key==='raid-roster-v1')renderFusion()});
+
 document.getElementById('fusionAdd').addEventListener('click',()=>{
  const target=document.getElementById('fusionTarget').value.trim(),name=document.getElementById('fusionIngredient').value.trim();
  const count=Math.max(1,Math.min(100,Number(document.getElementById('fusionCount').value)||1));
