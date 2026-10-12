@@ -25,3 +25,5 @@ Sample reports can include champion names, IDs, ranks and levels.
 
 This preview is unsigned. Uninstall it through Windows Settings > Apps.
 Installing this preview is not completion of the full Xtender-style reader.
+
+PC replay preview: the installed battle-runner folder contains a separate CLI. It defaults to observing without clicks. Live replay requires explicit calibration and the --live-replay switch. Read REPLAY-PREVIEW.md. Live game behavior has not been validated by this build. iPadOS remains a separate web planning target.

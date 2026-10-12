@@ -75,7 +75,7 @@ Storage also provides a reviewed backup restore that adds missing artifact IDs, 
 All 54 existing archive portraits also ship as direct assets, with aliases for full champion names. Portrait loading does not download JSZip or extract a ZIP at runtime.
 
 ## Windows reader boundary
-Storage accepts Windows Reader diagnostic reports for review, without importing unverified candidate objects or treating them as usable gear. Live account verification, complete gear bonuses/equipped links, automatic equipping and battle control still require development and verification on Windows with RAID running. The web app does not claim those features.
+Storage accepts Windows Reader diagnostic reports for review, without importing unverified candidate objects or treating them as usable gear. Live account verification, complete gear bonuses/equipped links, automatic equipping and verified battle control still require development and verification on Windows with RAID running. The PC source now includes a calibrated replay CLI preview with an observation-only default, bounded session controller, foreground/build/geometry guards and Escape stop; this is not validated live RAID automation. The web app does not claim those features.
 
 ## Verification
 Run `npm ci`, `npm test`, and `npm run test:dom`. DOM integration checks preserve a synthetic 65-copy roster while exercising progression, inventory changes, session logging, optimiser results and saved loadouts. The happy-dom checks verify interaction logic, not browser visual layout or a live RAID connection.
