@@ -29,8 +29,8 @@ class ReaderWindow:
         style.configure('Treeview', background='#15171C', foreground='#F4F4F4', fieldbackground='#15171C', rowheight=28)
         style.configure('Treeview.Heading', background='#24262D', foreground='#FFB13B')
         tk.Label(root, text='RAID COMPANION', bg='#08090B', fg='#FF851B', font=('Segoe UI', 24, 'bold')).pack(anchor='w', padx=28, pady=(24, 2))
-        tk.Label(root, text='Windows Reader Preview · 0.2.0', bg='#08090B', fg='#00DFF5', font=('Segoe UI', 12)).pack(anchor='w', padx=28)
-        tk.Label(root, text='Read-only roster candidates and experimental gear inspection. Account syncing, final stats and game automation are not available yet.',
+        tk.Label(root, text='Windows Reader Preview · 0.3.0', bg='#08090B', fg='#00DFF5', font=('Segoe UI', 12)).pack(anchor='w', padx=28)
+        tk.Label(root, text='Read-only roster candidates and experimental gear inspection. Account syncing and final stats are not available yet. A separate calibrated replay CLI preview is included; live game behavior still requires validation.',
                  wraplength=780, justify='left', bg='#08090B', fg='#FFB13B', font=('Segoe UI', 11)).pack(anchor='w', padx=28, pady=18)
         self.status = tk.StringVar(value='Open RAID through Plarium Play, then check the connection.')
         tk.Label(root, textvariable=self.status, wraplength=780, justify='left', bg='#08090B', fg='#F4F4F4', font=('Segoe UI', 12)).pack(anchor='w', padx=28, pady=(0, 14))

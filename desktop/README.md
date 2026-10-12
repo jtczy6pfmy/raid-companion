@@ -4,7 +4,7 @@ This folder contains an installable **Windows Reader Preview** and a read-only c
 
 ## Install the preview
 
-Run `RAID-Companion-Reader-Preview-Setup-0.2.0-x64.exe` on Windows 10/11 x64. It includes Python, creates optional shortcuts, and can be removed through Windows Settings → Apps. No login is added. The installer uses the current Windows account and does not request administrator access.
+Run `RAID-Companion-Reader-Preview-Setup-0.3.0-x64.exe` on Windows 10/11 x64. It includes Python, creates optional shortcuts, and can be removed through Windows Settings → Apps. No login is added. The installer uses the current Windows account and does not request administrator access.
 
 Open RAID, launch the preview, then select **Check RAID connection**. If Windows denies read access, close the reader and run its shortcut as administrator; Windows asks for approval.
 
@@ -14,7 +14,7 @@ Open RAID, launch the preview, then select **Check RAID connection**. If Windows
 
 **Read gear candidates** performs bounded reads of artifact list and cached dictionary containers with basic IDs/ranks/levels/kinds/rarities/set IDs. The live cached-dictionary test returned 513 stable records after validating keys, unique IDs, counts and repeated snapshots. Account identity remains unverified. Equipped links and bonus stats are not implemented.
 
-The preview does not sync account records, equip artifacts, sell items, or run battles. Updated game builds need a validated reader update; the installer does not automatically adapt or update.
+The reader dashboard does not sync account records, equip artifacts, sell items, or run battles. The bundled PC-only replay CLI is a separate calibrated preview: observation-only by default, with an explicit live-replay option. Its controller and calibration validation are unit tested, but actual RAID input and capture still need Windows game verification. See [REPLAY-PREVIEW.md](REPLAY-PREVIEW.md). Updated game builds need a validated reader update; the installer does not automatically adapt or update.
 
 **Open web companion** opens the existing website in your normal browser, retaining that browser's own saved session. A different laptop/browser still has its own session and does not automatically inherit another device's cloud records. The native reader does not send data to the website or create a separate cloud identity. Diagnostic export is local; after sample inspection it includes the selected champion fields, not a raw memory dump. The preview is unsigned and has no automatic updater.
 
@@ -49,3 +49,8 @@ Windows error 5 means Windows denied the requested process access. An administra
 The next milestone is confirming account identity, filling the missing champion description, reading artifact bonuses/equipped links, and validating final champion stats against the game. A reader must verify the game build and reject unknown layouts before using offsets. Final champion stats, verified gear extraction, local dashboard transport, equipping and battle automation are not implemented.
 
 Game binaries, generated game schema, user data and third-party analyzer executables stay outside the repository. The development analyzer's documented release is [Cpp2IL pre-release 21](https://github.com/SamboyCoding/Cpp2IL/releases/tag/2022.1.0-pre-release.21). Its executable SHA256 used locally was `663FB432433B4371FD1EE0EBC321A8FFF2A9AAC5AC4230C843F9E03DDEE4E04C` (recorded locally, not a publisher signature).
+
+## Separate PC and iPadOS targets
+The `desktop/` source and Windows installer are PC components. The deployed `site/` web app supports the iPadOS planning workflow. Do not treat the older root `index.html` as an established separate PC deployment without confirming its actual hosting path. Native controls are not added to the iPadOS UI.
+
+The Windows build workflow tests reader UI/field validation plus replay controller/profile logic, compiles both executables and saves the installer as a workflow artifact. This does not validate account membership, final gear stats or live replay in RAID.
