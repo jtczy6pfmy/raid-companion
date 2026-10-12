@@ -13,7 +13,7 @@ export function foodRequirements(currentRank, targetRank) {
   function ingredients(rank, count) {
     if (!count) return;
     byRank[rank] = (byRank[rank] || 0) + count;
-    if (rank > 1) ingredients(rank - 1, count * rank);
+    if (rank > 1) ingredients(rank - 1, count * (rank - 1));
   }
   for (let rank = currentRank; rank < targetRank; rank++) {
     ingredients(rank, rank);
