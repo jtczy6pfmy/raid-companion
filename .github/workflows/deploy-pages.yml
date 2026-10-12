@@ -1,8 +1,8 @@
-name: Deploy RAID Companion to GitHub Pages
+name: Deploy iPadOS RAID Companion to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [ipados]
   workflow_dispatch:
 
 permissions:
@@ -16,6 +16,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: github.ref == 'refs/heads/ipados'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -33,11 +34,12 @@ jobs:
           npm ci
           npm test
           npm run test:dom
-      - name: Prepare site files only
+      - name: Prepare iPadOS site files only
         run: |
           mkdir -p _site
           cp -R site/. _site/
           touch _site/.nojekyll
+          node -e "require('fs').writeFileSync('_site/deployment.json', JSON.stringify({platform:'ipados',branch:process.env.GITHUB_REF_NAME,commit:process.env.GITHUB_SHA}))"
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload static website

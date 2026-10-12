@@ -79,3 +79,6 @@ Storage accepts Windows Reader diagnostic reports for review, without importing 
 
 ## Verification
 Run `npm ci`, `npm test`, and `npm run test:dom`. DOM integration checks preserve a synthetic 65-copy roster while exercising progression, inventory changes, session logging, optimiser results and saved loadouts. The happy-dom checks verify interaction logic, not browser visual layout or a live RAID connection.
+
+## Platform branches
+iPadOS development and GitHub Pages deployment use `ipados`. PC development and Windows installer builds use `main`. See [PLATFORMS.md](PLATFORMS.md) for source/deployment details and the separate Cloudflare production-branch setting.
