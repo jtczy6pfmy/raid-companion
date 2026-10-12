@@ -26,8 +26,12 @@
  }
  async function start(){
   try{
-   const names=["misericord", "lifetaker", "aristocrat", "heiress", "tomoe", "redeemer", "slither", "incubus", "dhampir", "commander", "pit-fighter", "warmaiden", "frostskin", "high-khatun", "gator", "yaga", "pit-cur", "diabolist", "swordsman", "valerie", "galek", "fionn", "stitched-beast", "vildrax", "oldbeard", "dorothy", "brute", "kael", "cait", "jaeger", "aox", "hound-spawn", "vilespawn", "templar", "rocktooth", "athel", "warchanter", "skathix", "outlaw-monk", "vallaryn", "stalwart", "skullsquire", "dervish", "jizoh", "antigone", "tracker", "militia", "hardscale", "sergeant", "justiciar", "cheshire", "satyr", "panthera", "maiden"];
-   for(const key of names)urls.set(key,'./portraits/'+key+'.webp');
+   const response=await fetch('./portraits/manifest.json?v=20261012-all');
+   if(!response.ok)throw new Error('Portrait catalog unavailable');
+   const manifest=await response.json();
+   for(const [key,file] of Object.entries(manifest.portraits||{})){
+    if(/^[a-z0-9-]+$/.test(key)&&/^[a-z0-9-]+\.webp$/.test(file))urls.set(key,'./portraits/'+file);
+   }
    function applyFusion(){
     document.querySelectorAll('#fusionTrackerList img[data-fusion-champion]').forEach(img=>{
      const url=window.raidPortraitUrl(img.dataset.fusionChampion);
