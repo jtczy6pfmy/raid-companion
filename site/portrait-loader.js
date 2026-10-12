@@ -3,7 +3,9 @@
  'use strict';
  const archive='./portraits/raid_companion_portraits.zip';
  const urls=new Map();
+ const antigoneImage='./portraits/93F56C1E-CBE3-4727-9ED4-05207426C948.png';
  const slug=name=>name.toLowerCase().normalize('NFKD').replace(/\s*\(copy\s+\d+\)\s*$/i,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+ window.raidPortraitUrl=name=>{const key=slug(String(name||''));return key.startsWith('antigone')?antigoneImage:urls.get(key)||null};
  function apply(){
   document.querySelectorAll('#championRoster .roster-card').forEach(card=>{
    const title=card.querySelector('h3')?.textContent||'';
@@ -36,7 +38,6 @@
     const bytes=await f.async('uint8array');
     urls.set(key,URL.createObjectURL(new Blob([bytes],{type:'image/webp'})));
    }));
-   window.raidPortraitUrl=name=>{const key=slug(String(name||''));return key.startsWith('antigone')?'./portraits/93F56C1E-CBE3-4727-9ED4-05207426C948.png':urls.get(key)||null};
    function applyFusion(){
     document.querySelectorAll('#fusionTrackerList img[data-fusion-champion]').forEach(img=>{
      const url=window.raidPortraitUrl(img.dataset.fusionChampion);
