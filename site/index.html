@@ -372,7 +372,9 @@ function renderFusion(){
  const group=rows.filter(r=>r.target===target);
  if(!group.length){overview.textContent=recipe&&!recipe.stages.length?'Recipe not yet verified. Add confirmed ingredients under Custom fusion requirement.':'No requirements saved yet.';return}
  let roster=[];try{const v=JSON.parse(localStorage.getItem('raid-roster-v1')||'[]');if(Array.isArray(v))roster=v}catch{}
- const counts=new Map();roster.forEach(r=>{const name=String(r.name||'').trim().toLowerCase();counts.set(name,(counts.get(name)||0)+1)});
+ const counts=new Map(),copies=new Map();roster.forEach(r=>{const name=String(r.name||'').trim().toLowerCase();counts.set(name,(counts.get(name)||0)+1);if(!copies.has(name))copies.set(name,[]);copies.get(name).push(r)});
+ const requiredRank=name=>{if(target==='Broadmaw')return ['Arbalester','Stoneskin','Huntress','Bloodhorn'].includes(name)?3:0;if(target==='Rhazin Scarhide')return ['Lich','Erinyes','Bloodfeather','Torturehelm'].includes(name)?5:4;if(target==='Relickeeper')return name==='Justiciar'||['Executioner','Templar','Sorceress'].includes(name)?4:3;if(target==='Lady Mikage')return ['Keeyra the Watcher','Tatsu'].includes(name)?6:['Locwain','Weregren Suncursed'].includes(name)?5:0;if(target==='Theimios the Everdrinker')return name==='Unblinking'?5:4;return 0};
+ const championState=(name)=>{const rank=requiredRank(name),owned=copies.get(String(name).toLowerCase())||[];if(!owned.length)return 'Missing';if(!rank)return 'Owned · verify requirements';const ready=owned.filter(c=>Number(c.rank)>=rank&&Number(c.level)>=rank*10&&Number(c.ascension)>=rank).length;if(ready)return 'Ready ('+ready+')';const needs=owned[0];if(Number(needs.rank)<rank)return 'Needs rank '+rank+'★';if(Number(needs.level)<rank*10)return 'Needs level '+(rank*10);return 'Needs ascension '+rank+'★'};
  const baseNames=target==='Broadmaw'?recipe.stages.slice(4).map(x=>x.name):target==='Lady Mikage'?recipe.stages.slice(4).map(x=>x.name):target==='Relickeeper'?['Warmaiden','Diabolist','Spirithost','Heiress']:target==='Rhazin Scarhide'?recipe.stages.slice(4).map(x=>x.name):target==='Theimios the Everdrinker'?['Shore-spear Fionn']:recipe?recipe.stages.map(x=>x.name):group.map(x=>x.name);
  const baseSet=new Set(baseNames.map(x=>x.toLowerCase()));
  const baseRows=group.filter(r=>baseSet.has(String(r.name).toLowerCase()));
@@ -397,7 +399,7 @@ function renderFusion(){
   const line=document.createElement('div');line.className='panel';line.style.margin='10px 0';
   const h=document.createElement('h3');h.textContent=r.name;line.append(h);
   const own=counts.get(String(r.name||'').trim().toLowerCase())||0;
-  const p=document.createElement('p');p.className='muted';p.textContent='In My Champions: '+own+' · Ready: '+(Number(r.owned)||0)+' / '+r.count+' · Missing from roster: '+Math.max(0,Number(r.count)-own);line.append(p);
+  const p=document.createElement('p');p.className='muted';p.textContent='Roster: '+own+' · '+championState(r.name)+' · Manually confirmed ready: '+(Number(r.owned)||0)+' / '+r.count+' · Missing copies: '+Math.max(0,Number(r.count)-own);line.append(p);
   const controls=document.createElement('div');controls.style.cssText='display:flex;gap:8px;align-items:center;flex-wrap:wrap';
   const minus=document.createElement('button');minus.className='action';minus.type='button';minus.textContent='−1 ready';minus.onclick=()=>changeFusionReady(r.id,-1);
   const plus=document.createElement('button');plus.className='action';plus.type='button';plus.textContent='+1 ready';plus.onclick=()=>changeFusionReady(r.id,1);
@@ -421,6 +423,7 @@ function refreshFusionRoster(){
  status.textContent='Refreshed '+target+': checked '+roster.length+' saved champions; found '+matched+' of '+requirements.length+' ingredient types in My Champions. Ready counts remain manually confirmed.';
 }
 document.getElementById('fusionRefresh').addEventListener('click',refreshFusionRoster);
+window.addEventListener('raid-roster-change',()=>{if(document.getElementById('fusionFocus').value)renderFusion()});
 window.addEventListener('storage',event=>{if(event.key==='raid-roster-v1')renderFusion()});
 
 document.getElementById('fusionAdd').addEventListener('click',()=>{
