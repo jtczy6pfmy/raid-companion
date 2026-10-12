@@ -45,8 +45,15 @@
     });
    }
    function applyFood(){
+    const rosterImages=new Map();
+    document.querySelectorAll('#championRoster .roster-card').forEach(card=>{
+     const key=slug(card.querySelector('h3')?.textContent||'');
+     const rosterImg=card.querySelector('.hh-portrait img');
+     if(key&&rosterImg?.getAttribute('src')&&!rosterImages.has(key))rosterImages.set(key,rosterImg.src);
+    });
     document.querySelectorAll('#foodAdvice img[data-food-champion]').forEach(img=>{
-     const url=window.raidPortraitUrl(img.dataset.foodChampion);
+     const key=slug(img.dataset.foodChampion||'');
+     const url=rosterImages.get(key)||window.raidPortraitUrl(img.dataset.foodChampion);
      if(url&&img.dataset.portraitResolved!==url){img.dataset.portraitResolved=url;img.src=url;}
     });
    }
@@ -58,7 +65,7 @@
    const roster=document.getElementById('championRoster');
    if(roster){let pending=false;new MutationObserver(()=>{
     if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;apply();});
-   }).observe(roster,{childList:true});}
+   applyFood();}).observe(roster,{childList:true,subtree:true});}
   }catch(err){console.warn('Optional champion portraits unavailable:',err);}
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
